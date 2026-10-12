@@ -74,9 +74,8 @@ function levelConfig(level){
  return {players,count,diffs};
 }
 function startGame(level){
- state.level=Math.max(1,Math.min(50,level||1));state.towers=[];state.edges=[];state.flights=[];state.orders=[];state.players=[];state.elapsed=0;state.over=false;state.won=false;state.paused=false;state.drag=null;
- const cfg=levelConfig(state.level);state.mapSize=$("mapSize").value;
- for(let p=0;p<cfg.players;p++)state.players.push({id:p,color:COLORS[p],name:p===0?"أنت":"الخصم "+p,difficulty:p===0?"لاعب":cfg.diffs[p-1]||"متوسط",alive:true,nextThink:rand(1,3)});
+ state.level=Math.max(1,Math.min(50,level||1));state.mapSize=$("mapSize").value;state.towers=[];state.edges=[];state.flights=[];state.orders=[];state.players=[];state.elapsed=0;state.over=false;state.won=false;state.paused=false;state.drag=null;
+ const cfg=levelConfig(state.level);for(let p=0;p<cfg.players;p++)state.players.push({id:p,color:COLORS[p],name:p===0?"أنت":"الخصم "+p,difficulty:p===0?"لاعب":cfg.diffs[p-1]||"متوسط",alive:true,nextThink:rand(1,3)});
  const w=canvas.clientWidth||900,h=canvas.clientHeight||500,margin=55;
  const points=[];
  for(let i=0;i<cfg.count;i++){
@@ -199,10 +198,10 @@ canvas.addEventListener("pointerdown",e=>{if(state.paused||state.over)return;con
 canvas.addEventListener("pointermove",e=>{if(!state.drag)return;const pos=pointerPos(e);state.drag.x=pos.x;state.drag.y=pos.y;state.hover=towerAt(pos);draw()});
 canvas.addEventListener("pointerup",e=>{if(!state.drag)return;const pos=pointerPos(e),target=towerAt(pos),from=state.drag.id;state.drag=null;if(target&&target.id!==from&&connected(from,target.id))sendOrder(from,target.id);else if(target&&target.id!==from)log("لا يمكن الإرسال: البرجان غير متصلين بمسار.");draw()});
 canvas.addEventListener("pointercancel",()=>{state.drag=null;draw()});
-$("startBtn").addEventListener("click",()=>{if(state.won&&state.level<50)startGame(state.level+1);else startGame(Number($("startLevel").value)||1)});
+$("startBtn").addEventListener("click",()=>{if(state.paused&&!state.over&&$("modalTitle").textContent==="اللعبة متوقفة"){state.paused=false;$("overlay").style.display="none";$("pauseBtn").textContent="⏸ إيقاف مؤقت"}else if(state.won&&state.level<50)startGame(state.level+1);else startGame(Number($("startLevel").value)||1)});
 $("restartBtn").addEventListener("click",()=>startGame(state.level));
 $("nextBtn").addEventListener("click",()=>{if(state.level<50)startGame(state.level+1)});
-$("pauseBtn").addEventListener("click",()=>{if(state.over){$("overlay").style.display="flex";return}state.paused=!state.paused;$("pauseBtn").textContent=state.paused?"▶ متابعة":"⏸ إيقاف مؤقت";if(state.paused){$("modalTitle").textContent="اللعبة متوقفة";$("modalText").textContent="خذ وقتك في التخطيط، ثم تابع المعركة عند الاستعداد.";$("startBtn").textContent="متابعة اللعب";$("startBtn").onclick=()=>{state.paused=false;$("overlay").style.display="none";$("pauseBtn").textContent="⏸ إيقاف مؤقت";$("startBtn").onclick=null};$("overlay").style.display="flex"}else{$("overlay").style.display="none";$("startBtn").onclick=null}});
+$("pauseBtn").addEventListener("click",()=>{if(state.over){$("overlay").style.display="flex";return}state.paused=!state.paused;$("pauseBtn").textContent=state.paused?"▶ متابعة":"⏸ إيقاف مؤقت";if(state.paused){$("modalTitle").textContent="اللعبة متوقفة";$("modalText").textContent="خذ وقتك في التخطيط، ثم تابع المعركة عند الاستعداد.";$("startBtn").textContent="متابعة اللعب";$("overlay").style.display="flex"}else{$("overlay").style.display="none"}});
 $("mapSize").addEventListener("change",()=>{if(!state.paused)log("حجم الخريطة يتطبق في المرحلة الجديدة.")});
 let last=performance.now();function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;tick(dt);draw();requestAnimationFrame(frame)}
 window.addEventListener("resize",resize);resize();updateStats();requestAnimationFrame(frame);
