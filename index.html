@@ -16,9 +16,94 @@ button,select{font:inherit}button{cursor:pointer;border:1px solid #314762;backgr
 .bottom{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}.panel h2{font-size:14px;margin:0 0 10px}.legend{display:flex;gap:8px 13px;flex-wrap:wrap;color:#c7d4e7;font-size:12px}.legend-item{display:flex;align-items:center;gap:6px}.dot{width:10px;height:10px;border-radius:50%;display:inline-block}.tips{color:var(--muted);font-size:12px;line-height:1.8;margin:0}.feed{display:flex;flex-direction:column;gap:6px;max-height:116px;overflow:auto;font-size:12px;color:#c6d4e8}.feed div{border-right:2px solid #3a5678;padding:3px 8px}.overlay{position:absolute;inset:0;background:#08111edb;display:flex;align-items:center;justify-content:center;padding:18px;z-index:5}.modal{width:min(440px,100%);background:#142136;border:1px solid #344c6b;border-radius:20px;padding:22px;text-align:center;box-shadow:0 20px 70px #0008}.modal h2{margin:0 0 8px;font-size:24px}.modal p{color:#b8c8de;line-height:1.7;font-size:14px}.modal-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px}.settings{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}.settings label{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:5px;text-align:right}.settings select{background:#0d1828;color:var(--text);border:1px solid #344b67;border-radius:10px;padding:8px}
 footer{text-align:center;color:#7286a2;font-size:11px;padding:2px 0 10px}
 @media(max-width:700px){.app{padding:10px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom{grid-template-columns:1fr}.topbar{align-items:flex-start}.top-actions{width:100%}.top-actions button{flex:1}canvas{height:58vh;min-height:370px}.board-head{align-items:flex-start}.stat strong{font-size:16px}}
+
+/* Campaign-style front end */
+body{overflow-x:hidden}
+#loadingScreen,#mainMenu{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;overflow:auto;padding:22px;background:radial-gradient(ellipse at 50% 18%,#25466a 0,#101d32 36%,#070d18 78%);isolation:isolate}
+#loadingScreen:before,#mainMenu:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.28;background-image:linear-gradient(#8abfff13 1px,transparent 1px),linear-gradient(90deg,#8abfff13 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+#loadingScreen{flex-direction:column;gap:18px;transition:opacity .35s ease}
+.load-emblem{width:90px;height:90px;border-radius:26px;display:grid;place-items:center;font-size:48px;color:#fff;background:linear-gradient(145deg,#42b6ff,#6c55e8);box-shadow:0 0 70px #328dff4d, inset 0 1px #ffffff88;animation:float-emblem 1.5s ease-in-out infinite}
+.load-title{font-size:clamp(26px,5vw,42px);font-weight:950;letter-spacing:1px;text-align:center}
+.load-subtitle{font-size:13px;color:#a9c0dc;text-align:center}
+.load-track{width:min(260px,70vw);height:5px;border-radius:99px;background:#ffffff18;overflow:hidden}
+.load-track span{display:block;width:35%;height:100%;border-radius:99px;background:linear-gradient(90deg,#4fc3ff,#8d83ff);animation:loading-bar 1.25s ease-in-out infinite}
+@keyframes loading-bar{from{transform:translateX(-120%)}to{transform:translateX(400%)}}
+@keyframes float-emblem{50%{transform:translateY(-5px);box-shadow:0 0 90px #328dff66}}
+.menu-wrap{width:min(1080px,100%);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:clamp(24px,5vw,64px);padding:clamp(8px,3vw,28px);animation:menu-enter .55s ease both}
+@keyframes menu-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.menu-copy{position:relative;z-index:1}
+.menu-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #78b9ff40;border-radius:999px;background:#4c9fff12;color:#9dcfff;font-size:12px;font-weight:800;letter-spacing:.5px}
+.menu-title{font-size:clamp(42px,7vw,76px);line-height:.98;letter-spacing:-2px;font-weight:1000;margin:20px 0 15px;text-shadow:0 7px 35px #4e8fff35}
+.menu-title span{display:block;color:#79c5ff}
+.menu-description{max-width:460px;color:#aebfd5;line-height:1.9;font-size:15px;margin:0 0 25px}
+.menu-actions{display:flex;flex-direction:column;gap:10px;max-width:340px}
+.menu-actions button{min-height:52px;border-radius:14px;font-size:15px}
+.menu-actions .primary{box-shadow:0 8px 28px #1678e744;background:linear-gradient(115deg,#1599ff,#6359ee);border-color:#8ecaff55}
+.menu-foot{font-size:11px;color:#728ba8;margin-top:22px}
+.menu-art{min-height:400px;position:relative;display:grid;place-items:center}
+.art-glow{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:#247bff1c;filter:blur(22px)}
+.art-board{width:min(440px,100%);aspect-ratio:1.05;position:relative;border:1px solid #79b8ff35;border-radius:30px;overflow:hidden;background:linear-gradient(145deg,#172c45d9,#0b1424ed);box-shadow:0 30px 90px #0007,inset 0 1px #ffffff13;transform:rotate(-2deg)}
+.art-board:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#8abfff0c 1px,transparent 1px),linear-gradient(90deg,#8abfff0c 1px,transparent 1px);background-size:28px 28px}
+.art-path{position:absolute;height:3px;background:linear-gradient(90deg,#597da5,#87baff,#597da5);transform-origin:left center;opacity:.8;box-shadow:0 0 10px #68aaff55}
+.art-tower{position:absolute;width:72px;height:72px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(145deg,#203b58,#122238);border:2px solid var(--tower-color);box-shadow:0 0 24px color-mix(in srgb,var(--tower-color) 28%,transparent),inset 0 1px #ffffff20;color:#fff;font-size:25px}
+.art-tower strong{position:absolute;bottom:-11px;min-width:28px;text-align:center;border-radius:8px;background:#07111f;border:1px solid #ffffff22;padding:3px 6px;font-size:12px}
+.art-badge{position:absolute;bottom:20px;left:20px;border:1px solid #ffffff22;background:#0b1628e8;border-radius:14px;padding:12px 15px;box-shadow:0 10px 28px #0005}
+.art-badge b{display:block;font-size:18px}.art-badge small{color:#9cb4d1;font-size:11px}
+.menu-progress{display:flex;align-items:center;gap:12px;margin-top:22px;padding:13px 15px;max-width:340px;border-radius:14px;border:1px solid #ffffff16;background:#ffffff08}
+.progress-icon{font-size:22px}.progress-copy{flex:1}.progress-copy b{display:block;font-size:12px}.progress-copy small{color:#91a8c4;font-size:11px}.progress-track{height:4px;background:#ffffff17;border-radius:9px;margin-top:7px;overflow:hidden}.progress-track span{display:block;height:100%;background:linear-gradient(90deg,#39c2ff,#8a78ff)}
+#menuLevel{background:#102039;color:#eaf4ff;border:1px solid #35516f;border-radius:10px;padding:9px 10px;font:inherit;width:100%;margin-top:8px}
+.menu-level-picker{max-width:340px;margin-top:12px;color:#9eb4ce;font-size:12px}
+#gameScreen{display:none}
+@media(max-width:760px){#mainMenu{align-items:flex-start;padding:14px}.menu-wrap{grid-template-columns:1fr;gap:12px;padding:8px 4px}.menu-art{grid-row:1;min-height:250px}.art-board{width:min(330px,88vw);border-radius:23px}.art-tower{width:56px;height:56px;border-radius:17px;font-size:21px}.menu-copy{text-align:center}.menu-description{margin-inline:auto;font-size:13px}.menu-actions,.menu-progress,.menu-level-picker{margin-left:auto;margin-right:auto}.menu-kicker{margin:auto}.menu-title{font-size:clamp(42px,13vw,62px);margin:15px 0 12px}.menu-foot{margin-top:15px}.menu-progress{text-align:right}.art-badge{bottom:12px;left:12px;padding:9px 12px}.art-badge b{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
+<div id="loadingScreen" role="status" aria-label="جارٍ تحميل اللعبة">
+  <div class="load-emblem">♜</div>
+  <div class="load-title">TOWER CONQUEST</div>
+  <div class="load-subtitle">جارٍ تجهيز ساحة المعركة...</div>
+  <div class="load-track"><span></span></div>
+</div>
+<section id="mainMenu" style="display:none" aria-label="القائمة الرئيسية">
+  <div class="menu-wrap">
+    <div class="menu-copy">
+      <div class="menu-kicker">✦ حملة السيطرة · 50 مرحلة</div>
+      <div class="menu-title">ابنِ قوتك.<span>احكم الخريطة.</span></div>
+      <p class="menu-description">استولِ على الأبراج، عزّز خطوطك، وتفوّق على قادة الذكاء الاصطناعي. كل مرحلة معركة جديدة، وكل قرار يغيّر مصير مملكتك.</p>
+      <div class="menu-actions">
+        <button class="primary" id="playCampaignBtn">⚔ ابدأ الحملة</button>
+        <button id="continueBtn">▶ متابعة التقدم</button>
+      </div>
+      <div class="menu-level-picker">اختيار مرحلة مفتوحة
+        <select id="menuLevel" aria-label="اختيار المرحلة"></select>
+      </div>
+      <div class="menu-progress">
+        <div class="progress-icon">🏆</div>
+        <div class="progress-copy"><b id="progressLabel">تقدم الحملة</b><small id="progressSub">أمامك 50 مرحلة للسيطرة عليها</small><div class="progress-track"><span id="progressBar" style="width:2%"></span></div></div>
+      </div>
+      <div class="menu-foot">لعبة استراتيجية فردية · خصوم ذكاء اصطناعي · احفظ تقدمك تلقائيًا</div>
+    </div>
+    <div class="menu-art" aria-hidden="true">
+      <div class="art-glow"></div>
+      <div class="art-board">
+        <i class="art-path" style="left:22%;top:25%;width:56%;transform:rotate(27deg)"></i>
+        <i class="art-path" style="left:22%;top:25%;width:48%;transform:rotate(93deg)"></i>
+        <i class="art-path" style="left:22%;top:25%;width:55%;transform:rotate(150deg)"></i>
+        <i class="art-path" style="left:22%;top:25%;width:48%;transform:rotate(5deg)"></i>
+        <i class="art-path" style="left:50%;top:52%;width:36%;transform:rotate(-52deg)"></i>
+        <div class="art-tower" style="--tower-color:#48a5ff;left:12%;top:12%">♜<strong>24</strong></div>
+        <div class="art-tower" style="--tower-color:#ff647c;left:67%;top:17%">♜<strong>18</strong></div>
+        <div class="art-tower" style="--tower-color:#ffc857;left:39%;top:42%">♜<strong>32</strong></div>
+        <div class="art-tower" style="--tower-color:#9c83ff;left:14%;top:68%">♜<strong>11</strong></div>
+        <div class="art-tower" style="--tower-color:#8998ad;left:69%;top:68%">♜<strong>08</strong></div>
+        <div class="art-badge"><b>50 <small>مرحلة</small></b><small>خطة واحدة تفصل بينك وبين النصر</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="gameScreen">
 <div class="app">
 <header class="topbar">
   <div class="brand"><div class="logo">♜</div><div><h1>Tower Conquest</h1><p>سيطر على الخريطة — خطّط، أرسل، وانتصر</p></div></div>
@@ -51,6 +136,7 @@ footer{text-align:center;color:#7286a2;font-size:11px;padding:2px 0 10px}
 </section>
 <footer>نسخة أولية قابلة للتطوير · اللعب فردي ضد الذكاء الاصطناعي · لا يوجد لعب جماعي بشري</footer>
 </div>
+</div>
 <script>
 (function(){
 "use strict";
@@ -58,7 +144,26 @@ const canvas=document.getElementById("board"),ctx=canvas.getContext("2d");
 const $=id=>document.getElementById(id);
 const COLORS=["#48a5ff","#ff647c","#ffc857","#9c83ff","#44d6a1"];
 const DIFFICULTIES=["سهل","متوسط","صعب","خبير"];
-const state={level:1,towers:[],edges:[],flights:[],orders:[],players:[],paused:true,over:false,won:false,last:0,elapsed:0,drag:null,hover:null,feed:[],mapSize:"auto",dpr:1};
+let unlockedLevel=1;let savedLevel=1;
+try{unlockedLevel=Math.max(1,Math.min(50,Number(localStorage.getItem("tc-unlocked")||1)));savedLevel=Math.max(1,Math.min(unlockedLevel,Number(localStorage.getItem("tc-current")||1)))}catch(e){}
+const state={level:savedLevel,towers:[],edges:[],flights:[],orders:[],players:[],paused:true,over:false,won:false,last:0,elapsed:0,drag:null,hover:null,feed:[],mapSize:"auto",dpr:1};
+function renderMenuProgress(){
+ const menu=$("menuLevel");if(!menu)return;
+ const previous=Number(menu.value)||savedLevel;menu.innerHTML="";
+ for(let i=1;i<=unlockedLevel;i++){const op=document.createElement("option");op.value=String(i);op.textContent="المرحلة "+i+(i===unlockedLevel?" — الأحدث":"");menu.appendChild(op)}
+ menu.value=String(Math.min(unlockedLevel,previous));
+ $("progressLabel").textContent="المرحلة "+unlockedLevel+" من 50 مفتوحة";
+ $("progressSub").textContent=unlockedLevel>=50?"وصلت إلى المرحلة النهائية!":"أكمل المرحلة "+unlockedLevel+" لفتح المرحلة التالية";
+ $("progressBar").style.width=(unlockedLevel/50*100)+"%";
+}
+function showMainMenu(){
+ $("gameScreen").style.display="none";$("mainMenu").style.display="flex";$("loadingScreen").style.display="none";
+ renderMenuProgress();
+}
+function enterGame(level){
+ $("mainMenu").style.display="none";$("gameScreen").style.display="block";
+ startGame(level);
+}
 function rand(a,b){return Math.random()*(b-a)+a} function irand(a,b){return Math.floor(rand(a,b+1))}
 function distance(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
 function log(msg){state.feed.unshift(msg);state.feed=state.feed.slice(0,9);$("feed").innerHTML=state.feed.map(x=>"<div>"+x+"</div>").join("")}
@@ -74,7 +179,9 @@ function levelConfig(level){
  return {players,count,diffs};
 }
 function startGame(level){
- state.level=Math.max(1,Math.min(50,level||1));state.mapSize=$("mapSize").value;state.towers=[];state.edges=[];state.flights=[];state.orders=[];state.players=[];state.elapsed=0;state.over=false;state.won=false;state.paused=false;state.drag=null;
+ state.level=Math.max(1,Math.min(unlockedLevel,Number(level)||savedLevel||1));
+ try{localStorage.setItem("tc-current",String(state.level))}catch(e){}
+ $("gameScreen").style.display="block";$("mainMenu").style.display="none";state.mapSize=$("mapSize").value;state.towers=[];state.edges=[];state.flights=[];state.orders=[];state.players=[];state.elapsed=0;state.over=false;state.won=false;state.paused=false;state.drag=null;
  const cfg=levelConfig(state.level);for(let p=0;p<cfg.players;p++)state.players.push({id:p,color:COLORS[p],name:p===0?"أنت":"الخصم "+p,difficulty:p===0?"لاعب":cfg.diffs[p-1]||"متوسط",alive:true,nextThink:rand(1,3)});
  const w=canvas.clientWidth||900,h=canvas.clientHeight||500,margin=55;
  const points=[];
@@ -162,7 +269,13 @@ function checkEnd(){
  if(!state.towers.some(t=>t.owner===0)){state.over=true;state.won=false;showEnd("انتهت المعركة","فقدت كل أبراجك. أعد المحاولة وجرّب الاستيلاء على برج محايد مبكرًا.");return}
  if(alive.length===1&&alive[0].id===0){state.over=true;state.won=true;showEnd("انتصار!","سيطرت على جميع الأبراج في المرحلة "+state.level+". "+(state.level<50?"تابع إلى تحدٍ أصعب.":"لقد أكملت المراحل الخمسين!"));$("nextBtn").disabled=state.level>=50;return}
 }
-function showEnd(title,txt){state.paused=true;$("modalTitle").textContent=title;$("modalText").textContent=txt;$("startBtn").textContent=state.won&&state.level<50?"المرحلة التالية":"العب مجددًا";$("overlay").style.display="flex";$("pauseBtn").textContent="▶ متابعة";log(title)}
+function showEnd(title,txt){
+ state.paused=true;
+ if(state.won){unlockedLevel=Math.max(unlockedLevel,Math.min(50,state.level+1));savedLevel=Math.min(50,state.level+1);try{localStorage.setItem("tc-unlocked",String(unlockedLevel));localStorage.setItem("tc-current",String(savedLevel))}catch(e){}}
+ $("modalTitle").textContent=title;$("modalText").textContent=txt;
+ $("startBtn").textContent=state.won?(state.level<50?"المرحلة التالية":"العودة للقائمة"):"إعادة المرحلة";
+ $("overlay").style.display="flex";$("pauseBtn").textContent="▶ متابعة";log(title);
+}
 function updateStats(){
  $("levelStat").textContent=state.level+" / 50";
  $("ownedStat").textContent=state.towers.filter(t=>t.owner===0).length;
@@ -198,13 +311,24 @@ canvas.addEventListener("pointerdown",e=>{if(state.paused||state.over)return;con
 canvas.addEventListener("pointermove",e=>{if(!state.drag)return;const pos=pointerPos(e);state.drag.x=pos.x;state.drag.y=pos.y;state.hover=towerAt(pos);draw()});
 canvas.addEventListener("pointerup",e=>{if(!state.drag)return;const pos=pointerPos(e),target=towerAt(pos),from=state.drag.id;state.drag=null;if(target&&target.id!==from&&connected(from,target.id))sendOrder(from,target.id);else if(target&&target.id!==from)log("لا يمكن الإرسال: البرجان غير متصلين بمسار.");draw()});
 canvas.addEventListener("pointercancel",()=>{state.drag=null;draw()});
-$("startBtn").addEventListener("click",()=>{if(state.paused&&!state.over&&$("modalTitle").textContent==="اللعبة متوقفة"){state.paused=false;$("overlay").style.display="none";$("pauseBtn").textContent="⏸ إيقاف مؤقت"}else if(state.won&&state.level<50)startGame(state.level+1);else startGame(Number($("startLevel").value)||1)});
+$("startBtn").addEventListener("click",()=>{
+ if(state.paused&&!state.over&&$("modalTitle").textContent==="اللعبة متوقفة"){state.paused=false;$("overlay").style.display="none";$("pauseBtn").textContent="⏸ إيقاف مؤقت";return}
+ if(state.over&&state.won){if(state.level<50)startGame(state.level+1);else showMainMenu();return}
+ if(state.over&&!state.won){startGame(state.level);return}
+ startGame(Number($("startLevel").value)||state.level||1)
+});
 $("restartBtn").addEventListener("click",()=>startGame(state.level));
 $("nextBtn").addEventListener("click",()=>{if(state.level<50)startGame(state.level+1)});
 $("pauseBtn").addEventListener("click",()=>{if(state.over){$("overlay").style.display="flex";return}state.paused=!state.paused;$("pauseBtn").textContent=state.paused?"▶ متابعة":"⏸ إيقاف مؤقت";if(state.paused){$("modalTitle").textContent="اللعبة متوقفة";$("modalText").textContent="خذ وقتك في التخطيط، ثم تابع المعركة عند الاستعداد.";$("startBtn").textContent="متابعة اللعب";$("overlay").style.display="flex"}else{$("overlay").style.display="none"}});
 $("mapSize").addEventListener("change",()=>{if(!state.paused)log("حجم الخريطة يتطبق في المرحلة الجديدة.")});
+$("playCampaignBtn").addEventListener("click",()=>enterGame(savedLevel));
+$("continueBtn").addEventListener("click",()=>enterGame(savedLevel));
+$("menuLevel").addEventListener("change",e=>{savedLevel=Math.max(1,Math.min(unlockedLevel,Number(e.target.value)||1));try{localStorage.setItem("tc-current",String(savedLevel))}catch(e){}});
 let last=performance.now();function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;tick(dt);draw();requestAnimationFrame(frame)}
-window.addEventListener("resize",resize);resize();updateStats();requestAnimationFrame(frame);
+window.addEventListener("resize",resize);resize();updateStats();renderMenuProgress();
+$("overlay").style.display="none";$("gameScreen").style.display="none";
+setTimeout(()=>{const loader=$("loadingScreen");loader.style.opacity="0";setTimeout(()=>{loader.style.display="none";showMainMenu()},360)},1250);
+requestAnimationFrame(frame);
 })();
 </script>
 </body>
