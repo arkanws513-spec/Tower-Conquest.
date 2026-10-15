@@ -74,7 +74,7 @@ for(let i=0;i<200;i++){
 const saveKey='tower-conquest-arena-v1';
 let profile={rating:1000,wins:0,losses:0,battles:0,weekly:0};
 try{const saved=JSON.parse(localStorage.getItem(saveKey)||'null');if(saved&&typeof saved==='object')profile={...profile,...saved}}catch(e){}
-let boardMode='global',sendPercent=.5,paused=false,gameOver=false,matchCount=1,selected=null,elapsed=0,lastTime=0,acc=0,holdTime=0,toastTimer=null;
+let boardMode='global',sendPercent=.5,paused=false,gameOver=false,matchCount=1,selected=null,elapsed=0,lastTime=0,acc=0,holdTime=0,toastTimer=null,leaderboardTick=0;
 let towers=[],armies=[],rivals=[],mapSeed=Date.now()>>>0,world={w:1000,h:650},particles=[];
 const maps=[
 {name:'Balanced frontier',positions:[[100,320],[320,120],[320,320],[320,520],[500,210],[500,430],[690,120],[690,320],[690,520],[900,320],[500,320],[180,180],[180,460],[820,180],[820,460],[500,80]]},
@@ -100,7 +100,7 @@ function newGame(){
  // Keep mine/fortress sites neutral and ensure every base has connections.
  rivals.forEach((r,i)=>{r.baseId=[9,3,6][i]});
  $('hint').textContent='Tap your blue tower, then tap a connected tower to send troops.';
- renderRivals();draw();updateHUD();
+ renderRivals();draw();updateHUD();renderBoard();
 }
 function resize(){
  const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
@@ -148,7 +148,7 @@ function aiThink(team,dt){
 }
 function update(dt){
  if(paused||gameOver)return;
- elapsed+=dt;
+ elapsed+=dt;leaderboardTick+=dt;if(leaderboardTick>=25){leaderboardTick=0;simulateLeaderboardTick();}
  towers.forEach(t=>{if(t.owner!==null){const spec=towerTypes[t.type]||towerTypes.normal;t.progress+=spec.rate*dt;while(t.progress>=1&&t.troops<t.max){t.troops++;t.progress-=1}if(t.troops>=t.max)t.progress=0}});
  armies.forEach(a=>a.t+=dt);
  const landed=armies.filter(a=>a.t>=a.duration);landed.forEach(land);armies=armies.filter(a=>a.t<a.duration);
@@ -160,7 +160,7 @@ function update(dt){
 }
 function finish(win,timeout){
  if(gameOver)return;gameOver=true;paused=true;
- const change=win?28:timeout?0:-18;profile.rating=Math.max(500,profile.rating+change);profile.battles++;if(win){profile.wins++;profile.weekly+=28}else if(!timeout)profile.losses++;save();updateHUD();
+ const change=win?28:timeout?0:-18;profile.rating=Math.max(500,profile.rating+change);profile.battles++;if(win){profile.wins++;profile.weekly+=28}else if(!timeout)profile.losses++;save();updateHUD();renderBoard();
  $('resultTitle').textContent=win?'Victory — all rival bases captured!':timeout?'Time limit reached':'Defeat — regroup and try again';
  const owned=towers.filter(t=>t.owner===0).length;const total=towers.length;
  $('resultBody').innerHTML='<div class="notice">Match '+String(matchCount).padStart(3,'0')+' finished in '+formatTime(elapsed)+'. '+(win?'You captured all three rival bases and held them for 10 seconds.':timeout?'The result was decided by remaining territory and forces.':'Your base or all controlled territory was lost.')+'</div><div class="enemylist" style="margin-top:12px"><div class="enemyrow"><div class="avatar">♜</div><div><strong>Your territory</strong><small>'+owned+' of '+total+' towers held</small></div><div class="score">'+(win?'+28':timeout?'±0':'−18')+' rating</div></div><div class="enemyrow"><div class="avatar">★</div><div><strong>Current rating</strong><small>Local profile · saved on this device</small></div><div class="score">'+profile.rating+'</div></div></div>';
@@ -172,7 +172,6 @@ function updateHUD(){
  const sorted=[...bots].sort((a,b)=>b.rating-a.rating);const rank=sorted.filter(b=>b.rating>profile.rating).length+1;
  $('myRank').textContent='#'+rank;$('myPosition').textContent='#'+rank;
  $('selectionInfo').textContent=selected===null?'Select one of your towers':('Tower '+(selected+1)+' · '+towers[selected].troops+' troops');
- renderBoard();
 }
 function draw(){
  const w=world.w,h=world.h;ctx.clearRect(0,0,w,h);
@@ -214,6 +213,7 @@ function renderBoard(){
  list.sort((a,b)=>b.score-a.score);const display=list.slice(0,8);
  $('leaderboard').innerHTML=display.map((b,i)=>'<div class="rankrow '+(b.you?'you':'')+'"><div class="rank">'+(i+1)+'</div><div class="rankname">'+escapeHtml(b.name)+(b.you?' <b style="color:var(--gold)">YOU</b>':'')+'<small>'+(b.you?'Local player · human':escapeHtml(b.region)+' · AI rival')+'</small></div><div class="points">'+b.score+'</div></div>').join('');
 }
+function simulateLeaderboardTick(){const r=rng((mapSeed^Math.floor(elapsed)^Math.imul(matchCount,2654435761))>>>0);for(let i=0;i<7;i++){const b=bots[Math.floor(r()*bots.length)];const delta=Math.floor(r()*9)-3;b.rating=Math.max(700,Math.min(1800,b.rating+delta));if(delta>=3){b.wins++;b.weekly+=Math.floor(r()*12)}else if(delta<=-2){b.losses++}}renderBoard();}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function openBots(){const list=bots.slice().sort((a,b)=>b.rating-a.rating);$('botGrid').innerHTML=list.map((b,i)=>'<div class="botcard"><strong><span style="color:var(--gold)">#'+(i+1)+'</span> '+escapeHtml(b.name)+'</strong><small>'+escapeHtml(b.region)+' · '+escapeHtml(b.style)+' · AI</small><div class="progress"><i style="width:'+Math.max(8,(b.rating-700)/10)+'%"></i></div><small>Rating '+b.rating+' · '+b.wins+'W / '+b.losses+'L</small></div>').join('');$('botsModal').classList.add('open')}
 function closeModal(id){$(id).classList.remove('open')}
