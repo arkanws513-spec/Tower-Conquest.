@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b1323">
+<title>Tower Conquest — Arena</title>
+<style>
+:root{color-scheme:dark;--bg:#09111f;--panel:#111e31;--panel2:#17263d;--line:#263a56;--text:#edf4ff;--muted:#92a5c2;--gold:#f5c768;--blue:#52a7ff;--red:#ff6677;--green:#50d7a1;--purple:#b39aff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#20365a 0,#09111f 55%);color:var(--text);font:14px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}button{font:inherit;color:inherit;border:1px solid #344967;background:#1b2d47;border-radius:10px;padding:9px 12px;font-weight:750;cursor:pointer;transition:.15s}button:hover{filter:brightness(1.15);transform:translateY(-1px)}button:disabled{opacity:.4;cursor:not-allowed;transform:none}.app{max-width:1440px;margin:auto;padding:16px;display:grid;gap:14px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#f8d777,#dd873b);display:grid;place-items:center;color:#172238;font-size:23px;box-shadow:0 8px 24px #e6a74922}.brand h1{font-size:20px;margin:0;letter-spacing:.02em}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.topstats{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);background:#101d30;border-radius:999px;padding:7px 11px;color:#c6d5ea;font-size:12px}.pill b{color:var(--gold)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}.panel{background:linear-gradient(180deg,#142238f5,#0f1b2cf5);border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:0 14px 36px #0002}.panelhead{padding:14px 16px;border-bottom:1px solid #263852;display:flex;align-items:center;justify-content:space-between;gap:10px}.panelhead h2,.panelhead h3{font-size:14px;margin:0;letter-spacing:.03em}.muted{color:var(--muted)}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:#94aac8;font-weight:800}.battlebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.battlebar button.active{border-color:var(--gold);background:#463a27}.arena{position:relative;background:#0b1726}.canvaswrap{height:min(62vh,620px);min-height:360px;position:relative;touch-action:manipulation}.canvaswrap canvas{width:100%;height:100%;display:block;touch-action:manipulation}.canvasbadge{position:absolute;top:12px;left:12px;background:#09111fce;border:1px solid #34465f;border-radius:10px;padding:8px 10px;font-size:11px;pointer-events:none}.canvasbadge b{color:var(--gold)}.hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#08111ee8;border:1px solid #2b3d57;border-radius:999px;padding:8px 13px;font-size:11px;color:#d8e5f8;white-space:nowrap;max-width:95%;pointer-events:none}.battlefoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 15px;border-top:1px solid #263852}.sendgroup{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.sendgroup button{padding:7px 10px;font-size:12px}.sendgroup button.active{border-color:var(--gold);color:var(--gold)}.small{font-size:11px;color:var(--muted)}.side{display:grid;gap:14px}.tabs{display:flex;gap:5px;padding:10px 12px 0}.tab{flex:1;padding:8px 5px;font-size:12px;background:transparent;border-color:transparent;color:var(--muted)}.tab.active{background:#223653;border-color:#3b5373;color:#fff}.tabbody{padding:12px}.enemylist{display:grid;gap:9px}.enemyrow{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:9px;align-items:center;background:#ffffff05;border:1px solid #263852;border-radius:12px;padding:9px}.avatar{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:17px;font-weight:900;background:#253a58}.enemyrow strong{display:block;font-size:12px}.enemyrow small{display:block;color:var(--muted);font-size:10px}.tag{font-size:9px;letter-spacing:.04em;border-radius:999px;padding:3px 6px;background:#27364b;color:#bcd1ed;white-space:nowrap}.tag.ai{color:#cbbcff;background:#352b52}.enemyrow .score{font-weight:850;font-size:12px;color:var(--gold)}.sectionfoot{border-top:1px solid #263852;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}.leaderboard{display:grid;gap:5px}.rankrow{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:8px;padding:7px 8px;border-radius:9px;background:#ffffff04}.rankrow:nth-child(-n+3){background:#f5c7680b}.rank{font-size:11px;color:#93a7c3;font-weight:850}.rankname{font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rankname small{display:block;color:var(--muted);font-size:9px}.points{font-size:11px;font-weight:800;color:#f4d38a}.rankrow.you{outline:1px solid #f5c76880;background:#f5c76812}.notice{font-size:10px;line-height:1.5;color:#92a5c2;background:#0a1422;border:1px solid #263852;border-radius:10px;padding:9px 10px}.progress{height:5px;background:#25334a;border-radius:99px;overflow:hidden;margin-top:5px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#4f9eff,#b39aff)}.modalback{position:fixed;inset:0;background:#030813d9;display:none;place-items:center;padding:18px;z-index:10}.modalback.open{display:grid}.modal{width:min(760px,100%);max-height:88vh;overflow:auto;background:#111f33;border:1px solid #3a4f6d;border-radius:18px;box-shadow:0 25px 100px #0009}.modalhead{display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border-bottom:1px solid var(--line)}.modalhead h2{margin:0;font-size:16px}.modalbody{padding:16px}.botgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.botcard{padding:10px;border:1px solid #2b3d57;border-radius:11px;background:#ffffff04;min-width:0}.botcard strong{font-size:11px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.botcard small{font-size:10px;color:var(--muted)}.footer{color:#8296b3;font-size:10px;text-align:center;padding:2px 0 8px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#f4d38a;color:#182337;padding:10px 16px;border-radius:999px;font-weight:850;box-shadow:0 10px 35px #0007;display:none;z-index:20}.toast.show{display:block}.hidden{display:none!important}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.side .panel:first-child{grid-column:1/-1}.canvaswrap{height:58vh;min-height:340px}}
+@media(max-width:600px){.app{padding:8px;gap:9px}.brand h1{font-size:17px}.topstats{gap:5px}.pill{font-size:10px;padding:6px 8px}.side{grid-template-columns:1fr}.side .panel:first-child{grid-column:auto}.canvaswrap{height:55vh;min-height:320px}.panelhead{padding:11px 12px}.botgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.hint{font-size:10px}.battlefoot{padding:10px}.battlebar button{padding:7px 9px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">♜</div><div><h1>TOWER CONQUEST <span style="color:var(--gold)">ARENA</span></h1><p>Real-time tower strategy · Solo vs AI rivals</p></div></div>
+    <div class="topstats"><div class="pill">RANK <b id="myRank">#201</b></div><div class="pill">RATING <b id="myRating">1000</b></div><div class="pill">WINS <b id="myWins">0</b></div></div>
+  </header>
+  <main class="layout">
+    <section class="panel arena">
+      <div class="panelhead"><div><div class="eyebrow">Live battle</div><h2 id="battleTitle">Frontier Clash · Map 01</h2></div><div class="battlebar"><button id="newBattle">↻ New battle</button><button id="pauseBtn">Ⅱ Pause</button></div></div>
+      <div class="canvaswrap"><canvas id="battleCanvas" aria-label="Interactive tower conquest map"></canvas><div class="canvasbadge">MATCH <b id="matchNo">001</b> · <span id="elapsed">00:00</span><br><span id="mapLabel">Balanced frontier</span></div><div class="hint" id="hint">Tap your blue tower, then tap a connected tower to send troops.</div></div>
+      <div class="battlefoot"><div class="sendgroup"><span class="small">SEND:</span><button data-send="25">25%</button><button data-send="50" class="active">50%</button><button data-send="75">75%</button><button data-send="100">ALL</button></div><div class="small" id="selectionInfo">Select one of your towers</div></div>
+    </section>
+    <aside class="side">
+      <section class="panel"><div class="panelhead"><div><div class="eyebrow">This match</div><h2>Rival commanders</h2></div><span class="tag ai">3 AI RIVALS</span></div><div class="tabbody"><div class="enemylist" id="rivalList"></div></div><div class="sectionfoot"><span class="small">All opponents are simulated AI.</span><button id="allBotsBtn">Browse 200</button></div></section>
+      <section class="panel"><div class="panelhead"><div><div class="eyebrow">Season 01</div><h2>Leaderboard</h2></div><span class="tag">SIMULATED</span></div><div class="tabs"><button class="tab active" data-board="global">Global</button><button class="tab" data-board="weekly">Weekly</button></div><div class="tabbody"><div class="leaderboard" id="leaderboard"></div></div><div class="sectionfoot"><span class="small">Your position</span><strong id="myPosition">#201</strong></div></section>
+      <section class="panel"><div class="panelhead"><div><div class="eyebrow">How to play</div><h2>Command guide</h2></div></div><div class="tabbody"><div class="notice"><b>1.</b> Select a blue tower you own.<br><b>2.</b> Tap a linked tower to send troops.<br><b>3.</b> Capture neutral towers, mines and enemy bases.<br><b>4.</b> Capture all three rival bases and hold them for 10 seconds to win.<br><br><b>Fair play:</b> AI uses the same production rules as you. Bot rankings are simulated for offline play, not real human accounts.</div></div></section>
+    </aside>
+  </main>
+  <div class="footer">Prototype build · Local AI simulation · No real-money purchases · Progress saved on this device</div>
+</div>
+<div class="modalback" id="botsModal"><div class="modal"><div class="modalhead"><div><div class="eyebrow">Rival directory</div><h2>200 AI commanders</h2></div><button id="closeBots">Close ✕</button></div><div class="modalbody"><p class="small">A diverse simulated roster with names from Arabic, European, African, South Asian and East Asian naming traditions. These are game bots, not real users.</p><div class="botgrid" id="botGrid"></div></div></div></div>
+<div class="modalback" id="resultModal"><div class="modal"><div class="modalhead"><div><div class="eyebrow">Battle report</div><h2 id="resultTitle">Victory!</h2></div><button id="closeResult">Close ✕</button></div><div class="modalbody" id="resultBody"></div><div class="sectionfoot"><span class="small">Rating changes are local prototype data.</span><button id="resultRematch">Play again</button></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const canvas=$('battleCanvas'),ctx=canvas.getContext('2d');
+const COLORS=['#4e9fff','#ff6677','#f5c768','#b39aff'];
+const TEAMNAMES=['You','Raad','The Warden','The Fox'];
+const PERSONALITIES=['human','aggressive','defensive','tactician'];
+const EMOJIS=['♜','⚔','🛡','✦'];
+const firstNames=[
+['أركان','ليلى','عمر','نور','مريم','زياد','سلمى','ياسين','جنى','حمزة','ريم','آدم','تالا','كريم','هنا','مالك','سارة','فارس','لينا','رامي','دانا','باسل','ياسمين','سيف','نادين'],
+['Oliver','Amelia','Noah','Isla','Liam','Sofia','Ethan','Mila','Lucas','Chloe','Leo','Freya','Arthur','Emma','Hugo','Alice','Oscar','Maya','Theo','Ella','Felix','Nora','Jack','Clara','Henry'],
+['Aarav','Anaya','Vihaan','Diya','Arjun','Ishita','Reyansh','Aadhya','Kabir','Meera','Rohan','Saanvi','Yuki','Haruto','Aoi','Ren','Hana','Min-jun','Seo-yun','Ji-ho','Wei','Mei','Hao','Xinyi','Riku'],
+['Amara','Kwame','Zuri','Kofi','Nia','Jabari','Imani','Thabo','Ayo','Lerato','Fatou','Moussa','Aminata','Chidi','Ngozi','Sibusiso','Eshe','Tariq','Malik','Samira','Dalia','Rami','Farah','Idris','Mina']
+];
+const lastNames=[
+['النجار','المنصور','الشافعي','البحيري','حسن','إبراهيم','السعدي','الرفاعي','العطار','فؤاد','مراد','الكيلاني','عبدالله','علي','يوسف','البدري','سالم','حمدان','المرسي','زهران'],
+['Carter','Bennett','Morgan','Foster','Hayes','Turner','Parker','Reed','Brooks','Ward','Coleman','Bishop','Hayward','Ellis','Miller','Wright','Cooper','Bailey','Russell','Gray'],
+['Sharma','Patel','Rao','Mehta','Singh','Kapoor','Kim','Park','Choi','Tanaka','Sato','Nakamura','Watanabe','Chen','Lin','Wang','Liu','Zhang','Kobayashi','Ito'],
+['Mensah','Okafor','Diallo','Ndlovu','Banda','Kamau','Abebe','Traore','Dlamini','Adeyemi','Mbeki','Owusu','Moyo','Bello','Sow','Adebayo','Toure','Mthembu','Kone','Nwosu']
+];
+const regions=['MENA','Europe','South Asia / East Asia','Africa'];
+function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){let x=seed>>>0;return()=>{x+=0x6D2B79F5;let t=x;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
+const bots=[];
+for(let i=0;i<200;i++){
+ const region=i%4, f=firstNames[region], l=lastNames[region], n=i;
+ const first=f[n%f.length], last=l[Math.floor(n/f.length)%l.length];
+ const name=first+' '+last;
+ const styles=['Aggressor','Guardian','Tactician','Opportunist'];
+ const style=styles[(i*7+Math.floor(i/5))%4];
+ const skill=700+Math.floor(rng(hash(name))()*1000);
+ const wins=4+Math.floor(rng(hash(name+'w'))()*190);
+ const losses=3+Math.floor(rng(hash(name+'l'))()*130);
+ bots.push({id:'AI-'+String(i+1).padStart(3,'0'),name,region:regions[region],style,rating:skill,wins,losses,weekly:Math.floor(rng(hash(name+'week'))()*950),ai:true});
+}
+const saveKey='tower-conquest-arena-v1';
+let profile={rating:1000,wins:0,losses:0,battles:0,weekly:0};
+try{const saved=JSON.parse(localStorage.getItem(saveKey)||'null');if(saved&&typeof saved==='object')profile={...profile,...saved}}catch(e){}
+let boardMode='global',sendPercent=.5,paused=false,gameOver=false,matchCount=1,selected=null,elapsed=0,lastTime=0,acc=0,holdTime=0,toastTimer=null;
+let towers=[],armies=[],rivals=[],mapSeed=Date.now()>>>0,world={w:1000,h:650},particles=[];
+const maps=[
+{name:'Balanced frontier',positions:[[100,320],[320,120],[320,320],[320,520],[500,210],[500,430],[690,120],[690,320],[690,520],[900,320],[500,320],[180,180],[180,460],[820,180],[820,460],[500,80]]},
+{name:'River crossings',positions:[[100,325],[300,110],[300,300],[300,540],[500,180],[500,470],[700,100],[700,300],[700,540],[900,325],[500,325],[180,210],[180,440],[820,210],[820,440],[500,70]]},
+{name:'Twin valleys',positions:[[100,325],[300,140],[300,325],[300,510],[500,130],[500,520],[700,140],[700,325],[700,510],[900,325],[500,325],[160,170],[160,480],[840,170],[840,480],[500,325]]}
+];
+const connections=[[0,1],[0,2],[0,3],[1,2],[1,11],[2,3],[2,4],[2,5],[3,12],[4,5],[4,6],[4,10],[5,8],[5,10],[6,7],[6,13],[7,8],[7,9],[7,10],[8,14],[9,13],[9,14],[10,15],[11,1],[11,2],[12,2],[12,3],[13,6],[13,7],[14,7],[14,8],[15,4],[15,6]];
+const towerTypes={base:{name:'Base',rate:1/4,cap:60,def:1.12},normal:{name:'Tower',rate:1/4,cap:40,def:1},fortress:{name:'Fort',rate:1/5,cap:50,def:1.35},mine:{name:'Mine',rate:0,cap:30,def:1}};
+function showToast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2100)}
+function save(){try{localStorage.setItem(saveKey,JSON.stringify(profile))}catch(e){}}
+function seededShuffle(arr,seed){const a=arr.slice(),r=rng(seed);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function newGame(){
+ paused=false;gameOver=false;elapsed=0;holdTime=0;selected=null;armies=[];particles=[];mapSeed=(Math.random()*4294967295)>>>0;
+ const map=maps[Math.floor(rng(mapSeed)()*maps.length)];$('mapLabel').textContent=map.name;$('battleTitle').textContent='Frontier Clash · '+map.name;$('matchNo').textContent=String(matchCount).padStart(3,'0');$('pauseBtn').textContent='Ⅱ Pause';
+ const botOrder=seededShuffle(bots,mapSeed).slice(0,3);rivals=botOrder.map((b,i)=>({...b,team:i+1,personality:PERSONALITIES[i+1],color:COLORS[i+1]}));
+ towers=map.positions.map((p,i)=>({id:i,x:p[0],y:p[1],type:[0,9].includes(i)?'base':([6,8].includes(i)?'fortress':([4,12].includes(i)?'mine':'normal')),owner:([0,9].includes(i)?(i===0?0:1):null),troops:([0,9].includes(i)?12:([6,8].includes(i)?7:([4,12].includes(i)?5:4))),max:([0,9].includes(i)?60:([6,8].includes(i)?50:([4,12].includes(i)?30:40))),progress:0}));
+ // Ensure four bases in four separated quadrants.
+ towers[0].owner=0;towers[9].owner=1;towers[3].owner=2;towers[6].owner=3;
+ towers[3].type='base';towers[6].type='base';
+ towers[0].troops=towers[9].troops=towers[3].troops=towers[6].troops=12;
+ towers[0].max=towers[9].max=towers[3].max=towers[6].max=60;
+ towers[0].type=towers[9].type=towers[3].type=towers[6].type='base';
+ // Keep mine/fortress sites neutral and ensure every base has connections.
+ rivals.forEach((r,i)=>{r.baseId=[9,3,6][i]});
+ $('hint').textContent='Tap your blue tower, then tap a connected tower to send troops.';
+ renderRivals();draw();updateHUD();
+}
+function resize(){
+ const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
+ canvas.width=Math.max(1,Math.floor(rect.width*dpr));canvas.height=Math.max(1,Math.floor(rect.height*dpr));
+ ctx.setTransform(dpr,0,0,dpr,0,0);world.w=rect.width;world.h=rect.height;draw();
+}
+function xy(t){const pad=48;return{x:pad+t.x/1000*(world.w-pad*2),y:pad+t.y/650*(world.h-pad*2)}}
+function adj(id){return connections.filter(e=>e[0]===id||e[1]===id).map(e=>e[0]===id?e[1]:e[0])}
+function send(from,to,percent,team){
+ const a=towers[from],b=towers[to];if(!a||!b||a.owner!==team||!adj(from).includes(to)||a.troops<1)return false;
+ const n=Math.max(1,Math.floor(a.troops*percent));if(n>a.troops)return false;a.troops-=n;
+ const p1=xy(a),p2=xy(b),dist=Math.hypot(p2.x-p1.x,p2.y-p1.y);
+ armies.push({from,to,team,n,x:a.x,y:a.y,t:0,duration:Math.max(1.05,dist/100),start:{x:a.x,y:a.y},end:{x:b.x,y:b.y}});
+ return true;
+}
+function land(army){
+ const t=towers[army.to];if(t.owner===army.team){t.troops=Math.min(t.max,t.troops+army.n);return}
+ const attacker=army.n,defender=t.troops,def=t.owner===null?1:towers[t.id].type==='fortress'?1.35:1.12;
+ const effectiveAttack=attacker, effectiveDefense=defender*def;
+ if(effectiveAttack>effectiveDefense){t.owner=army.team;t.troops=Math.max(1,Math.floor((effectiveAttack-effectiveDefense)/def));t.progress=0;burst(t,army.team)}
+ else {t.troops=Math.max(0,Math.ceil(defender-effectiveAttack/def));if(t.troops===0){t.owner=army.team;t.troops=1;burst(t,army.team)}}
+}
+function burst(t,team){for(let i=0;i<12;i++){const r=rng((Date.now()+t.id*99+i*7)>>>0);particles.push({x:t.x,y:t.y,vx:(r()-.5)*70,vy:(r()-.5)*70,life:.6,color:COLORS[team]})}}
+function aiThink(team,dt){
+ const rival=rivals.find(r=>r.team===team);if(!rival)return;
+ rival.think=(rival.think||0)+dt;if(rival.think<(rival.personality==='aggressive'?.8:rival.personality==='defensive'?1.2:1))return;rival.think=0;
+ const own=towers.filter(t=>t.owner===team&&t.troops>=4);if(!own.length)return;
+ let options=[];
+ own.forEach(t=>adj(t.id).forEach(id=>{const dest=towers[id];if(dest.owner===team)return;let value=0;
+ const troops=dest.troops||0,dist=Math.hypot(t.x-dest.x,t.y-dest.y);
+ const mine=dest.type==='mine'?3:0,fort=dest.type==='fortress'?-1.2:0,enemy=dest.owner!==null?1.2:0,base=dest.type==='base'?5:0;
+ const nearbyOwn=towers.filter(x=>x.owner===team&&adj(x.id).includes(dest.id)).length;
+ const risk=troops/(t.troops||1);
+ if(rival.personality==='aggressive')value=4+base+enemy+mine+fort-troops*.35-risk*2-dist*.003;
+ else if(rival.personality==='defensive')value=2+base*.8+mine+fort-troops*.45-risk*3+nearbyOwn*.2-dist*.002;
+ else value=3+base+mine*2+enemy+fort-troops*.28-risk*1.6-dist*.002;
+ if(t.troops<9)value-=2;if(dest.owner===null)value+=.5;
+ options.push({from:t.id,to:id,value});
+ }));
+ options.sort((a,b)=>b.value-a.value);if(!options.length)return;
+ const best=options[0];const source=towers[best.from],dest=towers[best.to];
+ const required=dest.troops*(dest.owner===null?1.08:1.28)+2;
+ if(source.troops>=required&&best.value>0){send(source.id,dest.id,rival.personality==='aggressive'?.78:rival.personality==='defensive'?.48:.62,team)}
+ else if(source.troops>=18&&dest.type==='mine'&&dest.owner===null)send(source.id,dest.id,.35,team);
+}
+function update(dt){
+ if(paused||gameOver)return;
+ elapsed+=dt;
+ towers.forEach(t=>{if(t.owner!==null){const spec=towerTypes[t.type]||towerTypes.normal;t.progress+=spec.rate*dt;while(t.progress>=1&&t.troops<t.max){t.troops++;t.progress-=1}if(t.troops>=t.max)t.progress=0}});
+ armies.forEach(a=>a.t+=dt);
+ const landed=armies.filter(a=>a.t>=a.duration);landed.forEach(land);armies=armies.filter(a=>a.t<a.duration);
+ [1,2,3].forEach(team=>aiThink(team,dt));
+ particles.forEach(p=>{p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt});particles=particles.filter(p=>p.life>0);
+ const enemyBases=[9,3,6].map(id=>towers[id]);if(enemyBases.every(t=>t.owner===0)){holdTime+=dt;if(holdTime>=10)finish(true)}else holdTime=0;
+ if(elapsed>=600)finish(false,true);
+ updateHUD();draw();
+}
+function finish(win,timeout){
+ if(gameOver)return;gameOver=true;paused=true;
+ const change=win?28:timeout?0:-18;profile.rating=Math.max(500,profile.rating+change);profile.battles++;if(win){profile.wins++;profile.weekly+=28}else if(!timeout)profile.losses++;save();updateHUD();
+ $('resultTitle').textContent=win?'Victory — all rival bases captured!':timeout?'Time limit reached':'Defeat — regroup and try again';
+ const owned=towers.filter(t=>t.owner===0).length;const total=towers.length;
+ $('resultBody').innerHTML='<div class="notice">Match '+String(matchCount).padStart(3,'0')+' finished in '+formatTime(elapsed)+'. '+(win?'You captured all three rival bases and held them for 10 seconds.':timeout?'The result was decided by remaining territory and forces.':'Your base or all controlled territory was lost.')+'</div><div class="enemylist" style="margin-top:12px"><div class="enemyrow"><div class="avatar">♜</div><div><strong>Your territory</strong><small>'+owned+' of '+total+' towers held</small></div><div class="score">'+(win?'+28':timeout?'±0':'−18')+' rating</div></div><div class="enemyrow"><div class="avatar">★</div><div><strong>Current rating</strong><small>Local profile · saved on this device</small></div><div class="score">'+profile.rating+'</div></div></div>';
+ $('resultModal').classList.add('open');$('pauseBtn').textContent='Ⅱ Paused';
+}
+function formatTime(s){s=Math.floor(s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function updateHUD(){
+ $('elapsed').textContent=formatTime(elapsed);$('myRating').textContent=profile.rating;$('myWins').textContent=profile.wins;
+ const sorted=[...bots].sort((a,b)=>b.rating-a.rating);const rank=sorted.filter(b=>b.rating>profile.rating).length+1;
+ $('myRank').textContent='#'+rank;$('myPosition').textContent='#'+rank;
+ $('selectionInfo').textContent=selected===null?'Select one of your towers':('Tower '+(selected+1)+' · '+towers[selected].troops+' troops');
+ renderBoard();
+}
+function draw(){
+ const w=world.w,h=world.h;ctx.clearRect(0,0,w,h);
+ const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#12283b');g.addColorStop(1,'#0a1728');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+ // subtle grid
+ ctx.strokeStyle='#9bb7d00a';ctx.lineWidth=1;for(let x=0;x<w;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}for(let y=0;y<h;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+ // links
+ connections.forEach(e=>{const a=xy(towers[e[0]]),b=xy(towers[e[1]]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='#68809b44';ctx.lineWidth=7;ctx.stroke();ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='#8faac526';ctx.lineWidth=1.5;ctx.stroke()});
+ // selection targets
+ if(selected!==null){adj(selected).forEach(id=>{const p=xy(towers[id]);ctx.beginPath();ctx.arc(p.x,p.y,26,0,Math.PI*2);ctx.fillStyle='#f5c76812';ctx.fill();ctx.strokeStyle='#f5c768aa';ctx.lineWidth=2;ctx.stroke()})}
+ // armies
+ armies.forEach(a=>{const p1=xy(towers[a.from]),p2=xy(towers[a.to]),q=Math.min(1,a.t/a.duration),x=p1.x+(p2.x-p1.x)*q,y=p1.y+(p2.y-p1.y)*q;ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fillStyle=COLORS[a.team];ctx.fill();ctx.strokeStyle='#ffffff';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 10px system-ui';ctx.textAlign='center';ctx.fillText(a.n,x,y-12)});
+ // nodes
+ towers.forEach(t=>{const p=xy(t),color=t.owner===null?'#62758d':COLORS[t.owner],r=t.type==='base'?23:t.type==='fortress'?20:t.type==='mine'?17:16;
+ ctx.beginPath();ctx.arc(p.x,p.y,r+5,0,Math.PI*2);ctx.fillStyle=color+'22';ctx.fill();
+ ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fillStyle='#101d30';ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=t.id===selected?4:3;ctx.stroke();
+ ctx.beginPath();ctx.arc(p.x,p.y,r-4,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,t.troops/t.max));ctx.strokeStyle=color;ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle=t.owner===null?'#b9c8dc':'#f3f7ff';ctx.font='bold '+(r>20?'12':'11')+'px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(t.type==='base'?'♜':t.type==='fortress'?'⬟':t.type==='mine'?'◆':'●',p.x,p.y);
+ ctx.fillStyle='#f2f6ff';ctx.font='bold 11px system-ui';ctx.fillText(String(t.troops),p.x,p.y+r+14);
+ if(t.type==='base'){ctx.font='bold 9px system-ui';ctx.fillStyle=color;ctx.fillText(t.owner===0?'YOU':t.owner===null?'NEUTRAL':rivals.find(r=>r.team===t.owner)?.name.split(' ')[0].toUpperCase()||'AI',p.x,p.y-r-11)}
+ });
+ particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/.6);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(xy({x:p.x,y:p.y}).x,xy({x:p.x,y:p.y}).y,3,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1});
+ if(paused&&!gameOver){ctx.fillStyle='#06101b99';ctx.fillRect(0,0,w,h);ctx.fillStyle='#f2f6ff';ctx.font='800 28px system-ui';ctx.textAlign='center';ctx.fillText('PAUSED',w/2,h/2)}
+}
+function canvasPoint(e){const r=canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+function handleCanvas(e){if(paused||gameOver)return;const p=canvasPoint(e);let found=null,best=Infinity;towers.forEach(t=>{const q=xy(t),d=Math.hypot(q.x-p.x,q.y-p.y);if(d<30&&d<best){best=d;found=t.id}});if(found===null)return;
+ if(selected===null){if(towers[found].owner!==0){showToast('Select a blue tower you own first.');return}selected=found;updateHUD();draw();return}
+ if(found===selected){selected=null;updateHUD();draw();return}
+ if(!adj(selected).includes(found)){if(towers[found].owner===0){selected=found;updateHUD();draw()}else showToast('That tower is not connected.');return}
+ if(send(selected,found,sendPercent,0)){showToast('Troops dispatched!');selected=null;updateHUD();draw()}else showToast('Not enough troops to send.');
+}
+function renderRivals(){
+ $('rivalList').innerHTML=rivals.map(r=>'<div class="enemyrow"><div class="avatar" style="color:'+r.color+';border:1px solid '+r.color+'55">'+(r.personality==='aggressive'?'⚔':r.personality==='defensive'?'🛡':'✦')+'</div><div><strong>'+escapeHtml(r.name)+'</strong><small>'+escapeHtml(r.region)+' · '+escapeHtml(r.style)+' · AI</small></div><div class="score">'+r.rating+'</div></div>').join('');
+}
+function renderBoard(){
+ const list=bots.map(b=>({...b,score:boardMode==='weekly'?b.weekly:b.rating})).sort((a,b)=>b.score-a.score).slice(0,8);
+ const your={name:'You',score:boardMode==='weekly'?profile.weekly:profile.rating,region:'Local player',you:true};
+ if(boardMode==='global'&&your.score>list[list.length-1].score)list.push(your);else if(boardMode==='weekly'&&your.score>list[list.length-1].score)list.push(your);
+ list.sort((a,b)=>b.score-a.score);const display=list.slice(0,8);
+ $('leaderboard').innerHTML=display.map((b,i)=>'<div class="rankrow '+(b.you?'you':'')+'"><div class="rank">'+(i+1)+'</div><div class="rankname">'+escapeHtml(b.name)+(b.you?' <b style="color:var(--gold)">YOU</b>':'')+'<small>'+(b.you?'Local player · human':escapeHtml(b.region)+' · AI rival')+'</small></div><div class="points">'+b.score+'</div></div>').join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function openBots(){const list=bots.slice().sort((a,b)=>b.rating-a.rating);$('botGrid').innerHTML=list.map((b,i)=>'<div class="botcard"><strong><span style="color:var(--gold)">#'+(i+1)+'</span> '+escapeHtml(b.name)+'</strong><small>'+escapeHtml(b.region)+' · '+escapeHtml(b.style)+' · AI</small><div class="progress"><i style="width:'+Math.max(8,(b.rating-700)/10)+'%"></i></div><small>Rating '+b.rating+' · '+b.wins+'W / '+b.losses+'L</small></div>').join('');$('botsModal').classList.add('open')}
+function closeModal(id){$(id).classList.remove('open')}
+canvas.addEventListener('pointerdown',handleCanvas);
+document.querySelectorAll('[data-send]').forEach(b=>b.addEventListener('click',()=>{sendPercent=Number(b.dataset.send)/100;document.querySelectorAll('[data-send]').forEach(x=>x.classList.toggle('active',x===b))}));
+$('newBattle').addEventListener('click',()=>{matchCount++;newGame();showToast('New battlefield generated.')});
+$('pauseBtn').addEventListener('click',()=>{if(gameOver)return;paused=!paused;$('pauseBtn').textContent=paused?'▶ Resume':'Ⅱ Pause';draw()});
+$('allBotsBtn').addEventListener('click',openBots);$('closeBots').addEventListener('click',()=>closeModal('botsModal'));$('closeResult').addEventListener('click',()=>closeModal('resultModal'));$('resultRematch').addEventListener('click',()=>{closeModal('resultModal');matchCount++;newGame()});
+document.querySelectorAll('[data-board]').forEach(b=>b.addEventListener('click',()=>{boardMode=b.dataset.board;document.querySelectorAll('[data-board]').forEach(x=>x.classList.toggle('active',x===b));renderBoard()}));
+window.addEventListener('resize',resize);
+function frame(now){if(!lastTime)lastTime=now;let dt=Math.min(.05,(now-lastTime)/1000);lastTime=now;acc+=dt;const step=1/30;while(acc>=step){update(step);acc-=step}requestAnimationFrame(frame)}
+newGame();resize();renderBoard();requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
