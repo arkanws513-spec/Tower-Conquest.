@@ -89,7 +89,7 @@ function seededShuffle(arr,seed){const a=arr.slice(),r=rng(seed);for(let i=a.len
 function newGame(){
  paused=false;gameOver=false;elapsed=0;holdTime=0;selected=null;armies=[];particles=[];mapSeed=(Math.random()*4294967295)>>>0;
  const map=maps[Math.floor(rng(mapSeed)()*maps.length)];$('mapLabel').textContent=map.name;$('battleTitle').textContent='Frontier Clash · '+map.name;$('matchNo').textContent=String(matchCount).padStart(3,'0');$('pauseBtn').textContent='Ⅱ Pause';
- const botOrder=seededShuffle(bots,mapSeed).slice(0,3);rivals=botOrder.map((b,i)=>({...b,team:i+1,personality:PERSONALITIES[i+1],color:COLORS[i+1]}));
+ const botOrder=seededShuffle(bots,mapSeed).slice(0,3);rivals=botOrder.map((b,i)=>({...b,team:i+1,personality:PERSONALITIES[i+1],style:['','Aggressor','Guardian','Tactician'][i+1],color:COLORS[i+1]}));
  towers=map.positions.map((p,i)=>({id:i,x:p[0],y:p[1],type:[0,9].includes(i)?'base':([6,8].includes(i)?'fortress':([4,12].includes(i)?'mine':'normal')),owner:([0,9].includes(i)?(i===0?0:1):null),troops:([0,9].includes(i)?12:([6,8].includes(i)?7:([4,12].includes(i)?5:4))),max:([0,9].includes(i)?60:([6,8].includes(i)?50:([4,12].includes(i)?30:40))),progress:0}));
  // Ensure four bases in four separated quadrants.
  towers[0].owner=0;towers[9].owner=1;towers[3].owner=2;towers[6].owner=3;
