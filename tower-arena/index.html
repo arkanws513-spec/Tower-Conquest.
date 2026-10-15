@@ -76,6 +76,8 @@ let profile={rating:1000,wins:0,losses:0,battles:0,weekly:0};
 try{const saved=JSON.parse(localStorage.getItem(saveKey)||'null');if(saved&&typeof saved==='object')profile={...profile,...saved}}catch(e){}
 let boardMode='global',sendPercent=.5,paused=false,gameOver=false,matchCount=1,selected=null,elapsed=0,lastTime=0,acc=0,holdTime=0,toastTimer=null,leaderboardTick=0;
 let towers=[],armies=[],rivals=[],mapSeed=Date.now()>>>0,world={w:1000,h:650},particles=[];
+let currentMapIndex=0;
+try{currentMapIndex=Math.max(0,Number(localStorage.getItem('tower-conquest-arena-map-index')||0))%3}catch(e){}
 const maps=[
 {name:'Balanced frontier',positions:[[100,320],[320,120],[320,320],[320,520],[500,210],[500,430],[690,120],[690,320],[690,520],[900,320],[500,320],[180,180],[180,460],[820,180],[820,460],[500,80]]},
 {name:'River crossings',positions:[[100,325],[300,110],[300,300],[300,540],[500,180],[500,470],[700,100],[700,300],[700,540],[900,325],[500,325],[180,210],[180,440],[820,210],[820,440],[500,70]]},
@@ -88,7 +90,7 @@ function save(){try{localStorage.setItem(saveKey,JSON.stringify(profile))}catch(
 function seededShuffle(arr,seed){const a=arr.slice(),r=rng(seed);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function newGame(){
  paused=false;gameOver=false;elapsed=0;holdTime=0;selected=null;armies=[];particles=[];mapSeed=(Math.random()*4294967295)>>>0;
- const map=maps[Math.floor(rng(mapSeed)()*maps.length)];$('mapLabel').textContent=map.name;$('battleTitle').textContent='اشتباك الحدود · '+map.name;$('matchNo').textContent=String(matchCount).padStart(3,'0');$('pauseBtn').textContent='Ⅱ Pause';
+ const map=maps[currentMapIndex%maps.length];$('mapLabel').textContent=map.name;$('battleTitle').textContent='اشتباك الحدود · '+map.name;$('matchNo').textContent=String(matchCount).padStart(3,'0');$('pauseBtn').textContent='Ⅱ Pause';
  const botOrder=seededShuffle(bots,mapSeed).slice(0,3);rivals=botOrder.map((b,i)=>({...b,team:i+1,personality:PERSONALITIES[i+1],style:['','Aggressor','Guardian','Tactician'][i+1],color:COLORS[i+1]}));
  towers=map.positions.map((p,i)=>({id:i,x:p[0],y:p[1],type:[0,9].includes(i)?'base':([6,8].includes(i)?'fortress':([4,12].includes(i)?'mine':'normal')),owner:([0,9].includes(i)?(i===0?0:1):null),troops:([0,9].includes(i)?12:([6,8].includes(i)?7:([4,12].includes(i)?5:4))),max:([0,9].includes(i)?60:([6,8].includes(i)?50:([4,12].includes(i)?30:40))),progress:0}));
  // Ensure four bases in four separated quadrants.
@@ -160,7 +162,7 @@ function update(dt){
 }
 function finish(win,timeout){
  if(gameOver)return;gameOver=true;paused=true;
- const change=win?28:timeout?0:-18;profile.rating=Math.max(500,profile.rating+change);profile.battles++;if(win){profile.wins++;profile.weekly+=28}else if(!timeout)profile.losses++;save();updateHUD();renderBoard();
+ const change=win?28:timeout?0:-18;profile.rating=Math.max(500,profile.rating+change);profile.battles++;if(win){profile.wins++;profile.weekly+=28;currentMapIndex=(currentMapIndex+1)%maps.length;try{localStorage.setItem('tower-conquest-arena-map-index',String(currentMapIndex))}catch(e){}}else if(!timeout)profile.losses++;save();updateHUD();renderBoard();
  $('resultTitle').textContent=win?'Victory — all rival bases captured!':timeout?'Time limit reached':'Defeat — regroup and try again';
  const owned=towers.filter(t=>t.owner===0).length;const total=towers.length;
  $('resultBody').innerHTML='<div class="notice">Match '+String(matchCount).padStart(3,'0')+' finished in '+formatTime(elapsed)+'. '+(win?'You captured all three rival bases and held them for 10 seconds.':timeout?'The result was decided by remaining territory and forces.':'Your base or all controlled territory was lost.')+'</div><div class="enemylist" style="margin-top:12px"><div class="enemyrow"><div class="avatar">♜</div><div><strong>Your territory</strong><small>'+owned+' of '+total+' towers held</small></div><div class="score">'+(win?'+28':timeout?'±0':'−18')+' rating</div></div><div class="enemyrow"><div class="avatar">★</div><div><strong>Current rating</strong><small>Local profile · saved on this device</small></div><div class="score">'+profile.rating+'</div></div></div>';
