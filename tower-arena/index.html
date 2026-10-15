@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#0b1323">
-<title>Tower Conquest — Arena</title>
+<title>غزو الأبراج — ساحة المعركة</title>
 <style>
 :root{color-scheme:dark;--bg:#09111f;--panel:#111e31;--panel2:#17263d;--line:#263a56;--text:#edf4ff;--muted:#92a5c2;--gold:#f5c768;--blue:#52a7ff;--red:#ff6677;--green:#50d7a1;--purple:#b39aff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#20365a 0,#09111f 55%);color:var(--text);font:14px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}button{font:inherit;color:inherit;border:1px solid #344967;background:#1b2d47;border-radius:10px;padding:9px 12px;font-weight:750;cursor:pointer;transition:.15s}button:hover{filter:brightness(1.15);transform:translateY(-1px)}button:disabled{opacity:.4;cursor:not-allowed;transform:none}.app{max-width:1440px;margin:auto;padding:16px;display:grid;gap:14px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#f8d777,#dd873b);display:grid;place-items:center;color:#172238;font-size:23px;box-shadow:0 8px 24px #e6a74922}.brand h1{font-size:20px;margin:0;letter-spacing:.02em}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.topstats{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);background:#101d30;border-radius:999px;padding:7px 11px;color:#c6d5ea;font-size:12px}.pill b{color:var(--gold)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}.panel{background:linear-gradient(180deg,#142238f5,#0f1b2cf5);border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:0 14px 36px #0002}.panelhead{padding:14px 16px;border-bottom:1px solid #263852;display:flex;align-items:center;justify-content:space-between;gap:10px}.panelhead h2,.panelhead h3{font-size:14px;margin:0;letter-spacing:.03em}.muted{color:var(--muted)}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:#94aac8;font-weight:800}.battlebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.battlebar button.active{border-color:var(--gold);background:#463a27}.arena{position:relative;background:#0b1726}.canvaswrap{height:min(62vh,620px);min-height:360px;position:relative;touch-action:manipulation}.canvaswrap canvas{width:100%;height:100%;display:block;touch-action:manipulation}.canvasbadge{position:absolute;top:12px;left:12px;background:#09111fce;border:1px solid #34465f;border-radius:10px;padding:8px 10px;font-size:11px;pointer-events:none}.canvasbadge b{color:var(--gold)}.hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#08111ee8;border:1px solid #2b3d57;border-radius:999px;padding:8px 13px;font-size:11px;color:#d8e5f8;white-space:nowrap;max-width:95%;pointer-events:none}.battlefoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 15px;border-top:1px solid #263852}.sendgroup{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.sendgroup button{padding:7px 10px;font-size:12px}.sendgroup button.active{border-color:var(--gold);color:var(--gold)}.small{font-size:11px;color:var(--muted)}.side{display:grid;gap:14px}.tabs{display:flex;gap:5px;padding:10px 12px 0}.tab{flex:1;padding:8px 5px;font-size:12px;background:transparent;border-color:transparent;color:var(--muted)}.tab.active{background:#223653;border-color:#3b5373;color:#fff}.tabbody{padding:12px}.enemylist{display:grid;gap:9px}.enemyrow{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:9px;align-items:center;background:#ffffff05;border:1px solid #263852;border-radius:12px;padding:9px}.avatar{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:17px;font-weight:900;background:#253a58}.enemyrow strong{display:block;font-size:12px}.enemyrow small{display:block;color:var(--muted);font-size:10px}.tag{font-size:9px;letter-spacing:.04em;border-radius:999px;padding:3px 6px;background:#27364b;color:#bcd1ed;white-space:nowrap}.tag.ai{color:#cbbcff;background:#352b52}.enemyrow .score{font-weight:850;font-size:12px;color:var(--gold)}.sectionfoot{border-top:1px solid #263852;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}.leaderboard{display:grid;gap:5px}.rankrow{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:8px;padding:7px 8px;border-radius:9px;background:#ffffff04}.rankrow:nth-child(-n+3){background:#f5c7680b}.rank{font-size:11px;color:#93a7c3;font-weight:850}.rankname{font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rankname small{display:block;color:var(--muted);font-size:9px}.points{font-size:11px;font-weight:800;color:#f4d38a}.rankrow.you{outline:1px solid #f5c76880;background:#f5c76812}.notice{font-size:10px;line-height:1.5;color:#92a5c2;background:#0a1422;border:1px solid #263852;border-radius:10px;padding:9px 10px}.progress{height:5px;background:#25334a;border-radius:99px;overflow:hidden;margin-top:5px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#4f9eff,#b39aff)}.modalback{position:fixed;inset:0;background:#030813d9;display:none;place-items:center;padding:18px;z-index:10}.modalback.open{display:grid}.modal{width:min(760px,100%);max-height:88vh;overflow:auto;background:#111f33;border:1px solid #3a4f6d;border-radius:18px;box-shadow:0 25px 100px #0009}.modalhead{display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border-bottom:1px solid var(--line)}.modalhead h2{margin:0;font-size:16px}.modalbody{padding:16px}.botgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.botcard{padding:10px;border:1px solid #2b3d57;border-radius:11px;background:#ffffff04;min-width:0}.botcard strong{font-size:11px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.botcard small{font-size:10px;color:var(--muted)}.footer{color:#8296b3;font-size:10px;text-align:center;padding:2px 0 8px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#f4d38a;color:#182337;padding:10px 16px;border-radius:999px;font-weight:850;box-shadow:0 10px 35px #0007;display:none;z-index:20}.toast.show{display:block}.hidden{display:none!important}
@@ -15,25 +15,25 @@
 <body>
 <div class="app">
   <header class="top">
-    <div class="brand"><div class="logo">♜</div><div><h1>TOWER CONQUEST <span style="color:var(--gold)">ARENA</span></h1><p>Real-time tower strategy · Solo vs AI rivals</p></div></div>
-    <div class="topstats"><div class="pill">RANK <b id="myRank">#201</b></div><div class="pill">RATING <b id="myRating">1000</b></div><div class="pill">WINS <b id="myWins">0</b></div></div>
+    <div class="brand"><div class="logo">♜</div><div><h1>TOWER CONQUEST <span style="color:var(--gold)">ARENA</span></h1><p>لعبة استراتيجية لحظية · العب منفردًا ضد 3 خصوم ذكاء اصطناعي</p></div></div>
+    <div class="topstats"><div class="pill">الترتيب <b id="myRank">#201</b></div><div class="pill">التقييم <b id="myRating">1000</b></div><div class="pill">الانتصارات <b id="myWins">0</b></div></div>
   </header>
   <main class="layout">
     <section class="panel arena">
-      <div class="panelhead"><div><div class="eyebrow">Live battle</div><h2 id="battleTitle">Frontier Clash · Map 01</h2></div><div class="battlebar"><button id="newBattle">↻ New battle</button><button id="pauseBtn">Ⅱ Pause</button></div></div>
-      <div class="canvaswrap"><canvas id="battleCanvas" aria-label="Interactive tower conquest map"></canvas><div class="canvasbadge">MATCH <b id="matchNo">001</b> · <span id="elapsed">00:00</span><br><span id="mapLabel">Balanced frontier</span></div><div class="hint" id="hint">Tap your blue tower, then tap a connected tower to send troops.</div></div>
-      <div class="battlefoot"><div class="sendgroup"><span class="small">SEND:</span><button data-send="25">25%</button><button data-send="50" class="active">50%</button><button data-send="75">75%</button><button data-send="100">ALL</button></div><div class="small" id="selectionInfo">Select one of your towers</div></div>
+      <div class="panelhead"><div><div class="eyebrow">المعركة الحالية</div><h2 id="battleTitle">اشتباك الحدود · الخريطة 1</h2></div><div class="battlebar"><button id="newBattle">↻ معركة جديدة</button><button id="pauseBtn">Ⅱ إيقاف مؤقت</button></div></div>
+      <div class="canvaswrap"><canvas id="battleCanvas" aria-label="خريطة غزو الأبراج التفاعلية"></canvas><div class="canvasbadge">MATCH <b id="matchNo">001</b> · <span id="elapsed">00:00</span><br><span id="mapLabel">Balanced frontier</span></div><div class="hint" id="hint">اضغط برجك الأزرق، ثم اضغط برجًا متصلًا لإرسال الجنود.</div></div>
+      <div class="battlefoot"><div class="sendgroup"><span class="small">إرسال:</span><button data-send="25">25٪</button><button data-send="50" class="active">50٪</button><button data-send="75">75٪</button><button data-send="100">الكل</button></div><div class="small" id="selectionInfo">اختر أحد أبراجك</div></div>
     </section>
     <aside class="side">
-      <section class="panel"><div class="panelhead"><div><div class="eyebrow">This match</div><h2>Rival commanders</h2></div><span class="tag ai">3 AI RIVALS</span></div><div class="tabbody"><div class="enemylist" id="rivalList"></div></div><div class="sectionfoot"><span class="small">All opponents are simulated AI.</span><button id="allBotsBtn">Browse 200</button></div></section>
-      <section class="panel"><div class="panelhead"><div><div class="eyebrow">Season 01</div><h2>Leaderboard</h2></div><span class="tag">SIMULATED</span></div><div class="tabs"><button class="tab active" data-board="global">Global</button><button class="tab" data-board="weekly">Weekly</button></div><div class="tabbody"><div class="leaderboard" id="leaderboard"></div></div><div class="sectionfoot"><span class="small">Your position</span><strong id="myPosition">#201</strong></div></section>
-      <section class="panel"><div class="panelhead"><div><div class="eyebrow">How to play</div><h2>Command guide</h2></div></div><div class="tabbody"><div class="notice"><b>1.</b> Select a blue tower you own.<br><b>2.</b> Tap a linked tower to send troops.<br><b>3.</b> Capture neutral towers, mines and enemy bases.<br><b>4.</b> Capture all three rival bases and hold them for 10 seconds to win.<br><br><b>Fair play:</b> AI uses the same production rules as you. Bot rankings are simulated for offline play, not real human accounts.</div></div></section>
+      <section class="panel"><div class="panelhead"><div><div class="eyebrow">المعركة الحالية</div><h2>قادة الخصوم</h2></div><span class="tag ai">3 خصوم آليين</span></div><div class="tabbody"><div class="enemylist" id="rivalList"></div></div><div class="sectionfoot"><span class="small">كل الخصوم شخصيات آلية داخل اللعبة.</span><button id="allBotsBtn">عرض 200 منافس</button></div></section>
+      <section class="panel"><div class="panelhead"><div><div class="eyebrow">الموسم الأول</div><h2>لوحة الصدارة</h2></div><span class="tag">SIMULATED</span></div><div class="tabs"><button class="tab active" data-board="global">عام</button><button class="tab" data-board="weekly">أسبوعي</button></div><div class="tabbody"><div class="leaderboard" id="leaderboard"></div></div><div class="sectionfoot"><span class="small">مركزك</span><strong id="myPosition">#201</strong></div></section>
+      <section class="panel"><div class="panelhead"><div><div class="eyebrow">ابدأ من هنا</div><h2>طريقة اللعب</h2></div></div><div class="tabbody"><div class="notice"><b>الهدف:</b> سيطر على أبراج الخصوم الثلاثة واحتفظ بها 10 ثوانٍ للفوز.<hr><b>1.</b> اضغط برجك الأزرق لتحديده.<br><b>2.</b> اضغط برجًا متصلًا به لإرسال الجنود.<br><b>3.</b> استولِ على الأبراج الرمادية أولًا لتقوية جيشك.<br><b>4.</b> اختر نسبة الجنود التي تريد إرسالها: 25٪ أو 50٪ أو 75٪ أو الكل.<br><br><b>مهم:</b> اللعبة تبدأ تلقائيًا. إذا لم تستطع الضغط على برج، فتأكد أنه متصل ببرجك. الخصوم والنتائج تجريبية ومحلية وليست لاعبين حقيقيين.</div></div></section>
     </aside>
   </main>
-  <div class="footer">Prototype build · Local AI simulation · No real-money purchases · Progress saved on this device</div>
+  <div class="footer">نسخة تجريبية · خصوم ذكاء اصطناعي · لا توجد مشتريات · يُحفظ تقدمك على هذا الجهاز</div>
 </div>
-<div class="modalback" id="botsModal"><div class="modal"><div class="modalhead"><div><div class="eyebrow">Rival directory</div><h2>200 AI commanders</h2></div><button id="closeBots">Close ✕</button></div><div class="modalbody"><p class="small">A diverse simulated roster with names from Arabic, European, African, South Asian and East Asian naming traditions. These are game bots, not real users.</p><div class="botgrid" id="botGrid"></div></div></div></div>
-<div class="modalback" id="resultModal"><div class="modal"><div class="modalhead"><div><div class="eyebrow">Battle report</div><h2 id="resultTitle">Victory!</h2></div><button id="closeResult">Close ✕</button></div><div class="modalbody" id="resultBody"></div><div class="sectionfoot"><span class="small">Rating changes are local prototype data.</span><button id="resultRematch">Play again</button></div></div></div>
+<div class="modalback" id="botsModal"><div class="modal"><div class="modalhead"><div><div class="eyebrow">Rival directory</div><h2>200 قائد آلي</h2></div><button id="closeBots">إغلاق ✕</button></div><div class="modalbody"><p class="small">قائمة بشخصيات آلية متنوعة. جميع الأسماء والنتائج داخل اللعبة تجريبية وليست حسابات لأشخاص حقيقيين.</p><div class="botgrid" id="botGrid"></div></div></div></div>
+<div class="modalback" id="resultModal"><div class="modal"><div class="modalhead"><div><div class="eyebrow">Battle report</div><h2 id="resultTitle">انتصار!</h2></div><button id="closeResult">إغلاق ✕</button></div><div class="modalbody" id="resultBody"></div><div class="sectionfoot"><span class="small">تغييرات التقييم تجريبية ومحفوظة محليًا فقط.</span><button id="resultRematch">Play again</button></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
 (function(){
@@ -88,7 +88,7 @@ function save(){try{localStorage.setItem(saveKey,JSON.stringify(profile))}catch(
 function seededShuffle(arr,seed){const a=arr.slice(),r=rng(seed);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function newGame(){
  paused=false;gameOver=false;elapsed=0;holdTime=0;selected=null;armies=[];particles=[];mapSeed=(Math.random()*4294967295)>>>0;
- const map=maps[Math.floor(rng(mapSeed)()*maps.length)];$('mapLabel').textContent=map.name;$('battleTitle').textContent='Frontier Clash · '+map.name;$('matchNo').textContent=String(matchCount).padStart(3,'0');$('pauseBtn').textContent='Ⅱ Pause';
+ const map=maps[Math.floor(rng(mapSeed)()*maps.length)];$('mapLabel').textContent=map.name;$('battleTitle').textContent='اشتباك الحدود · '+map.name;$('matchNo').textContent=String(matchCount).padStart(3,'0');$('pauseBtn').textContent='Ⅱ Pause';
  const botOrder=seededShuffle(bots,mapSeed).slice(0,3);rivals=botOrder.map((b,i)=>({...b,team:i+1,personality:PERSONALITIES[i+1],style:['','Aggressor','Guardian','Tactician'][i+1],color:COLORS[i+1]}));
  towers=map.positions.map((p,i)=>({id:i,x:p[0],y:p[1],type:[0,9].includes(i)?'base':([6,8].includes(i)?'fortress':([4,12].includes(i)?'mine':'normal')),owner:([0,9].includes(i)?(i===0?0:1):null),troops:([0,9].includes(i)?12:([6,8].includes(i)?7:([4,12].includes(i)?5:4))),max:([0,9].includes(i)?60:([6,8].includes(i)?50:([4,12].includes(i)?30:40))),progress:0}));
  // Ensure four bases in four separated quadrants.
@@ -99,7 +99,7 @@ function newGame(){
  towers[0].type=towers[9].type=towers[3].type=towers[6].type='base';
  // Keep mine/fortress sites neutral and ensure every base has connections.
  rivals.forEach((r,i)=>{r.baseId=[9,3,6][i]});
- $('hint').textContent='Tap your blue tower, then tap a connected tower to send troops.';
+ $('hint').textContent='اضغط برجك الأزرق، ثم اضغط برجًا متصلًا لإرسال الجنود.';
  renderRivals();draw();updateHUD();renderBoard();
 }
 function resize(){
@@ -171,7 +171,7 @@ function updateHUD(){
  $('elapsed').textContent=formatTime(elapsed);$('myRating').textContent=profile.rating;$('myWins').textContent=profile.wins;
  const sorted=[...bots].sort((a,b)=>b.rating-a.rating);const rank=sorted.filter(b=>b.rating>profile.rating).length+1;
  $('myRank').textContent='#'+rank;$('myPosition').textContent='#'+rank;
- $('selectionInfo').textContent=selected===null?'Select one of your towers':('Tower '+(selected+1)+' · '+towers[selected].troops+' troops');
+ $('selectionInfo').textContent=selected===null?'اختر أحد أبراجك':('Tower '+(selected+1)+' · '+towers[selected].troops+' troops');
 }
 function draw(){
  const w=world.w,h=world.h;ctx.clearRect(0,0,w,h);
@@ -194,14 +194,14 @@ function draw(){
  if(t.type==='base'){ctx.font='bold 9px system-ui';ctx.fillStyle=color;ctx.fillText(t.owner===0?'YOU':t.owner===null?'NEUTRAL':rivals.find(r=>r.team===t.owner)?.name.split(' ')[0].toUpperCase()||'AI',p.x,p.y-r-11)}
  });
  particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/.6);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(xy({x:p.x,y:p.y}).x,xy({x:p.x,y:p.y}).y,3,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1});
- if(paused&&!gameOver){ctx.fillStyle='#06101b99';ctx.fillRect(0,0,w,h);ctx.fillStyle='#f2f6ff';ctx.font='800 28px system-ui';ctx.textAlign='center';ctx.fillText('PAUSED',w/2,h/2)}
+ if(paused&&!gameOver){ctx.fillStyle='#06101b99';ctx.fillRect(0,0,w,h);ctx.fillStyle='#f2f6ff';ctx.font='800 28px system-ui';ctx.textAlign='center';ctx.fillText('متوقف مؤقتًا',w/2,h/2)}
 }
 function canvasPoint(e){const r=canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
 function handleCanvas(e){if(paused||gameOver)return;const p=canvasPoint(e);let found=null,best=Infinity;towers.forEach(t=>{const q=xy(t),d=Math.hypot(q.x-p.x,q.y-p.y);if(d<30&&d<best){best=d;found=t.id}});if(found===null)return;
- if(selected===null){if(towers[found].owner!==0){showToast('Select a blue tower you own first.');return}selected=found;updateHUD();draw();return}
+ if(selected===null){if(towers[found].owner!==0){showToast('ابدأ بالضغط على برجك الأزرق.');return}selected=found;updateHUD();draw();return}
  if(found===selected){selected=null;updateHUD();draw();return}
- if(!adj(selected).includes(found)){if(towers[found].owner===0){selected=found;updateHUD();draw()}else showToast('That tower is not connected.');return}
- if(send(selected,found,sendPercent,0)){showToast('Troops dispatched!');selected=null;updateHUD();draw()}else showToast('Not enough troops to send.');
+ if(!adj(selected).includes(found)){if(towers[found].owner===0){selected=found;updateHUD();draw()}else showToast('هذا البرج غير متصل ببرجك.');return}
+ if(send(selected,found,sendPercent,0)){showToast('تم إرسال الجنود!');selected=null;updateHUD();draw()}else showToast('عدد الجنود غير كافٍ للإرسال.');
 }
 function renderRivals(){
  $('rivalList').innerHTML=rivals.map(r=>'<div class="enemyrow"><div class="avatar" style="color:'+r.color+';border:1px solid '+r.color+'55">'+(r.personality==='aggressive'?'⚔':r.personality==='defensive'?'🛡':'✦')+'</div><div><strong>'+escapeHtml(r.name)+'</strong><small>'+escapeHtml(r.region)+' · '+escapeHtml(r.style)+' · AI</small></div><div class="score">'+r.rating+'</div></div>').join('');
@@ -219,8 +219,8 @@ function openBots(){const list=bots.slice().sort((a,b)=>b.rating-a.rating);$('bo
 function closeModal(id){$(id).classList.remove('open')}
 canvas.addEventListener('pointerdown',handleCanvas);
 document.querySelectorAll('[data-send]').forEach(b=>b.addEventListener('click',()=>{sendPercent=Number(b.dataset.send)/100;document.querySelectorAll('[data-send]').forEach(x=>x.classList.toggle('active',x===b))}));
-$('newBattle').addEventListener('click',()=>{matchCount++;newGame();showToast('New battlefield generated.')});
-$('pauseBtn').addEventListener('click',()=>{if(gameOver)return;paused=!paused;$('pauseBtn').textContent=paused?'▶ Resume':'Ⅱ Pause';draw()});
+$('newBattle').addEventListener('click',()=>{matchCount++;newGame();showToast('تم تجهيز ساحة معركة جديدة.')});
+$('pauseBtn').addEventListener('click',()=>{if(gameOver)return;paused=!paused;$('pauseBtn').textContent=paused?'▶ متابعة':'Ⅱ إيقاف مؤقت';draw()});
 $('allBotsBtn').addEventListener('click',openBots);$('closeBots').addEventListener('click',()=>closeModal('botsModal'));$('closeResult').addEventListener('click',()=>closeModal('resultModal'));$('resultRematch').addEventListener('click',()=>{closeModal('resultModal');matchCount++;newGame()});
 document.querySelectorAll('[data-board]').forEach(b=>b.addEventListener('click',()=>{boardMode=b.dataset.board;document.querySelectorAll('[data-board]').forEach(x=>x.classList.toggle('active',x===b));renderBoard()}));
 window.addEventListener('resize',resize);
