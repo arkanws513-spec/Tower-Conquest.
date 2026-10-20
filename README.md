@@ -1,39 +1,29 @@
-# Tower Conquest — Village Builder Prototype
+# ممالك الحدود — نموذج لعبة استراتيجية للمتصفح
 
-A browser-based village-building strategy game prototype. This is a new direction for the project, replacing the previous tower-capture concept.
+نسخة أولية جديدة مستوحاة من ألعاب بناء القرى والاستراتيجية مثل Clash of Clans، مع واجهة عربية واتجاه RTL. هذا مشروع تجريبي مستقل، وليس نسخة رسمية أو إعادة إنتاج لأصول Clash of Clans.
 
-## Run
+## التشغيل
+افتح `index.html` في متصفح حديث. لا يحتاج إلى تثبيت مكتبات أو بناء المشروع.
 
-Open `index.html` through a local web server (recommended because it uses ES modules from a CDN). For example:
+## الموجود في النموذج
+- واجهة عربية متجاوبة مع الهواتف.
+- قرية مرئية على Canvas مع مبانٍ قابلة للاختيار.
+- بناء وترقية مبانٍ، وموارد ذهب وإكسير وجواهر.
+- إنتاج موارد تدريجي، وتدريب ثلاث فئات من القوات.
+- غارة تجريبية ضد معسكر عدو، مع غنائم وخسائر قوات.
+- مهام ومكافآت ومستوى قائد وقوة قرية.
+- حفظ التقدم في localStorage على الجهاز الحالي.
 
-```bash
-python -m http.server 8000
-```
+## الحدود الحالية
+- ما زالت نسخة أولية أحادية الصفحة وليست لعبة إنتاجية.
+- نتائج المعارك محاكاة مبسطة؛ لا توجد حركة وحدات أو قتال لحظي متكامل.
+- لا يوجد خادم أو حسابات أو حفظ سحابي أو لعب جماعي أو تحالفات أو ترتيب عالمي حقيقي.
+- يلزم اختبار اللعب الفعلي على أجهزة Android ومتصفحات مختلفة، ثم فصل منطق اللعبة وإضافة اختبارات.
+- لا تستخدم اللعبة رسومات أو ملفات أصلية من Clash of Clans.
 
-Then open `http://localhost:8000`.
-
-The prototype loads Three.js from jsDelivr, so an internet connection is required.
-
-## Current prototype features
-
-- Interactive 3D scene with an orbiting camera, zoom, lighting, shadows, terrain, paths, trees, and decorative scenery.
-- A starting village with a Town Hall, resource buildings, Barracks, Army Camp, Cannon, and Builder Hut.
-- Building placement, selection, upgrades, and a basic move-building interaction.
-- Gold and elixir production, resource counters, and local browser saving.
-- Troop training queue with three troop roles.
-- AI opponent selection and a simplified battle-resolution prototype.
-- Responsive browser UI for desktop and mobile.
-
-## Known limitations
-
-This is an early playable foundation, not a finished game and not feature-equivalent to Clash of Clans. Combat is currently simplified and battle outcomes are simulated; enemy base layouts, animated deployed troops, real-time pathfinding, fully functional defensive combat, richer 3D assets, balancing, and comprehensive automated/browser testing still need development.
-
-The game uses original placeholder procedural models rather than copied Clash of Clans assets. Future work should improve the art pipeline and replace the simple geometry with polished original models and animations.
-
-## Next priorities
-
-1. Run browser checks and fix all console/runtime issues.
-2. Improve placement feedback, move-building behavior, save migration, and economy rules.
-3. Build actual battle scenes with troop deployment, pathfinding, targeting, damage, and defenses.
-4. Improve the village art with detailed original models, animation, and visual effects.
-5. Add automated tests and repeatable browser-based gameplay checks.
+## الخطوات التالية المقترحة
+1. اختبار واجهة الهاتف وتصحيح أي أخطاء.
+2. بناء نظام خرائط ومواقع مبانٍ وتوسعة القرية.
+3. تطوير محاكاة قتال مفصلة مع وحدات تتحرك ودفاعات تستهدفها.
+4. إضافة backend موثوق للحسابات والحفظ والتحقق من النتائج.
+5. تطوير التحالفات والهجمات غير المتزامنة بعد استقرار الأساس.
