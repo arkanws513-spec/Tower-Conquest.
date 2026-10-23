@@ -116,9 +116,11 @@ function shoot(from,to){
 }
 function endTurn(){
  const current=game.turn,center=game.pieces['0,0'];
- if(!game.alive[current])game.centerStreak[current]=0;
- else if(center&&center.owner===current)game.centerStreak[current]++;
- else game.centerStreak[current]=0;
+ const centerOwner=center&&center.owner>=0?center.owner:-1;
+ for(let i=0;i<game.n;i++){
+  if(!game.alive[i]||centerOwner!==i)game.centerStreak[i]=0;
+  else if(i===current)game.centerStreak[i]++;
+ }
  if(game.centerStreak[current]>=5){game.win=current;game.message='سيطرة مستمرة على العمق لخمس نهايات أدوار.';addLog('فاز '+NAMES[current]+' بالسيطرة على العمق.');return}
  if(aliveCount()===1){game.win=game.alive.findIndex(Boolean);game.message='آخر قلعة صامدة.';addLog('فاز '+NAMES[game.win]+'.');return}
  do{game.turn=(game.turn+1)%game.n;if(game.turn===0)game.round++}while(!game.alive[game.turn]);
