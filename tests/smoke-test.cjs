@@ -45,7 +45,7 @@ function pieceTotal(board) {
   const board = get('board');
   assert.equal(groups(board.innerHTML).length, 91, 'hex board should have 91 cells');
   assert.equal((get('players').innerHTML.match(/12 قطعة/g) || []).length, 2, 'two players should each start with 12 pieces');
-  assert.equal(get('pieceMetric').textContent, '12', 'current player should start with 12 pieces');
+  assert.equal(Number(get('pieceMetric').textContent), 12, 'current player should start with 12 pieces');
   console.log('PASS: initial two-player game and 91-cell board');
 }
 {
