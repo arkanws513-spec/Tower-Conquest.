@@ -40,6 +40,7 @@ const neighbors=(q,r)=>DIRS.map(([a,b])=>[q+a,r+b]).filter(([a,b])=>inside(a,b))
 const $=id=>document.getElementById(id);
 let game=null, sound=false;
 function clone(x){return JSON.parse(JSON.stringify(x))}
+function snapshotState(g=game){return {n:g.n,turn:g.turn,round:g.round,pieces:clone(g.pieces),alive:clone(g.alive),centerStreak:clone(g.centerStreak),selected:g.selected,win:g.win,message:g.message,log:clone(g.log),undoUsed:g.undoUsed,lastMoveSnapshot:null,turnSnapshot:null}}
 function addLog(text){game.log.unshift(text);game.log=game.log.slice(0,18)}
 function place(q,r,owner,type){game.pieces[key(q,r)]={owner,type}}
 function spawn(n){
@@ -59,7 +60,7 @@ function spawn(n){
 }
 function start(n=Number($('playerCount').value)){
  game={n,turn:0,round:1,pieces:{},alive:Array(n).fill(true),centerStreak:Array(n).fill(0),selected:null,win:null,message:'',log:[],turnSnapshot:null,undoUsed:false};
- spawn(n);game.turnSnapshot=clone(game);
+ spawn(n);game.turnSnapshot=snapshotState(game);
  addLog('بدأت المعركة — '+n+' قادة في الميدان.');addLog('فترة الانتشار: الأسر محظور خلال أول جولتين.');
  $('playerCount').value=String(n);$('hint').textContent='اختر قطعة من قطعك لعرض حركاتها.';render();
 }
@@ -94,6 +95,7 @@ function captureAround(q,r){
   if(attack>=2&&attack>defend)captured.push({q:a,r:b,p:clone(target)});
  }
  captured.forEach(({q:a,r:b,p})=>{
+  const stillThere=game.pieces[key(a,b)];if(!stillThere||stillThere.owner!==p.owner)return;
   delete game.pieces[key(a,b)];
   addLog(NAMES[active]+' طوّق '+TYPES[p.type].name+' لـ'+NAMES[p.owner]+'.');
   if(p.type==='F')eliminate(p.owner);
@@ -114,16 +116,16 @@ function shoot(from,to){
 }
 function endTurn(){
  const current=game.turn,center=game.pieces['0,0'];
- for(let i=0;i<game.n;i++){
-  if(!game.alive[i]){game.centerStreak[i]=0;continue}
-  if(center&&center.owner===i)game.centerStreak[i]++;else game.centerStreak[i]=0;
- }
+ if(!game.alive[current])game.centerStreak[current]=0;
+ else if(center&&center.owner===current)game.centerStreak[current]++;
+ else game.centerStreak[current]=0;
  if(game.centerStreak[current]>=5){game.win=current;game.message='سيطرة مستمرة على العمق لخمس نهايات أدوار.';addLog('فاز '+NAMES[current]+' بالسيطرة على العمق.');return}
  if(aliveCount()===1){game.win=game.alive.findIndex(Boolean);game.message='آخر قلعة صامدة.';addLog('فاز '+NAMES[game.win]+'.');return}
  do{game.turn=(game.turn+1)%game.n;if(game.turn===0)game.round++}while(!game.alive[game.turn]);
- game.selected=null;game.undoUsed=false;game.turnSnapshot=clone(game);
+ game.selected=null;game.undoUsed=false;game.turnSnapshot=snapshotState(game);
 }
 function doMove(from,to){
+ const before=snapshotState(game);
  const pc=game.pieces[from];if(!pc||pc.owner!==game.turn||game.win!==null)return false;
  const [q,r]=to.split(',').map(Number);
  if(!moveRange(pc,...from.split(',').map(Number)).some(([a,b])=>a===q&&b===r))return false;
@@ -132,7 +134,7 @@ function doMove(from,to){
  const captured=captureAround(q,r);
  if(!captured.length&&game.message==='')game.message='';
  addLog(NAMES[game.turn]+' حرّك '+TYPES[pc.type].name+'.');
- endTurn();render();return true;
+ endTurn();game.lastMoveSnapshot=before;render();return true;
 }
 function allMoves(owner){
  const arr=[];
@@ -182,7 +184,7 @@ function render(){
  $('alivePill').textContent=aliveCount()+' صامدان';
  $('players').innerHTML=Array.from({length:game.n},(_,i)=>`<div class="player ${game.turn===i&&game.win===null?'active':''} ${game.alive[i]?'':'out'}"><div class="player-left"><span class="mini-dot" style="background:${COLORS[i]}"></span><span>${NAMES[i]}</span></div><span class="pill">${pieceCount(i)} قطعة · عمق ${game.centerStreak[i]}/5</span></div>`).join('');
  $('log').innerHTML=game.log.map(t=>`<div class="log-item">${escapeHtml(t)}</div>`).join('');
- $('passBtn').disabled=game.win!==null;$('undoBtn').disabled=game.win!==null||game.undoUsed||!game.turnSnapshot;
+ $('passBtn').disabled=game.win!==null;$('undoBtn').disabled=game.win!==null||game.undoUsed||!game.lastMoveSnapshot;
  $('banner').classList.toggle('show',game.win!==null);
  $('banner').innerHTML=game.win!==null?'<strong>انتصار '+NAMES[game.win]+'!</strong> '+escapeHtml(game.message)+' <button id="bannerNew" style="float:left">معركة جديدة</button>':'';
  if(game.win!==null&&$('bannerNew'))$('bannerNew').onclick=()=>start(Number($('playerCount').value));
@@ -195,7 +197,10 @@ $('board').addEventListener('click',e=>{
  if(pc&&pc.owner===game.turn){game.selected=k;$('hint').textContent=TYPES[pc.type].name+' — اختر خانة مضيئة للحركة.';render();return}
  if(game.selected){
   const selectedPc=game.pieces[game.selected];
-  if(pc&&selectedPc&&selectedPc.type==='A'&&shoot(game.selected,k)){game.selected=null;endTurn();render();return}
+  if(pc&&selectedPc&&selectedPc.type==='A'){
+   const before=snapshotState(game);
+   if(shoot(game.selected,k)){game.selected=null;endTurn();game.lastMoveSnapshot=before;render();return}
+  }
   if(!pc&&doMove(game.selected,k))return;
  }
  game.selected=null;render();
@@ -204,7 +209,7 @@ $('board').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.t
 $('newGame').onclick=()=>start(Number($('playerCount').value));
 $('restartBtn').onclick=()=>start(Number($('playerCount').value));
 $('passBtn').onclick=()=>{if(game.win!==null)return;addLog(NAMES[game.turn]+' أنهى دوره دون نقلة.');game.message='تم إنهاء الدور.';endTurn();render()};
-$('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.turnSnapshot)return;const snap=clone(game.turnSnapshot);snap.undoUsed=true;snap.message='تم التراجع إلى بداية الدور.';snap.log=game.log.slice();snap.log.unshift('تم التراجع عن آخر نقلة.');game=snap;render()};
+$('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.turnSnapshot)return;const snap=clone(game.lastMoveSnapshot);const recent=game.log.slice();snap.undoUsed=true;snap.message='تم التراجع عن آخر نقلة؛ عاد الدور إلى صاحبه.';snap.log=recent;snap.log.unshift('تم التراجع عن آخر نقلة.');snap.turnSnapshot=snapshotState(snap);snap.lastMoveSnapshot=null;game=snap;render()};
 $('hintBtn').onclick=hint;
 $('rulesBtn').onclick=()=>{$('rules').open=!$('rules').open;$('rules').scrollIntoView({behavior:'smooth',block:'nearest'})};
 $('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent='الصوت: '+(sound?'مفتوح':'مغلق');if(sound)beep()};
