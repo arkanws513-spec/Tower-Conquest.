@@ -159,7 +159,7 @@ function botTurn(){
  const owner=game.turn;
  for(const [from,pc] of Object.entries(game.pieces)){if(pc.owner!==owner||pc.type!=='A'||game.round<=2)continue;const a=from.split(',').map(Number);for(const [to,target] of Object.entries(game.pieces)){if(target.owner<0||target.owner===owner||target.type==='F')continue;const b=to.split(',').map(Number),mid=rayBetween(a,b);if(mid&&!game.pieces[key(...mid)]){const before=snapshotState(game);if(shoot(from,to)){game.selected=null;endTurn();game.lastMoveSnapshot=null;render();scheduleBotTurn();return;}}}}
  const moves=allMoves(owner);
- if(!moves.length){addLog(NAMES[owner]+' (روبوت) أنهى دوره دون نقلة.');game.message=NAMES[owner]+' لا يملك نقلة متاحة.';endTurn();render();scheduleBotTurn();return;}
+ if(!moves.length){game.lastMoveSnapshot=null;addLog(NAMES[owner]+' (روبوت) أنهى دوره دون نقلة.');game.message=NAMES[owner]+' لا يملك نقلة متاحة.';endTurn();render();scheduleBotTurn();return;}
  moves.sort((a,b)=>botScore(b)-botScore(a));const best=moves[0];game.selected=null;
  if(doMove(best.from,best.to)){game.lastMoveSnapshot=null;addLog('نفّذ الروبوت '+NAMES[owner]+' نقلة تكتيكية.');render();scheduleBotTurn();}
  else{endTurn();render();scheduleBotTurn();}
