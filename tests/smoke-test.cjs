@@ -10,6 +10,9 @@ assert.ok(match, 'index.html must contain the game script');
 assert.doesNotThrow(() => new vm.Script(match[1]), 'game script must parse');
 assert.match(match[1], /const centerOwner=center&&center.owner>=0\?center.owner:-1;/, 'center streak must depend on current center ownership');
 assert.match(match[1], /moves\.sort\(\(a,b\)=>score\(b\)-score\(a\)\)/, 'tactical hint must rank higher-scoring moves first');
+assert.match(match[1], /function botTurn\(\)/, 'AI factions must take automated turns');
+assert.match(match[1], /function scheduleBotTurn\(\)/, 'bot turns must be scheduled automatically');
+assert.match(match[1], /game\.turn!==0\)return;/, 'human input must be limited to the red faction');
 assert.match(match[1], /const shots=\[\]/, 'archer target highlighting must be present');
 
 function createGame() {
@@ -29,7 +32,7 @@ function createGame() {
     return elements.get(id);
   };
   const document = { getElementById: get };
-  vm.runInNewContext(match[1], { document, window: {}, console });
+  vm.runInNewContext(match[1], { document, window: {}, console, setTimeout: () => 1, clearTimeout: () => {} });
   return { get, elements };
 }
 function groups(svg) {
@@ -69,11 +72,11 @@ function pieceTotal(board) {
   const destination = groups(board.innerHTML).find(g => g.html.includes('r="4.5" fill="#58d5a1"') && !/<text/.test(g.html));
   assert.ok(destination, 'selecting a piece should show at least one legal destination');
   clickCell(board, destination.key);
-  assert.equal(get('turnName').textContent, 'الأزرق', 'a legal move should advance the turn');
+  assert.equal(get('turnName').textContent, 'الأزرق — روبوت', 'a legal move should advance to the bot turn');
   assert.equal(pieceTotal(board), initialTotal, 'a normal move should not change the number of pieces');
   assert.equal(get('undoBtn').disabled, false, 'undo should be enabled after a move');
   get('undoBtn').onclick();
-  assert.equal(get('turnName').textContent, 'الأحمر', 'undo should restore the player whose turn it was');
+  assert.equal(get('turnName').textContent, 'الأحمر — أنت', 'undo should restore the human player turn');
   assert.equal(pieceTotal(board), initialTotal, 'undo should restore the board piece count');
   console.log('PASS: legal move, turn advance, and undo');
 }
