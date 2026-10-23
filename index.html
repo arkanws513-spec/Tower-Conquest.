@@ -129,7 +129,7 @@ function doMove(from,to){
  const pc=game.pieces[from];if(!pc||pc.owner!==game.turn||game.win!==null)return false;
  const [q,r]=to.split(',').map(Number);
  if(!moveRange(pc,...from.split(',').map(Number)).some(([a,b])=>a===q&&b===r))return false;
- const before=clone(game);game.pieces[to]=pc;delete game.pieces[from];game.selected=null;
+ game.pieces[to]=pc;delete game.pieces[from];game.selected=null;
  game.message=NAMES[game.turn]+' تحركت: '+TYPES[pc.type].name+'.';
  const captured=captureAround(q,r);
  if(!captured.length&&game.message==='')game.message='';
@@ -208,8 +208,8 @@ $('board').addEventListener('click',e=>{
 $('board').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-k]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 $('newGame').onclick=()=>start(Number($('playerCount').value));
 $('restartBtn').onclick=()=>start(Number($('playerCount').value));
-$('passBtn').onclick=()=>{if(game.win!==null)return;addLog(NAMES[game.turn]+' أنهى دوره دون نقلة.');game.message='تم إنهاء الدور.';endTurn();render()};
-$('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.turnSnapshot)return;const snap=clone(game.lastMoveSnapshot);const recent=game.log.slice();snap.undoUsed=true;snap.message='تم التراجع عن آخر نقلة؛ عاد الدور إلى صاحبه.';snap.log=recent;snap.log.unshift('تم التراجع عن آخر نقلة.');snap.turnSnapshot=snapshotState(snap);snap.lastMoveSnapshot=null;game=snap;render()};
+$('passBtn').onclick=()=>{if(game.win!==null)return;addLog(NAMES[game.turn]+' أنهى دوره دون نقلة.');game.message='تم إنهاء الدور.';game.lastMoveSnapshot=null;endTurn();render()};
+$('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.lastMoveSnapshot)return;const snap=clone(game.lastMoveSnapshot);const recent=game.log.slice();snap.undoUsed=true;snap.message='تم التراجع عن آخر نقلة؛ عاد الدور إلى صاحبه.';snap.log=recent;snap.log.unshift('تم التراجع عن آخر نقلة.');snap.turnSnapshot=snapshotState(snap);snap.lastMoveSnapshot=null;game=snap;render()};
 $('hintBtn').onclick=hint;
 $('rulesBtn').onclick=()=>{$('rules').open=!$('rules').open;$('rules').scrollIntoView({behavior:'smooth',block:'nearest'})};
 $('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent='الصوت: '+(sound?'مفتوح':'مغلق');if(sound)beep()};
