@@ -228,7 +228,7 @@ function render(){
  $('alivePill').textContent=aliveCount()+' صامدان';
  $('players').innerHTML=Array.from({length:game.n},(_,i)=>`<div class="player ${game.turn===i&&game.win===null?'active':''} ${game.alive[i]?'':'out'}"><div class="player-left"><span class="mini-dot" style="background:${COLORS[i]}"></span><span>${NAMES[i]}${i===0?' (أنت)':' (روبوت)'}</span></div><span class="pill">${pieceCount(i)} قطعة · عمق ${game.centerStreak[i]}/5</span></div>`).join('');
  $('log').innerHTML=game.log.map(t=>`<div class="log-item">${escapeHtml(t)}</div>`).join('');
- $('passBtn').disabled=game.win!==null||game.turn!==0;$('undoBtn').disabled=game.win!==null||game.turn!==0||game.undoUsed||!game.lastMoveSnapshot;$('hintBtn').disabled=game.win!==null||game.turn!==0;
+ $('passBtn').disabled=game.win!==null||game.turn!==0;$('undoBtn').disabled=game.win!==null||game.undoUsed||!game.lastMoveSnapshot;$('hintBtn').disabled=game.win!==null||game.turn!==0;
  $('banner').classList.toggle('show',game.win!==null);
  $('banner').innerHTML=game.win!==null?'<strong>انتصار '+NAMES[game.win]+'!</strong> '+escapeHtml(game.message)+' <button id="bannerNew" style="float:left">معركة جديدة</button>':'';
  if(game.win!==null&&$('bannerNew'))$('bannerNew').onclick=()=>start(Number($('playerCount').value));
@@ -253,7 +253,7 @@ $('board').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.t
 $('newGame').onclick=()=>start(Number($('playerCount').value));
 $('restartBtn').onclick=()=>start(Number($('playerCount').value));
 $('passBtn').onclick=()=>{if(game.win!==null||game.turn!==0)return;addLog(NAMES[game.turn]+' أنهى دوره دون نقلة.');game.message='تم إنهاء الدور.';game.lastMoveSnapshot=null;endTurn();render();scheduleBotTurn()};
-$('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.lastMoveSnapshot)return;const snap=clone(game.lastMoveSnapshot);const recent=game.log.slice();snap.undoUsed=true;snap.message='تم التراجع عن آخر نقلة؛ عاد الدور إلى صاحبه.';snap.log=recent;snap.log.unshift('تم التراجع عن آخر نقلة.');snap.turnSnapshot=snapshotState(snap);snap.lastMoveSnapshot=null;game=snap;render()};
+$('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.lastMoveSnapshot)return;if(botTimer!==null){clearTimeout(botTimer);botTimer=null}const snap=clone(game.lastMoveSnapshot);const recent=game.log.slice();snap.undoUsed=true;snap.message='تم التراجع عن آخر نقلة؛ عاد الدور إلى صاحبه.';snap.log=recent;snap.log.unshift('تم التراجع عن آخر نقلة.');snap.turnSnapshot=snapshotState(snap);snap.lastMoveSnapshot=null;game=snap;render()};
 $('hintBtn').onclick=hint;
 $('rulesBtn').onclick=()=>{$('rules').open=!$('rules').open;$('rules').scrollIntoView({behavior:'smooth',block:'nearest'})};
 $('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent='الصوت: '+(sound?'مفتوح':'مغلق');if(sound)beep()};
