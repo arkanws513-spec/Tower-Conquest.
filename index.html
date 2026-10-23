@@ -15,7 +15,7 @@
 <header class="top"><div class="brand"><div class="mark">⬡</div><div><h1>جبهات <span style="color:var(--gold)">JABHAT</span></h1><p>حرب العقول — نموذج لعب تكتيكي مستقل</p></div></div><div class="top-actions"><button id="soundBtn" title="الصوت">الصوت: مغلق</button><button id="rulesBtn">دليل القواعد</button></div></header>
 <div id="banner" class="banner"></div>
 <div class="layout">
-<section class="panel"><div class="panel-head"><div><div class="eyebrow">TACTICAL MAP</div><h2>ميدان العمليات</h2></div><div class="setup"><label for="playerCount">القادة</label><select id="playerCount"><option value="2">لاعبان</option><option value="3">3 لاعبين</option><option value="4">4 لاعبين</option><option value="5">5 لاعبين</option></select><button class="primary" id="newGame">معركة جديدة</button></div></div><div class="board-wrap"><svg id="board" class="board" viewBox="-255 -245 510 490" role="img" aria-label="لوحة جبهات السداسية"></svg></div><div class="legend"><span><i style="background:#e75c64"></i>الأحمر</span><span><i style="background:#53a9ff"></i>الأزرق</span><span><i style="background:#65d49a"></i>الأخضر</span><span><i style="background:#f5b84e"></i>الذهبي</span><span><i style="background:#b29aff"></i>البنفسجي</span><span>● حركة متاحة</span><span>✦ مركز العمق</span></div></section>
+<section class="panel"><div class="panel-head"><div><div class="eyebrow">TACTICAL MAP</div><h2>ميدان العمليات</h2></div><div class="setup"><label for="playerCount">القادة</label><select id="playerCount"><option value="2">لاعبان</option><option value="3">3 لاعبين</option><option value="4">4 لاعبين</option><option value="5">5 لاعبين</option></select><button class="primary" id="newGame">معركة جديدة</button></div></div><div class="board-wrap"><svg id="board" class="board" viewBox="-255 -245 510 490" role="img" aria-label="لوحة جبهات السداسية"></svg></div><div class="legend"><span><i style="background:#e75c64"></i>الأحمر</span><span><i style="background:#53a9ff"></i>الأزرق</span><span><i style="background:#65d49a"></i>الأخضر</span><span><i style="background:#f5b84e"></i>الذهبي</span><span><i style="background:#b29aff"></i>البنفسجي</span><span>● حركة متاحة</span><span>× هدف صالح للرامي</span><span>✦ مركز العمق</span></div></section>
 <aside class="side">
 <section class="panel"><div class="panel-head"><h2>حالة المعركة</h2><span class="pill" id="roundPill">الجولة 1</span></div><div class="section"><div class="turn-card"><span id="turnDot" class="turn-dot" style="color:#e75c64;background:#e75c64"></span><div><div class="sub">الدور الحالي</div><div id="turnName" class="turn-name">الأحمر</div><div id="phase" class="sub">فترة انتشار</div></div></div><div class="metrics"><div class="metric"><b id="centerMetric">0 / 5</b><span>السيطرة على العمق</span></div><div class="metric"><b id="pieceMetric">12</b><span>قطع في الميدان</span></div></div><p id="statusText" class="statusline">اختر قطعة من قطعك لعرض حركاتها.</p></div></section>
 <section class="panel"><div class="panel-head"><h2>القادة والفصائل</h2><span class="pill" id="alivePill">2 صامدان</span></div><div class="section"><div id="players" class="players"></div></div></section>
@@ -145,26 +145,46 @@ function hint(){
  if(game.win!==null){$('hint').textContent='انتهت المعركة.';return}
  const moves=allMoves(game.turn),enemies=Object.entries(game.pieces).filter(([,p])=>p.owner>=0&&p.owner!==game.turn);
  if(!moves.length){$('hint').textContent='لا توجد نقلات متاحة. يمكنك إنهاء الدور.';return}
- const centerDist=m=>distance(m.to.split(',').map(Number),[0,0]);
- moves.sort((a,b)=>{
-  const score=m=>{const pos=m.to.split(',').map(Number),near= Math.min(...enemies.map(([k])=>distance(pos,k.split(',').map(Number))));return (m.type==='F'?-2:0)-centerDist(m)*.8-near*.25};
-  return score(a)-score(b)
- });
+ const score=m=>{
+  const from=m.from.split(',').map(Number),to=m.to.split(',').map(Number);
+  const startDist=distance(from,[0,0]),endDist=distance(to,[0,0]);
+  let value=(startDist-endDist)*1.8+(endDist===0?3:0);
+  if(m.type==='F')value-=2.5;
+  let nearest=99;
+  for(const [k,p] of enemies){const d=distance(to,k.split(',').map(Number));if(d<nearest)nearest=d}
+  if(nearest<=2)value+=Math.max(-1.5,(3-nearest)*.35);
+  const occupant=(q,r)=>{const k=key(q,r);if(k===m.from)return null;if(k===m.to)return {owner:game.turn,type:m.type};return game.pieces[k]||null};
+  for(const [tq,tr] of neighbors(to[0],to[1])){
+   const target=occupant(tq,tr);if(!target||target.owner<0||target.owner===game.turn)continue;
+   let attackers=0,defenders=0;
+   for(const [aq,ar] of neighbors(tq,tr)){const ally=occupant(aq,ar);if(!ally||ally.owner<0)continue;if(ally.owner===game.turn)attackers++;if(ally.owner===target.owner)defenders++}
+   if(attackers>=2&&attackers>defenders)value+=7;
+  }
+  return value;
+ };
+ moves.sort((a,b)=>score(b)-score(a));
  const best=moves[0];game.selected=best.from;render();
- $('hint').textContent='اقتراح: حرّك '+TYPES[best.type].name+' باتجاه العمق أو خط المواجهة. النقلة المقترحة مميزة باللون الأخضر.';
+ $('hint').textContent='اقتراح تكتيكي أولي: حرّك '+TYPES[best.type].name+' إلى موقع يقرّب قواتك من العمق أو يهيئ تطويقًا. الاقتراح ليس ضمانًا لأفضل نقلة.';
 }
 function hexPoints(x,y,s){return Array.from({length:6},(_,i)=>{const a=(60*i-30)*Math.PI/180;return (x+s*Math.cos(a)).toFixed(1)+','+(y+s*Math.sin(a)).toFixed(1)}).join(' ')}
 function render(){
  if(!game)return;
- const moves=game.selected?moveRange(game.pieces[game.selected],...game.selected.split(',').map(Number)).map(([q,r])=>key(q,r)):[];
+ const selectedPiece=game.selected?game.pieces[game.selected]:null;
+ const moves=selectedPiece?moveRange(selectedPiece,...game.selected.split(',').map(Number)).map(([q,r])=>key(q,r)):[];
+ const shots=[];
+ if(selectedPiece&&selectedPiece.type==='A'&&game.round>2){
+  const from=game.selected.split(',').map(Number);
+  for(const [k,p] of Object.entries(game.pieces)){if(p.owner<0||p.owner===game.turn||p.type==='F')continue;const to=k.split(',').map(Number),mid=rayBetween(from,to);if(mid&&!game.pieces[key(...mid)])shots.push(k)}
+ }
  let svg='';
  for(const [q,r] of cells){
   const x=SZ*Math.sqrt(3)*(q+r/2),y=SZ*1.5*r,k=key(q,r),pc=game.pieces[k],center=q===0&&r===0;
-  const isMove=moves.includes(k),selected=game.selected===k;
+  const isMove=moves.includes(k),isShot=shots.includes(k),selected=game.selected===k;
   const fill=center?'#4d4027':((q+r)%2===0?'#142238':'#101b2d');
-  svg+=`<g class="cell" data-k="${k}" tabindex="0" role="button" aria-label="خانة ${q},${r}"><polygon points="${hexPoints(x,y,SZ-1)}" fill="${fill}" stroke="${selected?'#ffe6a2':isMove?'#57e5a4':center?'#c69b4d':'#2a3c55'}" stroke-width="${selected?3:isMove?2.4:1}"/>`;
+  svg+=`<g class="cell" data-k="${k}" tabindex="0" role="button" aria-label="خانة ${q},${r}"><polygon points="${hexPoints(x,y,SZ-1)}" fill="${fill}" stroke="${selected?'#ffe6a2':isMove?'#57e5a4':isShot?'#ff8b8b':center?'#c69b4d':'#2a3c55'}" stroke-width="${selected?3:isMove||isShot?2.4:1}"/>`;
   if(center)svg+=`<circle cx="${x}" cy="${y}" r="10" fill="none" stroke="#e7bd66" stroke-width="1.5" opacity=".85"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="10" fill="#f7d98d">✦</text>`;
   if(isMove)svg+=`<circle cx="${x}" cy="${y}" r="4.5" fill="#58d5a1"/>`;
+  if(isShot)svg+=`<path d="M ${x-4} ${y-4} l8 8 m0 -8 l-8 8" stroke="#ff8b8b" stroke-width="2.4" stroke-linecap="round"/>`;
   if(pc){
    const col=pc.owner<0?'#6f7784':COLORS[pc.owner],radius=pc.type==='F'?13:10.5;
    svg+=`<circle cx="${x}" cy="${y}" r="${radius}" fill="${col}" stroke="${selected?'#fff1be':'#ffffff55'}" stroke-width="${selected?2.8:1.2}" />`;
