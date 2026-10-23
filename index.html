@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="shell">
-<header class="top"><div class="brand"><div class="mark">⬡</div><div><h1>جبهات <span style="color:var(--gold)">JABHAT</span></h1><p>حرب العقول — نموذج لعب تكتيكي مستقل</p></div></div><div class="top-actions"><button id="soundBtn" title="الصوت">الصوت: مغلق</button><button id="rulesBtn">دليل القواعد</button></div></header>
+<header class="top"><div class="brand"><div class="mark">⬡</div><div><h1>جبهات <span style="color:var(--gold)">JABHAT</span></h1><p>حرب العقول — واجه الروبوتات وقُد الفصيل الأحمر</p></div></div><div class="top-actions"><button id="soundBtn" title="الصوت">الصوت: مغلق</button><button id="rulesBtn">دليل القواعد</button></div></header>
 <div id="banner" class="banner"></div>
 <div class="layout">
 <section class="panel"><div class="panel-head"><div><div class="eyebrow">TACTICAL MAP</div><h2>ميدان العمليات</h2></div><div class="setup"><label for="playerCount">القادة</label><select id="playerCount"><option value="2">لاعبان</option><option value="3">3 لاعبين</option><option value="4">4 لاعبين</option><option value="5">5 لاعبين</option></select><button class="primary" id="newGame">معركة جديدة</button></div></div><div class="board-wrap"><svg id="board" class="board" viewBox="-255 -245 510 490" role="img" aria-label="لوحة جبهات السداسية"></svg></div><div class="legend"><span><i style="background:#e75c64"></i>الأحمر</span><span><i style="background:#53a9ff"></i>الأزرق</span><span><i style="background:#65d49a"></i>الأخضر</span><span><i style="background:#f5b84e"></i>الذهبي</span><span><i style="background:#b29aff"></i>البنفسجي</span><span>● حركة متاحة</span><span>× هدف صالح للرامي</span><span>✦ مركز العمق</span></div></section>
@@ -21,7 +21,7 @@
 <section class="panel"><div class="panel-head"><h2>القادة والفصائل</h2><span class="pill" id="alivePill">2 صامدان</span></div><div class="section"><div id="players" class="players"></div></div></section>
 <section class="panel"><div class="panel-head"><h2>أوامر تكتيكية</h2></div><div class="section"><div class="controls"><button id="undoBtn">↶ تراجع النقلة</button><button id="hintBtn">✧ اقتراح تكتيكي</button><button id="passBtn" class="wide">إنهاء الدور</button><button id="restartBtn" class="wide">إعادة المعركة</button></div><div id="hint" class="hint">اختر قطعة ثم وجهها إلى خانة مضيئة.</div></div><div class="panel-head"><h2>سجل الميدان</h2><span class="pill">آخر الأحداث</span></div><div class="section"><div id="log" class="log"></div></div></section>
 </aside></div>
-<details id="rules" class="panel rules"><summary>قواعد جبهات — الإصدار التجريبي الأول</summary><p><b>الهدف:</b> أسر قلاع الخصوم أو السيطرة على خانة العمق المركزية لخمس نهايات أدوار متتالية. آخر قلعة باقية تفوز.</p><p><b>القوات (12 لكل قائد):</b> قلعة واحدة (ق)، خمسة حراس (ح)، ثلاثة أجنحة (ج)، مخترقان (خ)، ورامٍ واحد (ر). القلعة والحارس يتحركان خانة واحدة؛ المخترق حتى خانتين بخط مستقيم؛ الجناح حتى ثلاث خانات بشرط بدء الحركة وانتهائها في إحدى الحلقتين الخارجيتين؛ الرامي يتحرك خانة ويستطيع إطلاق سهم على قطعة معادية تبعد خانتين بخط مستقيم إذا لم توجد قطعة بينهما. لا قفز فوق القطع.</p><p><b>الأسر بالتطويق:</b> بعد النقلة، تُؤسر قطعة خصم مجاورة إذا جاورتها قطعتان أو أكثر من قوات اللاعب صاحب الدور، وكان عدد قواته المجاورة أكبر من عدد قطعها المدافعة المجاورة. لا يستطيع الرامي إصابة القلعة؛ ولا تُؤسر القلعة إلا بالتطويق. عند سقوط القلعة، تتحول قوات ذلك الفصيل إلى أنقاض محايدة تعيق الحركة.</p><p><b>فترة الانتشار:</b> أول جولتين كاملتين بلا أسر، لإتاحة بناء الخطوط الدفاعية. الأدوار بالتناوب؛ لا توجد تحالفات رسمية. هذه قواعد تجريبية قابلة للتعديل بعد اختبارات التوازن.</p></details>
+<details id="rules" class="panel rules"><summary>قواعد جبهات — الإصدار التجريبي الأول</summary><p><b>الهدف:</b> أسر قلاع الخصوم أو السيطرة على خانة العمق المركزية لخمس نهايات أدوار متتالية. آخر قلعة باقية تفوز.</p><p><b>القوات (12 لكل قائد):</b> قلعة واحدة (ق)، خمسة حراس (ح)، ثلاثة أجنحة (ج)، مخترقان (خ)، ورامٍ واحد (ر). القلعة والحارس يتحركان خانة واحدة؛ المخترق حتى خانتين بخط مستقيم؛ الجناح حتى ثلاث خانات بشرط بدء الحركة وانتهائها في إحدى الحلقتين الخارجيتين؛ الرامي يتحرك خانة ويستطيع إطلاق سهم على قطعة معادية تبعد خانتين بخط مستقيم إذا لم توجد قطعة بينهما. لا قفز فوق القطع.</p><p><b>الأسر بالتطويق:</b> بعد النقلة، تُؤسر قطعة خصم مجاورة إذا جاورتها قطعتان أو أكثر من قوات اللاعب صاحب الدور، وكان عدد قواته المجاورة أكبر من عدد قطعها المدافعة المجاورة. لا يستطيع الرامي إصابة القلعة؛ ولا تُؤسر القلعة إلا بالتطويق. عند سقوط القلعة، تتحول قوات ذلك الفصيل إلى أنقاض محايدة تعيق الحركة.</p><p><b>اللعب ضد الروبوتات:</b> أنت تقود الفصيل الأحمر فقط، وجميع الفصائل الأخرى تلعب تلقائيًا. تحاول الروبوتات التقدم نحو العمق، والضغط على الخصوم، وتجهيز التطويق، وتستخدم الرامي عندما يتاح هدف قانوني. هذا ذكاء اصطناعي تكتيكي أولي وليس محركًا استراتيجيًا متقدمًا بعد.</p><p><b>فترة الانتشار:</b> أول جولتين كاملتين بلا أسر، لإتاحة بناء الخطوط الدفاعية. الأدوار بالتناوب. هذه قواعد تجريبية قابلة للتعديل بعد اختبارات التوازن.</p></details>
 <div class="footer">JABHAT • Prototype 0.1 • لعبة محلية على جهاز واحد — لا يوجد اتصال شبكي في هذه النسخة</div>
 </div>
 <script>
@@ -38,7 +38,7 @@ const distance=(a,b)=>Math.max(Math.abs(a[0]-b[0]),Math.abs(a[1]-b[1]),Math.abs(
 const cells=[];for(let q=-R;q<=R;q++)for(let r=-R;r<=R;r++)if(inside(q,r))cells.push([q,r]);
 const neighbors=(q,r)=>DIRS.map(([a,b])=>[q+a,r+b]).filter(([a,b])=>inside(a,b));
 const $=id=>document.getElementById(id);
-let game=null, sound=false;
+let game=null, sound=false, botTimer=null;
 function clone(x){return JSON.parse(JSON.stringify(x))}
 function snapshotState(g=game){return {n:g.n,turn:g.turn,round:g.round,pieces:clone(g.pieces),alive:clone(g.alive),centerStreak:clone(g.centerStreak),selected:g.selected,win:g.win,message:g.message,log:clone(g.log),undoUsed:g.undoUsed,lastMoveSnapshot:null,turnSnapshot:null}}
 function addLog(text){game.log.unshift(text);game.log=game.log.slice(0,18)}
@@ -59,6 +59,7 @@ function spawn(n){
  });
 }
 function start(n=Number($('playerCount').value)){
+ if(botTimer!==null){clearTimeout(botTimer);botTimer=null}
  game={n,turn:0,round:1,pieces:{},alive:Array(n).fill(true),centerStreak:Array(n).fill(0),selected:null,win:null,message:'',log:[],turnSnapshot:null,undoUsed:false};
  spawn(n);game.turnSnapshot=snapshotState(game);
  addLog('بدأت المعركة — '+n+' قادة في الميدان.');addLog('فترة الانتشار: الأسر محظور خلال أول جولتين.');
@@ -136,13 +137,34 @@ function doMove(from,to){
  const captured=captureAround(q,r);
  if(!captured.length&&game.message==='')game.message='';
  addLog(NAMES[game.turn]+' حرّك '+TYPES[pc.type].name+'.');
- endTurn();game.lastMoveSnapshot=before;render();return true;
+ endTurn();game.lastMoveSnapshot=before;render();scheduleBotTurn();return true;
 }
 function allMoves(owner){
  const arr=[];
  for(const [k,p] of Object.entries(game.pieces)){if(p.owner!==owner)continue;const [q,r]=k.split(',').map(Number);for(const [a,b] of moveRange(p,q,r))arr.push({from:k,to:key(a,b),type:p.type,owner})}
  return arr;
 }
+function botScore(m){
+ const from=m.from.split(',').map(Number),to=m.to.split(',').map(Number),pc=game.pieces[m.from];
+ const sd=distance(from,[0,0]),ed=distance(to,[0,0]);let value=(sd-ed)*1.7+(ed===0?5:0);
+ if(pc.type==='F')value-=3;
+ let nearest=99;for(const [k,p] of Object.entries(game.pieces)){if(p.owner<0||p.owner===game.turn)continue;nearest=Math.min(nearest,distance(to,k.split(',').map(Number)));}
+ if(nearest===1)value+=1.1;
+ if(pc.type==='F'&&nearest<=2)value-=2.5;
+ for(const [q,r] of neighbors(to[0],to[1])){const target=game.pieces[key(q,r)];if(!target||target.owner<0||target.owner===game.turn||target.type==='F')continue;let allies=1,defenders=0;for(const [aq,ar] of neighbors(q,r)){const k=key(aq,ar);if(k===m.from)continue;const ally=game.pieces[k];if(!ally||ally.owner<0)continue;if(ally.owner===game.turn)allies++;if(ally.owner===target.owner)defenders++;}if(allies>=2&&allies>defenders)value+=6;}
+ return value+Math.random()*.18;
+}
+function botTurn(){
+ if(!game||game.win!==null||game.turn===0||!game.alive[game.turn])return;
+ const owner=game.turn;
+ for(const [from,pc] of Object.entries(game.pieces)){if(pc.owner!==owner||pc.type!=='A'||game.round<=2)continue;const a=from.split(',').map(Number);for(const [to,target] of Object.entries(game.pieces)){if(target.owner<0||target.owner===owner||target.type==='F')continue;const b=to.split(',').map(Number),mid=rayBetween(a,b);if(mid&&!game.pieces[key(...mid)]){const before=snapshotState(game);if(shoot(from,to)){game.selected=null;endTurn();game.lastMoveSnapshot=null;render();scheduleBotTurn();return;}}}}
+ const moves=allMoves(owner);
+ if(!moves.length){addLog(NAMES[owner]+' (روبوت) أنهى دوره دون نقلة.');game.message=NAMES[owner]+' لا يملك نقلة متاحة.';endTurn();render();scheduleBotTurn();return;}
+ moves.sort((a,b)=>botScore(b)-botScore(a));const best=moves[0];game.selected=null;
+ if(doMove(best.from,best.to)){game.lastMoveSnapshot=null;addLog('نفّذ الروبوت '+NAMES[owner]+' نقلة تكتيكية.');render();scheduleBotTurn();}
+ else{endTurn();render();scheduleBotTurn();}
+}
+function scheduleBotTurn(){if(botTimer!==null){clearTimeout(botTimer);botTimer=null;}if(!game||game.win!==null||game.turn===0)return;botTimer=setTimeout(()=>{botTimer=null;botTurn();},450);}
 function hint(){
  if(game.win!==null){$('hint').textContent='انتهت المعركة.';return}
  const moves=allMoves(game.turn),enemies=Object.entries(game.pieces).filter(([,p])=>p.owner>=0&&p.owner!==game.turn);
@@ -196,7 +218,7 @@ function render(){
   svg+='</g>';
  }
  $('board').innerHTML=svg;
- $('turnName').textContent=game.win===null?NAMES[game.turn]:'انتهت المعركة';
+ $('turnName').textContent=game.win===null?NAMES[game.turn]+(game.turn===0?' — أنت':' — روبوت'):'انتهت المعركة';
  $('turnDot').style.background=game.win===null?COLORS[game.turn]:'#777';$('turnDot').style.color=game.win===null?COLORS[game.turn]:'#777';
  $('roundPill').textContent='الجولة '+game.round;
  $('phase').textContent=game.round<=2?'فترة انتشار — لا أسر':'اشتباك مفتوح';
@@ -204,9 +226,9 @@ function render(){
  $('pieceMetric').textContent=pieceCount(game.turn);
  $('statusText').textContent=game.win!==null?('الفائز: '+NAMES[game.win]+' — '+game.message):(game.message||'اختر قطعة من قطعك لعرض حركاتها.');
  $('alivePill').textContent=aliveCount()+' صامدان';
- $('players').innerHTML=Array.from({length:game.n},(_,i)=>`<div class="player ${game.turn===i&&game.win===null?'active':''} ${game.alive[i]?'':'out'}"><div class="player-left"><span class="mini-dot" style="background:${COLORS[i]}"></span><span>${NAMES[i]}</span></div><span class="pill">${pieceCount(i)} قطعة · عمق ${game.centerStreak[i]}/5</span></div>`).join('');
+ $('players').innerHTML=Array.from({length:game.n},(_,i)=>`<div class="player ${game.turn===i&&game.win===null?'active':''} ${game.alive[i]?'':'out'}"><div class="player-left"><span class="mini-dot" style="background:${COLORS[i]}"></span><span>${NAMES[i]}${i===0?' (أنت)':' (روبوت)'}</span></div><span class="pill">${pieceCount(i)} قطعة · عمق ${game.centerStreak[i]}/5</span></div>`).join('');
  $('log').innerHTML=game.log.map(t=>`<div class="log-item">${escapeHtml(t)}</div>`).join('');
- $('passBtn').disabled=game.win!==null;$('undoBtn').disabled=game.win!==null||game.undoUsed||!game.lastMoveSnapshot;
+ $('passBtn').disabled=game.win!==null||game.turn!==0;$('undoBtn').disabled=game.win!==null||game.turn!==0||game.undoUsed||!game.lastMoveSnapshot;$('hintBtn').disabled=game.win!==null||game.turn!==0;
  $('banner').classList.toggle('show',game.win!==null);
  $('banner').innerHTML=game.win!==null?'<strong>انتصار '+NAMES[game.win]+'!</strong> '+escapeHtml(game.message)+' <button id="bannerNew" style="float:left">معركة جديدة</button>':'';
  if(game.win!==null&&$('bannerNew'))$('bannerNew').onclick=()=>start(Number($('playerCount').value));
@@ -214,14 +236,14 @@ function render(){
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function beep(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const c=new C(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=620;g.gain.value=.035;o.start();o.stop(c.currentTime+.07);o.onended=()=>c.close()}catch(e){}}
 $('board').addEventListener('click',e=>{
- const cell=e.target.closest('[data-k]');if(!cell||game.win!==null)return;
+ const cell=e.target.closest('[data-k]');if(!cell||game.win!==null||game.turn!==0)return;
  const k=cell.dataset.k,pc=game.pieces[k];
  if(pc&&pc.owner===game.turn){game.selected=k;$('hint').textContent=TYPES[pc.type].name+' — اختر خانة مضيئة للحركة.';render();return}
  if(game.selected){
   const selectedPc=game.pieces[game.selected];
   if(pc&&selectedPc&&selectedPc.type==='A'){
    const before=snapshotState(game);
-   if(shoot(game.selected,k)){game.selected=null;endTurn();game.lastMoveSnapshot=before;render();return}
+   if(shoot(game.selected,k)){game.selected=null;endTurn();game.lastMoveSnapshot=before;render();scheduleBotTurn();return}
   }
   if(!pc&&doMove(game.selected,k))return;
  }
@@ -230,7 +252,7 @@ $('board').addEventListener('click',e=>{
 $('board').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-k]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 $('newGame').onclick=()=>start(Number($('playerCount').value));
 $('restartBtn').onclick=()=>start(Number($('playerCount').value));
-$('passBtn').onclick=()=>{if(game.win!==null)return;addLog(NAMES[game.turn]+' أنهى دوره دون نقلة.');game.message='تم إنهاء الدور.';game.lastMoveSnapshot=null;endTurn();render()};
+$('passBtn').onclick=()=>{if(game.win!==null||game.turn!==0)return;addLog(NAMES[game.turn]+' أنهى دوره دون نقلة.');game.message='تم إنهاء الدور.';game.lastMoveSnapshot=null;endTurn();render();scheduleBotTurn()};
 $('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.lastMoveSnapshot)return;const snap=clone(game.lastMoveSnapshot);const recent=game.log.slice();snap.undoUsed=true;snap.message='تم التراجع عن آخر نقلة؛ عاد الدور إلى صاحبه.';snap.log=recent;snap.log.unshift('تم التراجع عن آخر نقلة.');snap.turnSnapshot=snapshotState(snap);snap.lastMoveSnapshot=null;game=snap;render()};
 $('hintBtn').onclick=hint;
 $('rulesBtn').onclick=()=>{$('rules').open=!$('rules').open;$('rules').scrollIntoView({behavior:'smooth',block:'nearest'})};
