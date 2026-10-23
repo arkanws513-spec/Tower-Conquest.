@@ -1,39 +1,23 @@
-# Tower Conquest — Village Builder Prototype
+# جبهات | JABHAT
 
-A browser-based village-building strategy game prototype. This is a new direction for the project, replacing the previous tower-capture concept.
+لعبة استراتيجية سداسية محلية للمتصفح، قيد التطوير.
 
-## Run
+## التشغيل
+افتح `index.html` في متصفح حديث. لا تحتاج إلى تثبيت حزم أو مفاتيح API أو خادم.
 
-Open `index.html` through a local web server (recommended because it uses ES modules from a CDN). For example:
+## الموجود في النموذج 0.1
+- لوحة سداسية وتشكيلات من 2 إلى 5 قادة.
+- 12 قطعة لكل قائد: قلعة، 5 حراس، 3 أجنحة، مخترقان، ورامٍ.
+- حركة حسب نوع القطعة، تطويق وأسر، أنقاض بعد سقوط القلعة.
+- فترة انتشار أول جولتين، فوز عبر القلعة الأخيرة أو السيطرة على المركز.
+- سجل أحداث، اقتراح نقلة أولي، وتراجع إلى بداية الدور.
+- تصميم متجاوب مع الهاتف والكمبيوتر.
 
-```bash
-python -m http.server 8000
-```
+## حدود معروفة
+- اللعب محلي على جهاز واحد؛ لا يوجد لعب شبكي أو حسابات.
+- لا يوجد خصم آلي بعد؛ التلميح الحالي اقتراح بسيط وليس محركًا استراتيجيًا.
+- القواعد وتوزيع القطع أولية وتحتاج محاكاة واختبارات توازن، خصوصًا في مباريات 4 و5 لاعبين.
+- هذه نسخة أولية وليست إصدارًا نهائيًا.
 
-Then open `http://localhost:8000`.
-
-The prototype loads Three.js from jsDelivr, so an internet connection is required.
-
-## Current prototype features
-
-- Interactive 3D scene with an orbiting camera, zoom, lighting, shadows, terrain, paths, trees, and decorative scenery.
-- A starting village with a Town Hall, resource buildings, Barracks, Army Camp, Cannon, and Builder Hut.
-- Building placement, selection, upgrades, and a basic move-building interaction.
-- Gold and elixir production, resource counters, and local browser saving.
-- Troop training queue with three troop roles.
-- AI opponent selection and a simplified battle-resolution prototype.
-- Responsive browser UI for desktop and mobile.
-
-## Known limitations
-
-This is an early playable foundation, not a finished game and not feature-equivalent to Clash of Clans. Combat is currently simplified and battle outcomes are simulated; enemy base layouts, animated deployed troops, real-time pathfinding, fully functional defensive combat, richer 3D assets, balancing, and comprehensive automated/browser testing still need development.
-
-The game uses original placeholder procedural models rather than copied Clash of Clans assets. Future work should improve the art pipeline and replace the simple geometry with polished original models and animations.
-
-## Next priorities
-
-1. Run browser checks and fix all console/runtime issues.
-2. Improve placement feedback, move-building behavior, save migration, and economy rules.
-3. Build actual battle scenes with troop deployment, pathfinding, targeting, damage, and defenses.
-4. Improve the village art with detailed original models, animation, and visual effects.
-5. Add automated tests and repeatable browser-based gameplay checks.
+## الخطوة التالية
+إضافة اختبارات آلية لمحرك القواعد، ثم خصم آلي تدريجيًا وتحسين التوازن وتجربة المستخدم.

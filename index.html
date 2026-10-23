@@ -1,124 +1,214 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Tower Conquest — Village Builder</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090f1d">
+<title>جبهات | JABHAT — لعبة استراتيجية سداسية</title>
 <style>
-:root{--ink:#fff7dc;--panel:#192c31eF;--gold:#ffc85a;--green:#86d879;--line:#ffffff30}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#9dd8e7;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}button{font:inherit;cursor:pointer;color:inherit;border:1px solid #ffffff35;border-radius:12px;background:linear-gradient(#456d68,#27433f);padding:10px 13px;font-weight:800;box-shadow:0 3px 0 #142a2b;transition:filter .15s,transform .15s}button:hover{filter:brightness(1.14)}button:active{transform:translateY(2px);box-shadow:0 1px 0 #142a2b}button:disabled{opacity:.4;cursor:not-allowed}#game{position:fixed;inset:0}canvas{display:block;width:100%;height:100%;outline:none}.topbar{position:absolute;top:12px;left:12px;right:12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;pointer-events:none}.brand,.resources,.panel,.bottomnav,.toast{background:var(--panel);border:1px solid var(--line);box-shadow:0 8px 24px #10262b38;backdrop-filter:blur(12px);border-radius:16px}.brand{padding:10px 15px;pointer-events:auto}.brand strong{display:block;font-size:clamp(14px,2vw,20px);letter-spacing:.06em}.brand small{color:#b9d9c7;font-size:10px;letter-spacing:.18em}.resources{display:flex;gap:8px;padding:8px;pointer-events:auto}.resource{min-width:76px;text-align:center;padding:3px 9px;border-radius:10px;background:#071b1e66}.resource span{display:block;font-size:10px;color:#c8e0d7}.resource b{font-size:16px}.resource.gold b{color:#ffd76b}.resource.elixir b{color:#ff9bd5}.resource.gem b{color:#8ee5ff}.righttools{display:flex;gap:6px;pointer-events:auto}.righttools button{padding:9px}.leftpanel{position:absolute;left:12px;top:104px;width:min(250px,42vw);max-height:calc(100% - 205px);overflow:auto}.panel{padding:14px}.panel h2,.panel h3{margin:0 0 8px}.panel h2{font-size:17px}.panel p{font-size:12px;line-height:1.45;color:#d1e3d9;margin:5px 0 10px}.eyebrow{font-size:10px;color:#b4d7c7;letter-spacing:.15em;text-transform:uppercase}.buildlist{display:grid;grid-template-columns:1fr 1fr;gap:7px}.buildbtn{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:9px;min-width:0}.buildbtn .emoji{font-size:22px}.buildbtn strong{font-size:11px}.buildbtn small{font-size:10px;color:#d5e7d8}.buildbtn.selected{border-color:var(--gold);box-shadow:0 0 0 2px #ffc85a50}.bottomnav{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;padding:8px;max-width:calc(100% - 20px)}.bottomnav button{white-space:nowrap}.bottomnav .primary{background:linear-gradient(#d99b3b,#9a5728);border-color:#ffe0a1}.hint{position:absolute;bottom:84px;left:50%;transform:translateX(-50%);padding:8px 13px;border-radius:99px;background:#173035c9;border:1px solid #ffffff2b;color:#fff6d7;font-size:12px;text-align:center;white-space:nowrap;max-width:90vw}.detail{position:absolute;right:12px;top:100px;width:min(270px,45vw);display:none}.detail.open{display:block}.detail-actions{display:grid;gap:7px}.detail-actions button{width:100%;text-align:left}.modalback{position:absolute;inset:0;display:none;place-items:center;background:#061a1ecc;padding:18px}.modalback.open{display:grid}.modal{width:min(580px,100%);max-height:85vh;overflow:auto;background:#1a3033;border:1px solid #ffffff35;border-radius:20px;padding:20px;box-shadow:0 25px 80px #0008}.modalhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.modal h2{margin:0}.enemygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin-top:15px}.enemy{padding:14px;border:1px solid #ffffff25;background:#ffffff0a;border-radius:14px}.enemy h3{margin:0 0 5px}.enemy p{font-size:12px;color:#c5ddd2}.toast{position:absolute;top:88px;left:50%;transform:translateX(-50%);padding:10px 16px;display:none;z-index:10;max-width:90vw;text-align:center}.toast.show{display:block;animation:pop .2s ease-out}@keyframes pop{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}.progress{height:6px;border-radius:9px;background:#06191a;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#77d76b,#d2f98b);width:0%}.smallnote{font-size:10px;color:#bdd4c8;margin-top:8px}@media(max-width:640px){.topbar{top:7px;left:7px;right:7px;align-items:flex-start}.brand{padding:8px}.brand small{display:none}.resources{gap:3px;padding:5px}.resource{min-width:55px;padding:3px}.resource b{font-size:13px}.resource span{font-size:9px}.righttools{position:absolute;right:0;top:54px}.leftpanel{top:100px;left:7px;width:155px;padding:0;max-height:calc(100% - 190px)}.panel{padding:10px}.panel h2{font-size:14px}.buildlist{gap:5px}.buildbtn{padding:7px}.buildbtn .emoji{font-size:18px}.buildbtn strong{font-size:10px}.buildbtn small{font-size:9px}.detail{top:100px;right:7px;width:calc(100% - 176px);max-width:230px}.bottomnav{bottom:7px;gap:5px;padding:6px;width:calc(100% - 14px);justify-content:center}.bottomnav button{padding:9px 8px;font-size:11px;flex:1}.hint{bottom:62px;font-size:10px}.toast{top:118px}}
+:root{color-scheme:dark;--bg:#080d18;--panel:#101a2a;--panel2:#152238;--line:#263852;--text:#edf4ff;--muted:#93a5bd;--gold:#e7bd66;--good:#58d5a1;--danger:#ff737b}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at 50% -15%,#20395a 0,transparent 48%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}button,select{font:inherit}button{border:1px solid var(--line);background:#17253a;color:var(--text);border-radius:11px;padding:9px 13px;cursor:pointer;transition:.15s}button:hover{border-color:#6985aa;transform:translateY(-1px)}button:disabled{opacity:.38;cursor:not-allowed;transform:none}.primary{background:linear-gradient(135deg,#f0cf83,#c8943c);color:#172033;border-color:#f0cf83;font-weight:800}.shell{max-width:1280px;margin:auto;padding:16px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.brand{display:flex;align-items:center;gap:12px}.mark{width:48px;height:48px;border:1px solid #826b3d;background:linear-gradient(145deg,#1c304a,#0d1525);display:grid;place-items:center;clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);color:var(--gold);font-size:25px}.brand h1{margin:0;font-size:clamp(20px,3vw,30px);letter-spacing:.04em}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}.panel{background:linear-gradient(150deg,#111d30f5,#0d1626f5);border:1px solid var(--line);border-radius:18px;box-shadow:0 16px 40px #0003;overflow:hidden}.panel-head{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.panel-head h2{font-size:14px;margin:0;letter-spacing:.02em}.eyebrow{color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.board-wrap{padding:8px;position:relative}.board{width:100%;height:auto;display:block;touch-action:manipulation;user-select:none}.cell{cursor:pointer;outline:none}.cell polygon{transition:fill .12s,stroke .12s}.cell:focus polygon{stroke:#fff;stroke-width:3}.side{display:grid;gap:14px}.section{padding:14px}.section h3{margin:0 0 11px;font-size:13px}.turn-card{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:13px;background:#ffffff05}.turn-dot{width:15px;height:15px;border-radius:50%;box-shadow:0 0 16px currentColor}.turn-name{font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}.players{display:grid;gap:7px}.player{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border:1px solid transparent;border-radius:10px;background:#ffffff04;font-size:12px}.player.active{border-color:#d9b45d88;background:#e5b95610}.player.out{opacity:.42;text-decoration:line-through}.player-left{display:flex;align-items:center;gap:8px}.mini-dot{width:10px;height:10px;border-radius:50%}.pill{font-size:10px;border:1px solid var(--line);border-radius:99px;padding:3px 7px;color:var(--muted)}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.metric{padding:10px;border:1px solid var(--line);border-radius:11px;background:#ffffff04}.metric b{display:block;font-size:18px;color:var(--gold)}.metric span{font-size:11px;color:var(--muted)}.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.controls button{font-size:12px}.controls .wide{grid-column:1/-1}.hint{min-height:42px;color:#c5d5eb;font-size:12px;line-height:1.6;margin-top:10px}.log{display:flex;flex-direction:column;gap:8px;max-height:210px;overflow:auto}.log-item{font-size:11px;color:#b9c9dd;line-height:1.55;border-right:2px solid #344a66;padding:2px 9px}.log-item:first-child{border-color:var(--gold)}.rules{padding:14px;color:#c2d1e4;font-size:12px;line-height:1.9}.rules summary{cursor:pointer;color:var(--text);font-weight:800}.rules b{color:#f2d18a}.setup{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.setup label{font-size:12px;color:var(--muted)}select{background:#17253a;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:8px}.statusline{font-size:12px;color:var(--muted);line-height:1.6}.banner{display:none;padding:12px 14px;border:1px solid #b8944e;border-radius:13px;background:#d9aa3815;margin-bottom:12px}.banner.show{display:block}.banner strong{color:var(--gold)}.legend{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 12px;color:var(--muted);font-size:11px}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}.footer{color:#647891;font-size:10px;text-align:center;padding:18px 0 4px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.side .panel:last-child{grid-column:1/-1}.shell{padding:10px}.top{align-items:flex-start}.brand p{max-width:210px}}@media(max-width:520px){.top{flex-direction:column}.top-actions{width:100%}.top-actions button{flex:1}.side{grid-template-columns:1fr}.side .panel:last-child{grid-column:auto}.panel-head{padding:11px 12px}.board-wrap{padding:3px}.brand h1{font-size:22px}}
 </style>
 </head>
 <body>
-<div id="game"></div>
-<div class="topbar">
-  <div class="brand"><strong>⚔ TOWER CONQUEST</strong><small>BUILD · TRAIN · DEFEND</small></div>
-  <div class="resources">
-    <div class="resource gold"><span>🪙 GOLD</span><b id="gold">500</b></div>
-    <div class="resource elixir"><span>🧪 ELIXIR</span><b id="elixir">350</b></div>
-    <div class="resource gem"><span>💎 GEMS</span><b id="gems">25</b></div>
-  </div>
-  <div class="righttools"><button id="saveBtn" title="Save village">💾</button><button id="homeBtn" title="Reset camera">⌂</button></div>
+<div class="shell">
+<header class="top"><div class="brand"><div class="mark">⬡</div><div><h1>جبهات <span style="color:var(--gold)">JABHAT</span></h1><p>حرب العقول — نموذج لعب تكتيكي مستقل</p></div></div><div class="top-actions"><button id="soundBtn" title="الصوت">الصوت: مغلق</button><button id="rulesBtn">دليل القواعد</button></div></header>
+<div id="banner" class="banner"></div>
+<div class="layout">
+<section class="panel"><div class="panel-head"><div><div class="eyebrow">TACTICAL MAP</div><h2>ميدان العمليات</h2></div><div class="setup"><label for="playerCount">القادة</label><select id="playerCount"><option value="2">لاعبان</option><option value="3">3 لاعبين</option><option value="4">4 لاعبين</option><option value="5">5 لاعبين</option></select><button class="primary" id="newGame">معركة جديدة</button></div></div><div class="board-wrap"><svg id="board" class="board" viewBox="-255 -245 510 490" role="img" aria-label="لوحة جبهات السداسية"></svg></div><div class="legend"><span><i style="background:#e75c64"></i>الأحمر</span><span><i style="background:#53a9ff"></i>الأزرق</span><span><i style="background:#65d49a"></i>الأخضر</span><span><i style="background:#f5b84e"></i>الذهبي</span><span><i style="background:#b29aff"></i>البنفسجي</span><span>● حركة متاحة</span><span>✦ مركز العمق</span></div></section>
+<aside class="side">
+<section class="panel"><div class="panel-head"><h2>حالة المعركة</h2><span class="pill" id="roundPill">الجولة 1</span></div><div class="section"><div class="turn-card"><span id="turnDot" class="turn-dot" style="color:#e75c64;background:#e75c64"></span><div><div class="sub">الدور الحالي</div><div id="turnName" class="turn-name">الأحمر</div><div id="phase" class="sub">فترة انتشار</div></div></div><div class="metrics"><div class="metric"><b id="centerMetric">0 / 5</b><span>السيطرة على العمق</span></div><div class="metric"><b id="pieceMetric">12</b><span>قطع في الميدان</span></div></div><p id="statusText" class="statusline">اختر قطعة من قطعك لعرض حركاتها.</p></div></section>
+<section class="panel"><div class="panel-head"><h2>القادة والفصائل</h2><span class="pill" id="alivePill">2 صامدان</span></div><div class="section"><div id="players" class="players"></div></div></section>
+<section class="panel"><div class="panel-head"><h2>أوامر تكتيكية</h2></div><div class="section"><div class="controls"><button id="undoBtn">↶ تراجع النقلة</button><button id="hintBtn">✧ اقتراح تكتيكي</button><button id="passBtn" class="wide">إنهاء الدور</button><button id="restartBtn" class="wide">إعادة المعركة</button></div><div id="hint" class="hint">اختر قطعة ثم وجهها إلى خانة مضيئة.</div></div><div class="panel-head"><h2>سجل الميدان</h2><span class="pill">آخر الأحداث</span></div><div class="section"><div id="log" class="log"></div></div></section>
+</aside></div>
+<details id="rules" class="panel rules"><summary>قواعد جبهات — الإصدار التجريبي الأول</summary><p><b>الهدف:</b> أسر قلاع الخصوم أو السيطرة على خانة العمق المركزية لخمس نهايات أدوار متتالية. آخر قلعة باقية تفوز.</p><p><b>القوات (12 لكل قائد):</b> قلعة واحدة (ق)، خمسة حراس (ح)، ثلاثة أجنحة (ج)، مخترقان (خ)، ورامٍ واحد (ر). القلعة والحارس يتحركان خانة واحدة؛ المخترق حتى خانتين بخط مستقيم؛ الجناح حتى ثلاث خانات بشرط بدء الحركة وانتهائها في إحدى الحلقتين الخارجيتين؛ الرامي يتحرك خانة ويستطيع إطلاق سهم على قطعة معادية تبعد خانتين بخط مستقيم إذا لم توجد قطعة بينهما. لا قفز فوق القطع.</p><p><b>الأسر بالتطويق:</b> بعد النقلة، تُؤسر قطعة خصم مجاورة إذا أحاط بها لاعبان أو أكثر من قوات اللاعب صاحب الدور وكان عددهم أكبر من حراسها المجاورين. القلاع لا تُؤسر إلا بالتطويق، أو بقدرة الرامي غير مسموحة ضد القلعة. عند سقوط القلعة، تتحول قوات ذلك الفصيل إلى أنقاض محايدة تعيق الحركة.</p><p><b>فترة الانتشار:</b> أول جولتين كاملتين بلا أسر، لإتاحة بناء الخطوط الدفاعية. الأدوار بالتناوب؛ لا توجد تحالفات رسمية. هذه قواعد تجريبية قابلة للتعديل بعد اختبارات التوازن.</p></details>
+<div class="footer">JABHAT • Prototype 0.1 • لعبة محلية على جهاز واحد — لا يوجد اتصال شبكي في هذه النسخة</div>
 </div>
-<aside class="leftpanel"><div class="panel"><div class="eyebrow">Your settlement</div><h2>Builder's village</h2><p>Choose a structure, then tap an open tile on the grass to place it. Select a building to inspect or upgrade it.</p><div class="buildlist" id="buildlist"></div><div class="smallnote">Tap a selected item again to cancel placement.</div></div></aside>
-<aside class="detail" id="detail"><div class="panel"><div class="eyebrow">Selected structure</div><h2 id="detailName">Town Hall</h2><p id="detailDesc"></p><div class="progress"><i id="detailProgress"></i></div><p id="detailStats"></p><div class="detail-actions" id="detailActions"></div></div></aside>
-<div class="hint" id="hint">Drag to orbit · Scroll to zoom · Choose a building to place</div>
-<div class="bottomnav"><button id="trainBtn">🛡 Train troops</button><button id="attackBtn" class="primary">⚔ Attack</button><button id="villageBtn">🏡 Village</button></div>
-<div class="toast" id="toast"></div>
-<div class="modalback" id="modalback"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Army camp</h2><button id="closeModal">✕</button></div><div id="modalBody"></div></div></div>
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/controls/OrbitControls.js';
-
+<script>
+(()=> {
+'use strict';
+const R=5,SZ=22,DIRS=[[1,0],[1,-1],[0,-1],[-1,0],[-1,1],[0,1]];
+const COLORS=['#e75c64','#53a9ff','#65d49a','#f5b84e','#b29aff'];
+const NAMES=['الأحمر','الأزرق','الأخضر','الذهبي','البنفسجي'];
+const GLYPH={F:'ق',G:'ح',W:'ج',B:'خ',A:'ر'};
+const TYPES={F:{name:'قلعة',count:1,range:1},G:{name:'حارس',count:5,range:1},W:{name:'جناح',count:3,range:3},B:{name:'مخترق',count:2,range:2},A:{name:'رامٍ',count:1,range:1}};
+const key=(q,r)=>q+','+r;
+const inside=(q,r)=>Math.max(Math.abs(q),Math.abs(r),Math.abs(q+r))<=R;
+const distance=(a,b)=>Math.max(Math.abs(a[0]-b[0]),Math.abs(a[1]-b[1]),Math.abs(a[0]+a[1]-b[0]-b[1]));
+const cells=[];for(let q=-R;q<=R;q++)for(let r=-R;r<=R;r++)if(inside(q,r))cells.push([q,r]);
+const neighbors=(q,r)=>DIRS.map(([a,b])=>[q+a,r+b]).filter(([a,b])=>inside(a,b));
 const $=id=>document.getElementById(id);
-const game=$('game');
-const scene=new THREE.Scene(); scene.background=new THREE.Color('#9edce8'); scene.fog=new THREE.Fog('#9edce8',28,62);
-const camera=new THREE.PerspectiveCamera(38,innerWidth/innerHeight,.1,120); camera.position.set(15,19,22);
-const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;game.appendChild(renderer.domElement);
-const controls=new OrbitControls(camera,renderer.domElement);controls.target.set(0,0,0);controls.enableDamping=true;controls.dampingFactor=.07;controls.maxPolarAngle=Math.PI*.46;controls.minDistance=12;controls.maxDistance=37;controls.enablePan=true;
-scene.add(new THREE.HemisphereLight(0xd9f7ff,0x617b48,2.1));const sun=new THREE.DirectionalLight(0xfff0d2,3.1);sun.position.set(-9,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-22;sun.shadow.camera.right=22;sun.shadow.camera.top=22;sun.shadow.camera.bottom=-22;scene.add(sun);
-const mat=(color,roughness=.85)=>new THREE.MeshStandardMaterial({color,roughness});
-const materials={grass:mat('#79bd58'),grass2:mat('#6eae50'),dirt:mat('#c3a16b'),stone:mat('#858b88'),wood:mat('#86502d'),roof:mat('#b84c36'),gold:mat('#e9b83e'),blue:mat('#4e9ab6'),pink:mat('#ce6da9'),white:mat('#f3e8cb'),dark:mat('#394c45'),leaf:mat('#397d43'),leaf2:mat('#5c9b49'),water:mat('#52c5d8',.28)};
-function mesh(geo,material,x,y,z,parent=scene){const m=new THREE.Mesh(geo,material);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m}
-const ground=mesh(new THREE.BoxGeometry(38,.5,38),materials.grass,0,-.35,0);ground.receiveShadow=true;
-const tileGroup=new THREE.Group();scene.add(tileGroup);const tileGeo=new THREE.BoxGeometry(1.92,.035,1.92);const tileMat=mat('#ffffff',1);tileMat.transparent=true;tileMat.opacity=.0;
-const grid=[];
-for(let x=-8;x<=8;x++)for(let z=-8;z<=8;z++){let t=mesh(tileGeo,tileMat,x,.0,z,tileGroup);t.userData.tile={x,z};grid.push(t)}
-// Natural scenery and decorative paths
-const pathMat=materials.dirt;
-for(let i=-8;i<=8;i++){mesh(new THREE.BoxGeometry(1.9,.04,1.1),pathMat,i,.0,2.5);mesh(new THREE.BoxGeometry(1.1,.04,1.9),pathMat,2.5,.005,i)}
-function tree(x,z,s=1){const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);mesh(new THREE.CylinderGeometry(.14*s,.22*s,.8*s,7),materials.wood,0,.4*s,0,g);const crown=mesh(new THREE.IcosahedronGeometry(.65*s,1),Math.random()>.5?materials.leaf:materials.leaf2,0,1.08*s,0,g);crown.scale.set(1,1.05,1);mesh(new THREE.IcosahedronGeometry(.42*s,1),materials.leaf2,.3*s,1.35*s,.1*s,g);return g}
-function rock(x,z,s=1){let r=mesh(new THREE.DodecahedronGeometry(.45*s,0),materials.stone,x,.22*s,z);r.scale.set(1,.7,1.2)}
-for(let i=0;i<44;i++){const a=Math.random()*Math.PI*2,rad=14+Math.random()*4,x=Math.cos(a)*rad,z=Math.sin(a)*rad;if(Math.abs(x)<17&&Math.abs(z)<17){if(i%4)tree(x,z,.65+Math.random()*.75);else rock(x,z,.6+Math.random()*.8)}}
-for(let i=0;i<75;i++){let x=(Math.random()-.5)*28,z=(Math.random()-.5)*28;if(Math.hypot(x,z)>8&&Math.abs(x)>3.5&&Math.abs(z)>3.5){const f=mesh(new THREE.SphereGeometry(.055+Math.random()*.06,5,4),Math.random()>.5?materials.gold:materials.white,x,.03,z);f.scale.y=.4}}
-const definitions={
- townhall:{name:'Town Hall',emoji:'🏰',desc:'The heart of your village. Upgrade it to unlock stronger structures.',cost:0,res:'gold',hp:1800,color:'#c9bba0',kind:'main',level:1},
- goldmine:{name:'Gold Mine',emoji:'⛏️',desc:'Produces gold over time. Upgrade to increase production.',cost:120,res:'gold',hp:500,color:'#d4a23e',kind:'producer',resource:'gold',rate:3},
- goldstorage:{name:'Gold Storage',emoji:'🪙',desc:'Stores gold so your village can save for major upgrades.',cost:100,res:'gold',hp:800,color:'#d5ae47',kind:'storage',resource:'gold'},
- elixirmine:{name:'Elixir Pump',emoji:'🧪',desc:'Produces elixir for training troops and building upgrades.',cost:130,res:'gold',hp:500,color:'#c66bb2',kind:'producer',resource:'elixir',rate:2},
- elixirstorage:{name:'Elixir Storage',emoji:'🧫',desc:'Stores the magical elixir used by your army.',cost:110,res:'gold',hp:800,color:'#d27bc2',kind:'storage',resource:'elixir'},
- barracks:{name:'Barracks',emoji:'🛡️',desc:'Train infantry and prepare an army for battle.',cost:180,res:'gold',hp:750,color:'#ad6645',kind:'barracks'},
- camp:{name:'Army Camp',emoji:'⛺',desc:'Increases your army capacity.',cost:150,res:'gold',hp:600,color:'#b7a077',kind:'camp'},
- cannon:{name:'Cannon',emoji:'💣',desc:'A defensive turret that targets approaching enemies.',cost:200,res:'gold',hp:900,color:'#647b7b',kind:'defense',damage:35,range:5.5},
- archer:{name:'Archer Tower',emoji:'🏹',desc:'A tall defensive tower with a long attack range.',cost:240,res:'gold',hp:850,color:'#8eaa70',kind:'defense',damage:22,range:7},
- wall:{name:'Wall',emoji:'🧱',desc:'A sturdy wall segment that helps protect your village.',cost:35,res:'gold',hp:400,color:'#8c9690',kind:'wall'},
- hut:{name:'Builder Hut',emoji:'🛖',desc:'A small hut for your hardworking builders.',cost:90,res:'gold',hp:450,color:'#b67a4a',kind:'utility'},
-};
-const buildingMeshes=new Map();let buildings=[];let selectedType=null,selectedBuilding=null,ghost=null;let gold=500,elixir=350,gems=25,troops={barbarian:8,archer:0,giant:0},training=[],battle=null,lastSave=Date.now();let uid=1;
-function roofMesh(parent,x,y,z,color,scale=1){const r=mesh(new THREE.ConeGeometry(.78*scale,.72*scale,4),mat(color),x,y,z,parent);r.rotation.y=Math.PI/4;return r}
-function makeBuilding(type,x,z,level=1,id=null){const d=definitions[type];const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);const base=mesh(new THREE.BoxGeometry(1.65,.18,1.65),materials.stone,0,.09,0,g);base.material=materials.stone;
- if(type==='townhall'){mesh(new THREE.BoxGeometry(1.3,1.55,1.2),mat('#cbb894'),0,.88,0,g);roofMesh(g,0,1.95,0,'#a74632',1.25);mesh(new THREE.BoxGeometry(.35,.65,.08),mat('#553728'),0,.42,.62,g);for(let i=-1;i<=1;i+=2){mesh(new THREE.BoxGeometry(.15,.5,.15),mat('#e4d5ad'),i*.45,1.2,-.25,g)}mesh(new THREE.BoxGeometry(.16,.8,.16),mat('#8e372b'),-.55,1.5,.2,g)}
- else if(type==='goldmine'){mesh(new THREE.BoxGeometry(1.1,.72,1),mat('#876043'),0,.52,0,g);roofMesh(g,0,1.15,0,'#d9a63c',.9);mesh(new THREE.CylinderGeometry(.19,.19,.5,8),mat('#65716b'),.3,.95,.3,g);mesh(new THREE.TorusGeometry(.22,.055,6,12),mat('#e6bc49'),.3,1.23,.3,g).rotation.x=Math.PI/2}
- else if(type==='elixirmine'){mesh(new THREE.BoxGeometry(1.15,.6,1),mat('#8c6a79'),0,.45,0,g);roofMesh(g,0,.94,0,'#b75a9b',.85);mesh(new THREE.CylinderGeometry(.28,.22,.65,10),materials.water,0,.95,.05,g);mesh(new THREE.TorusGeometry(.28,.07,7,16),mat('#e6a4d0'),0,1.28,.05,g).rotation.x=Math.PI/2}
- else if(type==='goldstorage'||type==='elixirstorage'){mesh(new THREE.CylinderGeometry(.57,.62,1.2,10),mat(d.color),0,.72,0,g);mesh(new THREE.CylinderGeometry(.6,.6,.13,10),materials.gold,0,1.35,0,g);mesh(new THREE.CylinderGeometry(.22,.22,.1,10),materials.dark,0,1.43,0,g)}
- else if(type==='barracks'){mesh(new THREE.BoxGeometry(1.4,.95,1.2),mat('#b8a184'),0,.62,0,g);roofMesh(g,0,1.45,0,'#9e4d3a',1.15);mesh(new THREE.BoxGeometry(.38,.6,.08),mat('#543629'),0,.4,.62,g);mesh(new THREE.BoxGeometry(.08,.5,.08),mat('#dfc58a'),.45,.72,.64,g)}
- else if(type==='camp'){mesh(new THREE.ConeGeometry(.82,1.15,4),mat('#a68c60'),0,.68,0,g);mesh(new THREE.CylinderGeometry(.06,.06,.9,6),mat('#79532d'),0,1.12,0,g);const flag=mesh(new THREE.BoxGeometry(.45,.24,.03),mat('#c04b3c'),.22,1.45,0,g)}
- else if(type==='cannon'){mesh(new THREE.CylinderGeometry(.63,.7,.38,10),mat('#526b6d'),0,.36,0,g);mesh(new THREE.SphereGeometry(.45,10,8),mat('#7c9995'),0,.64,0,g);const barrel=mesh(new THREE.CylinderGeometry(.17,.22,.82,9),mat('#435a5c'),0,.88,.32,g);barrel.rotation.x=Math.PI/2}
- else if(type==='archer'){mesh(new THREE.CylinderGeometry(.5,.68,1.25,8),mat('#8b9d7a'),0,.72,0,g);mesh(new THREE.CylinderGeometry(.42,.42,.18,8),mat('#d5bd8a'),0,1.42,0,g);mesh(new THREE.CylinderGeometry(.12,.16,.85,8),mat('#72543a'),0,1.78,0,g);mesh(new THREE.ConeGeometry(.38,.38,8),mat('#6e9c65'),0,2.2,0,g)}
- else if(type==='wall'){mesh(new THREE.BoxGeometry(1.72,.75,.34),mat('#929b94'),0,.48,0,g);for(let i=-1;i<=1;i++)mesh(new THREE.BoxGeometry(.38,.18,.38),mat('#aeb5aa'),i*.55,.92,0,g)}
- else if(type==='hut'){mesh(new THREE.BoxGeometry(1.05,.9,1),mat('#c7aa7b'),0,.53,0,g);roofMesh(g,0,1.25,0,'#79503c',.95);mesh(new THREE.BoxGeometry(.3,.48,.07),mat('#59402d'),0,.34,.53,g)}
- // Level badge and small level marker
- if(level>1){const badge=mesh(new THREE.CylinderGeometry(.2,.2,.08,12),mat('#e8b847'),.62,1.65,.55,g);badge.rotation.x=Math.PI/2}
- const b={id:id??uid++,type,x,z,level,group:g,hp:d.hp+(level-1)*Math.round(d.hp*.35),maxHp:d.hp+(level-1)*Math.round(d.hp*.35),placedAt:Date.now()};buildings.push(b);buildingMeshes.set(b.id,g);g.userData.building=b;return b}
-function updateResources(){ $('gold').textContent=Math.floor(gold).toLocaleString();$('elixir').textContent=Math.floor(elixir).toLocaleString();$('gems').textContent=gems}
-function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),2400)}
-function buildButtons(){const list=$('buildlist');list.innerHTML='';for(const [type,d] of Object.entries(definitions)){const b=document.createElement('button');b.className='buildbtn';b.innerHTML='<span class="emoji">'+d.emoji+'</span><strong>'+d.name+'</strong><small>'+(d.cost?d.cost+' gold':'Starting building')+'</small>';b.onclick=()=>chooseBuild(type);list.appendChild(b)}}
-function chooseBuild(type){if(type==='townhall'&&buildings.some(b=>b.type==='townhall')){toast('Your village already has a Town Hall.');return}if(selectedType===type){selectedType=null;removeGhost();buildButtons();toast('Placement cancelled');return}selectedType=type;selectedBuilding=null;$('detail').classList.remove('open');removeGhost();const d=definitions[type];ghost=makeGhost(type);buildButtons();[...$('buildlist').children].forEach((el,i)=>{if(Object.keys(definitions)[i]===type)el.classList.add('selected')});$('hint').textContent='Choose an empty tile to place '+d.name+' · tap the item again to cancel'}
-function makeGhost(type){const g=new THREE.Group();scene.add(g);const d=definitions[type];let body=mesh(new THREE.BoxGeometry(1.4,1.1,1.4),new THREE.MeshStandardMaterial({color:d.color,transparent:true,opacity:.55,roughness:.8}),0,.6,0,g);g.userData.ghost=true;return g}
-function removeGhost(){if(ghost){scene.remove(ghost);ghost=null}}
-function tileAvailable(x,z){if(Math.abs(x)>8||Math.abs(z)>8)return false;return !buildings.some(b=>Math.abs(b.x-x)<1.25&&Math.abs(b.z-z)<1.25)}
-const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();function pointerToNdc(e){const r=renderer.domElement.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width*2-1;pointer.y=-(e.clientY-r.top)/r.height*2+1}
-function tileAt(e){pointerToNdc(e);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(grid,false);return hits.length?hits[0].object.userData.tile:null}
-function buildingAt(e){pointerToNdc(e);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(buildings.map(b=>b.group),true);for(const h of hits){let o=h.object;while(o&&!o.userData.building)o=o.parent;if(o?.userData.building)return o.userData.building}return null}
-renderer.domElement.addEventListener('pointermove',e=>{if(!ghost||e.buttons)return;const t=tileAt(e);if(t){ghost.position.set(t.x,0,t.z);ghost.children[0].material.color.set(tileAvailable(t.x,t.z)?'#86e57b':'#ed655c')}});
-renderer.domElement.addEventListener('pointerdown',e=>{if(e.button!==0)return;const t=tileAt(e);if(!t)return;if(selectedType==='__move__'&&selectedBuilding){moveBuilding(selectedBuilding,t.x,t.z);return}if(selectedType){placeBuilding(selectedType,t.x,t.z);return}const b=buildingAt(e);if(b)selectBuilding(b);else{selectedBuilding=null;$('detail').classList.remove('open')}});
-function placeBuilding(type,x,z){const d=definitions[type];if(!tileAvailable(x,z)){toast('That tile is occupied. Choose an empty tile.');return}if(gold<d.cost){toast('Not enough gold. Collect resources or wait for production.');return}gold-=d.cost;const b=makeBuilding(type,x,z);selectedType=null;removeGhost();buildButtons();updateResources();selectBuilding(b);toast(d.name+' constructed!');saveGame()}
-function selectBuilding(b){selectedBuilding=b;selectedType=null;removeGhost();buildButtons();$('detail').classList.add('open');const d=definitions[b.type];$('detailName').textContent=d.name+' · Lv. '+b.level;$('detailDesc').textContent=d.desc;$('detailProgress').style.width='100%';let extra='Health: '+Math.floor(b.hp)+' / '+b.maxHp;if(d.kind==='producer')extra+='\nProduction: '+d.rate*b.level+' '+d.resource+' / sec';if(d.kind==='defense')extra+='\nDamage: '+d.damage*b.level+' · Range: '+d.range;if(b.type==='camp')extra+='\nArmy capacity: '+(20+b.level*10);$('detailStats').textContent=extra;$('detailActions').innerHTML='';const upgrade=document.createElement('button');const cost=Math.floor((d.cost||150)*(1.7**b.level));upgrade.textContent='⬆ Upgrade · '+cost+' gold';upgrade.onclick=()=>upgradeBuilding(b.id);$('detailActions').appendChild(upgrade);if(d.kind==='barracks'){const train=document.createElement('button');train.textContent='🛡 Open training camp';train.onclick=openTraining;$('detailActions').appendChild(train)}if(b.type!=='townhall'){const move=document.createElement('button');move.textContent='↔ Move building';move.onclick=()=>{selectedType='__move__';selectedBuilding=b;$('hint').textContent='Tap an empty tile to move '+d.name;toast('Select an empty tile for the new location')};$('detailActions').appendChild(move)}}
-function upgradeBuilding(id){const b=buildings.find(x=>x.id===id);if(!b)return;const d=definitions[b.type],cost=Math.floor((d.cost||150)*(1.7**b.level));if(gold<cost){toast('You need '+cost+' gold to upgrade.');return}gold-=cost;b.level++;b.maxHp=Math.round(b.maxHp*1.35);b.hp=b.maxHp;const old=b.group;scene.remove(old);buildingMeshes.delete(id);buildings=buildings.filter(x=>x.id!==id);makeBuilding(b.type,b.x,b.z,b.level,id);updateResources();const fresh=buildings.find(x=>x.id===id);selectBuilding(fresh);toast(d.name+' upgraded to level '+b.level+'!');saveGame()}
-function moveBuilding(b,x,z){if(!tileAvailable(x,z)){toast('That tile is occupied.');return}b.x=x;b.z=z;b.group.position.set(x,0,z);selectedType=null;selectBuilding(b);toast('Building moved');saveGame()}
-const troopDefs={barbarian:{name:'Swordsman',emoji:'⚔️',cost:35,space:1,hp:110,damage:18,speed:2.4,desc:'Balanced melee fighter.'},archer:{name:'Archer',emoji:'🏹',cost:55,space:1,hp:65,damage:14,speed:2.2,desc:'Ranged damage from a safe distance.'},giant:{name:'Guardian',emoji:'🪨',cost:120,space:4,hp:520,damage:30,speed:1.1,desc:'Slow, durable unit that draws defenses.'}};
-function armyCapacity(){return 20+buildings.filter(b=>b.type==='camp').reduce((s,b)=>s+b.level*10,0)}
-function armyCount(){return Object.values(troops).reduce((s,n)=>s+n,0)+training.length}
-function openModal(title,html){$('modalTitle').textContent=title;$('modalBody').innerHTML=html;$('modalback').classList.add('open')}
-function openTraining(){const barracks=buildings.find(b=>b.type==='barracks');if(!barracks){toast('Build a Barracks first.');return}let html='<p>Army capacity: '+armyCount()+' / '+armyCapacity()+'</p><div class="enemygrid">';for(const [type,d] of Object.entries(troopDefs)){html+='<div class="enemy"><div style="font-size:28px">'+d.emoji+'</div><h3>'+d.name+'</h3><p>'+d.desc+'</p><p>Cost: '+d.cost+' elixir · Space: '+d.space+'</p><button data-train="'+type+'">Train 1</button></div>'}html+='</div><h3 style="margin-top:18px">Training queue</h3><div id="queueText">'+(training.length?training.map(t=>troopDefs[t.type].name+' ('+Math.ceil(t.left)+'s)').join('<br>'):'Queue is empty')+'</div>';openModal('Barracks · Train troops',html);document.querySelectorAll('[data-train]').forEach(btn=>btn.onclick=()=>trainTroop(btn.dataset.train))}
-function trainTroop(type){const d=troopDefs[type];if(armyCount()+d.space>armyCapacity()){toast('Army is full. Build another Army Camp.');return}if(elixir<d.cost){toast('Not enough elixir.');return}elixir-=d.cost;training.push({type,left:type==='giant'?12:6,space:d.space});updateResources();openTraining();toast(d.name+' added to training queue');saveGame()}
-function openAttack(){const enemies=[{name:'Pinewatch Outpost',level:1,gold:180,elixir:100,difficulty:'Easy',desc:'A lightly defended frontier settlement.'},{name:'Redstone Keep',level:2,gold:280,elixir:180,difficulty:'Medium',desc:'Stone walls and watchtowers guard the stores.'},{name:'Frostfang Fortress',level:3,gold:430,elixir:300,difficulty:'Hard',desc:'A heavily fortified base for experienced armies.'}];openModal('Choose an AI opponent','<p>Deploy your trained troops against an enemy base. Battles are simulated in this first playable build.</p><div class="enemygrid">'+enemies.map((e,i)=>'<div class="enemy"><div style="font-size:26px">🏯</div><h3>'+e.name+'</h3><p>Difficulty: '+e.difficulty+'</p><p>'+e.desc+'</p><p>Reward: 🪙 '+e.gold+' · 🧪 '+e.elixir+'</p><button data-attack="'+i+'">Start attack</button></div>').join('')+'</div>');document.querySelectorAll('[data-attack]').forEach(btn=>btn.onclick=()=>startBattle(enemies[+btn.dataset.attack]))}
-function startBattle(enemy){$('modalback').classList.remove('open');if(armyCount()===0){toast('Train troops before attacking!');return}battle={enemy,started:Date.now(),units:armyCount(),seconds:12+enemy.level*7};openModal('⚔ Battle in progress','<p>Your troops are advancing on '+enemy.name+'.</p><div style="font-size:44px;text-align:center;padding:20px">🛡️ ➜ 🏹 ➜ 🏰</div><p id="battleStatus">Your army is engaging enemy defenses…</p><div class="progress"><i id="battleProgress"></i></div><p id="battleTimer">Preparing battle…</p><button id="finishBattle" style="width:100%;margin-top:12px">Resolve battle</button>');$('finishBattle').onclick=()=>resolveBattle();battle.interval=setInterval(()=>{if(!battle)return;const elapsed=(Date.now()-battle.started)/1000;const p=Math.min(100,elapsed/battle.seconds*100);const bar=$('battleProgress');if(bar)bar.style.width=p+'%';const timer=$('battleTimer');if(timer)timer.textContent='Battle time: '+Math.max(0,Math.ceil(battle.seconds-elapsed))+'s';if(elapsed>=battle.seconds)resolveBattle()},350)}
-function resolveBattle(){if(!battle)return;clearInterval(battle.interval);const e=battle.enemy;const power=battle.units*15;const chance=Math.max(.18,Math.min(.94,.83-(e.level-1)*.2+(power-120)/800));const win=Math.random()<chance;if(win){gold+=e.gold;elixir+=e.elixir;gems+=e.level===3?3:1}else{for(const k of Object.keys(troops))troops[k]=Math.floor(troops[k]*.55)}battle=null;$('modalback').classList.remove('open');openModal(win?'🏆 Victory!':'🛡️ Defeat',win?'<div style="font-size:54px;text-align:center">🏆</div><p>Your army defeated the enemy and brought home resources.</p><h3>Rewards</h3><p>🪙 Gold and 🧪 elixir have been added to your village.</p><button id="battleDone" style="width:100%">Return to village</button>':'<div style="font-size:54px;text-align:center">🛡️</div><p>The enemy defenses pushed your army back. Some troops were lost. Train more troops and upgrade your base before trying again.</p><button id="battleDone" style="width:100%">Return to village</button>');$('battleDone').onclick=()=>{$('modalback').classList.remove('open');updateResources();saveGame()};updateResources();saveGame()}
-function saveGame(){const data={version:1,gold,elixir,gems,troops,training,buildings:buildings.map(b=>({type:b.type,x:b.x,z:b.z,level:b.level,id:b.id})),savedAt:Date.now()};try{localStorage.setItem('towerConquestVillageSave',JSON.stringify(data));lastSave=Date.now();toast('Village saved on this device.')}catch(e){toast('Could not save on this device.')} }
-function loadGame(){try{const raw=localStorage.getItem('towerConquestVillageSave');if(!raw)return false;const d=JSON.parse(raw);if(d.version!==1||!Array.isArray(d.buildings))return false;gold=d.gold??500;elixir=d.elixir??350;gems=d.gems??25;troops=d.troops??troops;training=d.training??[];for(const b of d.buildings)if(definitions[b.type])makeBuilding(b.type,b.x,b.z,b.level,b.id);uid=Math.max(uid,...buildings.map(b=>b.id+1));return true}catch(e){return false}}
-function resetCamera(){camera.position.set(15,19,22);controls.target.set(0,0,0);controls.update()}
-$('saveBtn').onclick=saveGame;$('homeBtn').onclick=resetCamera;$('trainBtn').onclick=openTraining;$('attackBtn').onclick=openAttack;$('villageBtn').onclick=()=>{selectedType=null;removeGhost();$('detail').classList.remove('open');$('hint').textContent='Drag to orbit · Scroll to zoom · Choose a building to place'};$('closeModal').onclick=()=>$('modalback').classList.remove('open');$('modalback').addEventListener('click',e=>{if(e.target===$('modalback'))$('modalback').classList.remove('open')});
-const loaded=loadGame();if(!loaded){makeBuilding('townhall',0,0);makeBuilding('goldmine',-3,-2);makeBuilding('goldstorage',-5,1);makeBuilding('elixirmine',3,-3);makeBuilding('barracks',4,1);makeBuilding('cannon',-2,4);makeBuilding('hut',1,4);makeBuilding('camp',5,-3)}
-buildButtons();updateResources();
-// Production, training and ambient animation
-let previous=performance.now(),autoSave=0;function animate(now){requestAnimationFrame(animate);const dt=Math.min(.1,(now-previous)/1000);previous=now;controls.update();for(const b of buildings){const d=definitions[b.type];if(d.kind==='producer'){if(d.resource==='gold')gold=Math.min(99999,gold+d.rate*b.level*dt);else elixir=Math.min(99999,elixir+d.rate*b.level*dt)}if(b.type==='goldmine'||b.type==='elixirmine'){const obj=b.group.children.find(c=>c.geometry?.type==='TorusGeometry');if(obj)obj.rotation.z+=dt*.8}}
-for(let i=training.length-1;i>=0;i--){training[i].left-=dt;if(training[i].left<=0){troops[training[i].type]=(troops[training[i].type]||0)+1;toast(troopDefs[training[i].type].name+' ready!');training.splice(i,1)}}if(ghost){ghost.rotation.y+=dt*.3}updateResources();autoSave+=dt;if(autoSave>20){autoSave=0;try{localStorage.setItem('towerConquestVillageSave',JSON.stringify({version:1,gold,elixir,gems,troops,training,buildings:buildings.map(b=>({type:b.type,x:b.x,z:b.z,level:b.level,id:b.id})),savedAt:Date.now()}))}catch(e){}}renderer.render(scene,camera)}
-requestAnimationFrame(animate);
-addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.8))});
-// Handle move placement after the normal selection logic.
-const originalPointerDown=renderer.domElement.onpointerdown;
-renderer.domElement.addEventListener('pointerup',e=>{if(selectedType==='__move__'&&selectedBuilding){const t=tileAt(e);if(t)moveBuilding(selectedBuilding,t.x,t.z)}});
+let game=null, sound=false;
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function addLog(text){game.log.unshift(text);game.log=game.log.slice(0,18)}
+function place(q,r,owner,type){game.pieces[key(q,r)]={owner,type}}
+function spawn(n){
+ const dirs=({2:[0,3],3:[0,2,4],4:[0,2,3,5],5:[0,1,2,3,4]})[n];
+ const used=new Set();
+ dirs.forEach((d,owner)=>{
+  const vec=DIRS[d],anchor=[vec[0]*R,vec[1]*R];
+  const candidates=cells.filter(([q,r])=>distance([q,r],anchor)<=3).sort((a,b)=>{
+   const score=x=>distance(x,anchor)*100-distance(x,[0,0])*2+(x[0]*vec[0]+x[1]*vec[1])*.01;
+   return score(a)-score(b)
+  });
+  const chosen=[];
+  for(const c of candidates){if(!used.has(key(...c))){chosen.push(c);used.add(key(...c));if(chosen.length===12)break}}
+  const order=['F','G','G','G','G','G','W','W','W','B','B','A'];
+  chosen.forEach((c,i)=>place(c[0],c[1],owner,order[i]));
+ });
+}
+function start(n=Number($('playerCount').value)){
+ game={n,turn:0,round:1,pieces:{},alive:Array(n).fill(true),centerStreak:Array(n).fill(0),selected:null,win:null,message:'',log:[],turnSnapshot:null,undoUsed:false};
+ spawn(n);game.turnSnapshot=clone(game);
+ addLog('بدأت المعركة — '+n+' قادة في الميدان.');addLog('فترة الانتشار: الأسر محظور خلال أول جولتين.');
+ $('playerCount').value=String(n);$('hint').textContent='اختر قطعة من قطعك لعرض حركاتها.';render();
+}
+function moveRange(pc,q,r){
+ const max=TYPES[pc.type].range,out=[];
+ for(const [dq,dr] of DIRS)for(let step=1;step<=max;step++){
+  const a=q+dq*step,b=r+dr*step,k=key(a,b);
+  if(!inside(a,b)||game.pieces[k])break;
+  if(pc.type==='W' && (Math.max(Math.abs(a),Math.abs(b),Math.abs(a+b))<R-1 || Math.max(Math.abs(q),Math.abs(r),Math.abs(q+r))<R-1))continue;
+  out.push([a,b]);
+ }
+ return out;
+}
+function rayBetween(a,b){
+ const d=distance(a,b);if(d!==2)return null;
+ for(const [dq,dr] of DIRS){if(a[0]+dq*2===b[0]&&a[1]+dr*2===b[1])return [a[0]+dq,a[1]+dr]}
+ return null;
+}
+function aliveCount(){return game.alive.filter(Boolean).length}
+function pieceCount(owner){return Object.values(game.pieces).filter(p=>p.owner===owner).length}
+function captureAround(q,r){
+ if(game.round<=2)return [];
+ const captured=[],active=game.turn;
+ for(const [a,b] of neighbors(q,r)){
+  const target=game.pieces[key(a,b)];
+  if(!target||target.owner<0||target.owner===active)continue;
+  let attack=0,defend=0;
+  for(const [x,y] of neighbors(a,b)){
+   const p=game.pieces[key(x,y)];if(!p||p.owner<0)continue;
+   if(p.owner===active)attack++;if(p.owner===target.owner)defend++;
+  }
+  if(attack>=2&&attack>defend)captured.push({q:a,r:b,p:clone(target)});
+ }
+ captured.forEach(({q:a,r:b,p})=>{
+  delete game.pieces[key(a,b)];
+  addLog(NAMES[active]+' طوّق '+TYPES[p.type].name+' لـ'+NAMES[p.owner]+'.');
+  if(p.type==='F')eliminate(p.owner);
+ });
+ return captured;
+}
+function eliminate(owner){
+ game.alive[owner]=false;
+ for(const k in game.pieces)if(game.pieces[k].owner===owner)game.pieces[k].owner=-1;
+ addLog('سقطت قلعة '+NAMES[owner]+'؛ تحولت قواتها إلى أنقاض.');
+ if(game.turn===owner)game.message='تم إقصاء '+NAMES[owner]+'.';
+}
+function shoot(from,to){
+ const pc=game.pieces[from],target=game.pieces[to];if(!pc||pc.type!=='A'||!target||target.owner<0||target.owner===game.turn||target.type==='F'||game.round<=2)return false;
+ const a=from.split(',').map(Number),b=to.split(',').map(Number),mid=rayBetween(a,b);if(!mid||game.pieces[key(...mid)])return false;
+ delete game.pieces[to];addLog('أصاب الرامي قطعة '+NAMES[target.owner]+'.');game.message='أصاب الرامي هدفه.';
+ if(sound)beep();return true;
+}
+function endTurn(){
+ const current=game.turn,center=game.pieces['0,0'];
+ for(let i=0;i<game.n;i++){
+  if(!game.alive[i]){game.centerStreak[i]=0;continue}
+  if(center&&center.owner===i)game.centerStreak[i]++;else game.centerStreak[i]=0;
+ }
+ if(game.centerStreak[current]>=5){game.win=current;game.message='سيطرة مستمرة على العمق لخمس نهايات أدوار.';addLog('فاز '+NAMES[current]+' بالسيطرة على العمق.');return}
+ if(aliveCount()===1){game.win=game.alive.findIndex(Boolean);game.message='آخر قلعة صامدة.';addLog('فاز '+NAMES[game.win]+'.');return}
+ do{game.turn=(game.turn+1)%game.n;if(game.turn===0)game.round++}while(!game.alive[game.turn]);
+ game.selected=null;game.undoUsed=false;game.turnSnapshot=clone(game);
+}
+function doMove(from,to){
+ const pc=game.pieces[from];if(!pc||pc.owner!==game.turn||game.win!==null)return false;
+ const [q,r]=to.split(',').map(Number);
+ if(!moveRange(pc,...from.split(',').map(Number)).some(([a,b])=>a===q&&b===r))return false;
+ const before=clone(game);game.pieces[to]=pc;delete game.pieces[from];game.selected=null;
+ game.message=NAMES[game.turn]+' تحركت: '+TYPES[pc.type].name+'.';
+ const captured=captureAround(q,r);
+ if(!captured.length&&game.message==='')game.message='';
+ addLog(NAMES[game.turn]+' حرّك '+TYPES[pc.type].name+'.');
+ endTurn();render();return true;
+}
+function allMoves(owner){
+ const arr=[];
+ for(const [k,p] of Object.entries(game.pieces)){if(p.owner!==owner)continue;const [q,r]=k.split(',').map(Number);for(const [a,b] of moveRange(p,q,r))arr.push({from:k,to:key(a,b),type:p.type,owner})}
+ return arr;
+}
+function hint(){
+ if(game.win!==null){$('hint').textContent='انتهت المعركة.';return}
+ const moves=allMoves(game.turn),enemies=Object.entries(game.pieces).filter(([,p])=>p.owner>=0&&p.owner!==game.turn);
+ if(!moves.length){$('hint').textContent='لا توجد نقلات متاحة. يمكنك إنهاء الدور.';return}
+ const centerDist=m=>distance(m.to.split(',').map(Number),[0,0]);
+ moves.sort((a,b)=>{
+  const score=m=>{const pos=m.to.split(',').map(Number),near= Math.min(...enemies.map(([k])=>distance(pos,k.split(',').map(Number))));return (m.type==='F'?-2:0)-centerDist(m)*.8-near*.25};
+  return score(a)-score(b)
+ });
+ const best=moves[0];game.selected=best.from;render();
+ $('hint').textContent='اقتراح: حرّك '+TYPES[best.type].name+' باتجاه العمق أو خط المواجهة. النقلة المقترحة مميزة باللون الأخضر.';
+}
+function hexPoints(x,y,s){return Array.from({length:6},(_,i)=>{const a=(60*i-30)*Math.PI/180;return (x+s*Math.cos(a)).toFixed(1)+','+(y+s*Math.sin(a)).toFixed(1)}).join(' ')}
+function render(){
+ if(!game)return;
+ const moves=game.selected?moveRange(game.pieces[game.selected],...game.selected.split(',').map(Number)).map(([q,r])=>key(q,r)):[];
+ let svg='';
+ for(const [q,r] of cells){
+  const x=SZ*Math.sqrt(3)*(q+r/2),y=SZ*1.5*r,k=key(q,r),pc=game.pieces[k],center=q===0&&r===0;
+  const isMove=moves.includes(k),selected=game.selected===k;
+  const fill=center?'#4d4027':((q+r)%2===0?'#142238':'#101b2d');
+  svg+=`<g class="cell" data-k="${k}" tabindex="0" role="button" aria-label="خانة ${q},${r}"><polygon points="${hexPoints(x,y,SZ-1)}" fill="${fill}" stroke="${selected?'#ffe6a2':isMove?'#57e5a4':center?'#c69b4d':'#2a3c55'}" stroke-width="${selected?3:isMove?2.4:1}"/>`;
+  if(center)svg+=`<circle cx="${x}" cy="${y}" r="10" fill="none" stroke="#e7bd66" stroke-width="1.5" opacity=".85"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="10" fill="#f7d98d">✦</text>`;
+  if(isMove)svg+=`<circle cx="${x}" cy="${y}" r="4.5" fill="#58d5a1"/>`;
+  if(pc){
+   const col=pc.owner<0?'#6f7784':COLORS[pc.owner],radius=pc.type==='F'?13:10.5;
+   svg+=`<circle cx="${x}" cy="${y}" r="${radius}" fill="${col}" stroke="${selected?'#fff1be':'#ffffff55'}" stroke-width="${selected?2.8:1.2}" />`;
+   if(pc.owner>=0)svg+=`<text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" font-weight="800" fill="#08101c">${GLYPH[pc.type]}</text>`;
+   else svg+=`<path d="M ${x-4} ${y-4} l8 8 m0 -8 l-8 8" stroke="#d4d9e0" stroke-width="1.5"/>`;
+  }
+  svg+='</g>';
+ }
+ $('board').innerHTML=svg;
+ $('turnName').textContent=game.win===null?NAMES[game.turn]:'انتهت المعركة';
+ $('turnDot').style.background=game.win===null?COLORS[game.turn]:'#777';$('turnDot').style.color=game.win===null?COLORS[game.turn]:'#777';
+ $('roundPill').textContent='الجولة '+game.round;
+ $('phase').textContent=game.round<=2?'فترة انتشار — لا أسر':'اشتباك مفتوح';
+ $('centerMetric').textContent=(game.centerStreak[game.turn]||0)+' / 5';
+ $('pieceMetric').textContent=pieceCount(game.turn);
+ $('statusText').textContent=game.win!==null?('الفائز: '+NAMES[game.win]+' — '+game.message):(game.message||'اختر قطعة من قطعك لعرض حركاتها.');
+ $('alivePill').textContent=aliveCount()+' صامدان';
+ $('players').innerHTML=Array.from({length:game.n},(_,i)=>`<div class="player ${game.turn===i&&game.win===null?'active':''} ${game.alive[i]?'':'out'}"><div class="player-left"><span class="mini-dot" style="background:${COLORS[i]}"></span><span>${NAMES[i]}</span></div><span class="pill">${pieceCount(i)} قطعة · عمق ${game.centerStreak[i]}/5</span></div>`).join('');
+ $('log').innerHTML=game.log.map(t=>`<div class="log-item">${escapeHtml(t)}</div>`).join('');
+ $('passBtn').disabled=game.win!==null;$('undoBtn').disabled=game.win!==null||game.undoUsed||!game.turnSnapshot;
+ $('banner').classList.toggle('show',game.win!==null);
+ $('banner').innerHTML=game.win!==null?'<strong>انتصار '+NAMES[game.win]+'!</strong> '+escapeHtml(game.message)+' <button id="bannerNew" style="float:left">معركة جديدة</button>':'';
+ if(game.win!==null&&$('bannerNew'))$('bannerNew').onclick=()=>start(Number($('playerCount').value));
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function beep(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const c=new C(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=620;g.gain.value=.035;o.start();o.stop(c.currentTime+.07);o.onended=()=>c.close()}catch(e){}}
+$('board').addEventListener('click',e=>{
+ const cell=e.target.closest('[data-k]');if(!cell||game.win!==null)return;
+ const k=cell.dataset.k,pc=game.pieces[k];
+ if(pc&&pc.owner===game.turn){game.selected=k;$('hint').textContent=TYPES[pc.type].name+' — اختر خانة مضيئة للحركة.';render();return}
+ if(game.selected){
+  const selectedPc=game.pieces[game.selected];
+  if(pc&&selectedPc&&selectedPc.type==='A'&&shoot(game.selected,k)){game.selected=null;endTurn();render();return}
+  if(!pc&&doMove(game.selected,k))return;
+ }
+ game.selected=null;render();
+});
+$('board').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-k]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
+$('newGame').onclick=()=>start(Number($('playerCount').value));
+$('restartBtn').onclick=()=>start(Number($('playerCount').value));
+$('passBtn').onclick=()=>{if(game.win!==null)return;addLog(NAMES[game.turn]+' أنهى دوره دون نقلة.');game.message='تم إنهاء الدور.';endTurn();render()};
+$('undoBtn').onclick=()=>{if(game.win!==null||game.undoUsed||!game.turnSnapshot)return;const snap=clone(game.turnSnapshot);snap.undoUsed=true;snap.message='تم التراجع إلى بداية الدور.';snap.log=game.log.slice();snap.log.unshift('تم التراجع عن آخر نقلة.');game=snap;render()};
+$('hintBtn').onclick=hint;
+$('rulesBtn').onclick=()=>{$('rules').open=!$('rules').open;$('rules').scrollIntoView({behavior:'smooth',block:'nearest'})};
+$('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent='الصوت: '+(sound?'مفتوح':'مغلق');if(sound)beep()};
+start(2);
+})();
 </script>
-</body>
-</html>
+</body></html>
