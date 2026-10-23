@@ -8,6 +8,9 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const match = html.match(/<script>([\s\S]*?)<\/script>/);
 assert.ok(match, 'index.html must contain the game script');
 assert.doesNotThrow(() => new vm.Script(match[1]), 'game script must parse');
+assert.match(match[1], /const centerOwner=center&&center.owner>=0\?center.owner:-1;/, 'center streak must depend on current center ownership');
+assert.match(match[1], /moves\.sort\(\(a,b\)=>score\(b\)-score\(a\)\)/, 'tactical hint must rank higher-scoring moves first');
+assert.match(match[1], /const shots=\[\]/, 'archer target highlighting must be present');
 
 function createGame() {
   const elements = new Map();
